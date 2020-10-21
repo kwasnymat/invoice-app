@@ -6,6 +6,7 @@ import Navigation from './components/navigation/Navigation';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Invoices from './components/invoices/Invoices';
+import Footer from './components/footer/Footer';
 
 import routes from './routesDefinitions/routes';
 
@@ -16,8 +17,8 @@ const App = () => {
   return (
     <div>
       <Router>
-        <div className='container'>
-          <Navigation />
+        <Navigation />
+        <div className='container content'>
           <Switch>
             <Route path={createInvoice.link} />
             <Route exact path={home.link} />
@@ -27,6 +28,7 @@ const App = () => {
             <Route />
           </Switch>
         </div>
+        <Footer />
       </Router>
     </div>
   );
