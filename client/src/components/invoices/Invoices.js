@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { Form, Button, Col } from 'react-bootstrap';
+
 import './Invoices.scss';
 
 const Invoices = () => {
-  return <div className='invoces'>elooo</div>;
+  return <div></div>;
 };
+
 export default Invoices;
