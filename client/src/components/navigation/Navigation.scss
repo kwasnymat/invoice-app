@@ -1,5 +1,4 @@
-$color-primary: #4a4a4b;
-$color-primary-choosen: #016353;
+$color-primary: #343a40;
 
 .Navigation {
   height: 7.6vh;
@@ -11,18 +10,13 @@ $color-primary-choosen: #016353;
   }
 
   .active {
-    color: $color-primary-choosen;
     text-decoration: none;
-    border-bottom: 2px solid $color-primary-choosen;
+    border-bottom: 2px solid $color-primary;
   }
 
   .inactive:hover {
     color: $color-primary;
     // text-decoration: none;
-  }
-
-  .active:hover {
-    color: $color-primary-choosen;
   }
 
   .nav__link {
@@ -36,7 +30,7 @@ $color-primary-choosen: #016353;
 
   .navbar-brand {
     padding: 0;
-    width: 120px;
+    width: 130px;
     height: 65px;
   }
 

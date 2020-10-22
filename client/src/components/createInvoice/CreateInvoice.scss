@@ -1,0 +1,107 @@
+.form__invoice {
+  margin: 2rem 0 4rem 0;
+}
+
+.form__invoice .form-control {
+  font-size: 13px;
+}
+
+.form__invoice label {
+  margin-bottom: 0.2rem;
+}
+
+.invoice__label {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.company__details {
+  margin: 0 auto;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 0.25rem;
+}
+
+.delete__button {
+  vertical-align: middle;
+}
+
+.delete__button:hover,
+.delete__button:active {
+  cursor: pointer;
+}
+
+.form-row {
+  justify-content: center;
+}
+
+hr {
+  margin-top: 30px;
+}
+
+h2 {
+  font-weight: 200;
+}
+
+button {
+  display: block;
+  appearance: none;
+  margin-top: 40px;
+  border: 1px solid #333;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+pre {
+  color: white;
+  white-space: pre;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+section,
+li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 20px;
+  /* height: 30px; */
+}
+
+section {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+section > button {
+  margin: 0;
+  padding: 10px;
+  height: 40px;
+}
+
+li > input,
+li > button {
+  margin: 0;
+  padding: 10px;
+  height: 40px;
+}
+
+.counter {
+  font-weight: 400;
+  background: white;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 4px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
