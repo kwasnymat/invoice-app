@@ -1,49 +1,105 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Form, Button, Col, Table } from 'react-bootstrap';
-import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
+import { Form, Button, Col } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 
 import './CreateInvoice.scss';
-let renderCount = 0;
-let count = 1;
+
 const Invoices = () => {
-  const [qty, setQty] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [vat, setVat] = useState(23);
-
-  const onChangeQty = (e) => {
-    setQty(parseInt(e.target.value));
-  };
-  const onChangePrice = (e) => {
-    setPrice(parseInt(e.target.value));
-  };
-  const onChangeVat = (e) => {
-    setVat(parseInt(e.target.value));
-  };
-
-  const { register, control, handleSubmit, reset, watch } = useForm({
-    defaultValues: {
-      product: [{ id: '', qty: '', price: '', var: '', totalPrice: '' }],
+  const [formList, setFormList] = useState([
+    {
+      productName: '',
+      qty: '',
+      priceNoVat: '',
+      vat: 23,
+      priceWithVat: '',
     },
-  });
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'product',
-  });
+  ]);
+  const selectedCurrency = '$';
+  const [currency, setCurrency] = useState(selectedCurrency);
 
-  const onSubmit = (data) => console.log('data', data);
-  renderCount++;
-  count++;
+  const currencies = ['$', '€', 'zł'];
+
+  const [invoiceNr, setinvoiceNr] = useState('');
+  const [dateInvoice, setldateInvoice] = useState('');
+
+  const submitValue = (e) => {
+    e.preventDefault();
+    const frmdetails = {
+      'Invoice numer': invoiceNr,
+      'Date on Invoicee': dateInvoice,
+    };
+    console.log(frmdetails);
+  };
+
+  const { register } = useForm();
+  //   const onSubmit = (data) => console.log(data);
+
+  const handleInputChange = (e, index) => {
+    console.log(e);
+    console.log(index);
+    const { name, value } = e.target;
+    const list = [...formList];
+    console.log(list);
+    list[index][name] = value;
+    // list[index][priceWithVat].value = (
+    //   qty * priceNoVat +
+    //   ((qty * priceNoVat) / 100) * vat
+    // ).toFixed(2);
+    console.log(list);
+    setFormList(list);
+  };
+
+  const calcGrandTotal = () => {
+    return formList
+      .reduce(
+        (prev, cur) =>
+          prev +
+          cur.qty * cur.priceNoVat +
+          ((cur.qty * cur.priceNoVat) / 100) * cur.vat,
+        0
+      )
+      .toFixed(2);
+  };
+  const calcSubTotal = () => {
+    return formList
+      .reduce((prev, cur) => prev + cur.qty * cur.priceNoVat, 0)
+      .toFixed(2);
+  };
+
+  const calcSTaxTotal = () => {
+    return (calcGrandTotal() - calcSubTotal()).toFixed(2);
+  };
+
+  const handleDeleteClick = (index) => {
+    const list = [...formList];
+    list.splice(index, 1);
+
+    setFormList(list);
+  };
+
+  const handleAddClick = () => {
+    setFormList([
+      ...formList,
+      { productName: '', qty: '', priceNoVat: '', vat: 23, priceWithVat: '' },
+    ]);
+  };
+
   return (
-    <Form className='form__invoice'>
+    <Form className='form__invoice' onSubmit={submitValue}>
       <h2>Invoice </h2>
       {/* pierwsza */}
-      <div className='row' style={{ marginBottom: 3 + 'rem' }} size='sm'>
+      <div className='row' size='sm'>
         <div className=' col-lg-6'>
           <Form.Row>
             <Col xs={5}>
               <Form.Label>Invoice number</Form.Label>
-              <Form.Control type='name' placeholder='#' size='sm' />
+              <Form.Control
+                name='invoiceNumber'
+                placeholder='#'
+                size='sm'
+                ref={register}
+              />
             </Col>
           </Form.Row>
         </div>
@@ -51,11 +107,17 @@ const Invoices = () => {
           <Form.Row>
             <Col xs={4}>
               <Form.Label>Date Of Invoice</Form.Label>
-              <Form.Control name='invoice date' type='date' size='sm' />
+              <Form.Control
+                onChange={(e) => setldateInvoice(e.target.value)}
+                name='dateInvoice'
+                type='date'
+                size='sm'
+                ref={register}
+              />
             </Col>
             <Col xs={4}>
               <Form.Label>City</Form.Label>
-              <Form.Control size='sm' />
+              <Form.Control size='sm' name='cityInvoice' ref={register} />
             </Col>
           </Form.Row>
         </div>
@@ -68,35 +130,60 @@ const Invoices = () => {
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Company name</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control size='sm' ref={register} name='companyName' />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Street</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='companyStreet'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={3}>
               <Form.Label>Zip code</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='companyZip'
+              />
             </Col>
             <Col xs={5}>
               <Form.Label>City</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='companyCity'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Vat Id</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='companyVat'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Phone number</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='companyPhone'
+              />
             </Col>
           </Form.Row>
         </div>
@@ -105,35 +192,65 @@ const Invoices = () => {
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Company name</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='Buyercompanyname'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Street</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='BuyercompanyStreet'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={3}>
               <Form.Label>Zip code</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='BuyercompanyZip'
+              />
             </Col>
             <Col xs={5}>
               <Form.Label>City</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='BuyercompanyCity'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Vat Id</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='BuyercompanyVat'
+              />
             </Col>
           </Form.Row>
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Phone number</Form.Label>
-              <Form.Control type='name' size='sm' />
+              <Form.Control
+                type='name'
+                size='sm'
+                ref={register}
+                name='BuyercompanyPhone'
+              />
             </Col>
           </Form.Row>
         </div>
@@ -147,7 +264,7 @@ const Invoices = () => {
             <thead>
               <tr>
                 <th className='text-center'> # </th>
-                <th className='text-center'> Product </th>
+                <th className='text-center'> Product name</th>
                 <th className='text-center'> Qty </th>
                 <th className='text-center'> Price excluding VAT</th>
                 <th className='text-center'> VAT %</th>
@@ -155,153 +272,177 @@ const Invoices = () => {
               </tr>
             </thead>
 
-            {fields.map((item, index) => {
+            {formList.map((x, i) => {
               return (
-                <tbody key={item.id}>
+                <tbody key={i}>
                   <tr id='addr0'>
-                    <td>{index + 1}</td>
+                    <td>{i + 1}</td>
                     <td>
                       <Form.Control
-                        control={control}
-                        ref={register()}
+                        ref={register}
+                        name='productName'
+                        value={x.productName}
+                        onChange={(e) => handleInputChange(e, i)}
                         type='text'
-                        name={index}
-                        placeholder='Enter Product Name'
                         className='form-control'
                       />
                     </td>
                     <td>
                       <Form.Control
-                        control={control}
-                        onChange={onChangeQty}
-                        name={index}
+                        ref={register}
+                        name='qty'
+                        value={x.qty}
+                        onChange={(e) => {
+                          handleInputChange(e, i);
+                          setinvoiceNr(e.target.value);
+                        }}
                         type='number'
-                        name='qty[]'
-                        placeholder='Enter Qty'
-                        className='form-control qty'
-                        step='0'
-                        min='0'
+                        className='form-control '
                       />
                     </td>
                     <td>
                       <Form.Control
-                        control={control}
-                        onChange={onChangePrice}
-                        name={index}
+                        ref={register}
+                        name='priceNoVat'
+                        value={x.priceNoVat}
+                        onChange={(e) => handleInputChange(e, i)}
                         type='number'
-                        placeholder='Enter Unit Price'
-                        className='form-control price'
+                        className='form-control '
                         step='0.00'
                         min='0'
                       />
                     </td>
                     <td>
                       <Form.Control
-                        control={control}
-                        onChange={onChangeVat}
-                        name={index}
+                        ref={register}
+                        name='vat'
+                        value={x.vat}
+                        onChange={(e) => handleInputChange(e, i)}
                         type='number'
-                        placeholder='0.00'
-                        className='form-control total'
-                        defaultValue={vat}
+                        className='form-control '
                       />
                     </td>
                     <td>
                       <Form.Control
-                        control={control}
+                        ref={register}
+                        name='priceWithVat'
+                        onChange={(e) => handleInputChange(e, i)}
+                        value={(
+                          x.qty * x.priceNoVat +
+                          ((x.qty * x.priceNoVat) / 100) * x.vat
+                        ).toFixed(2)}
                         type='number'
-                        name={index}
-                        className='form-control price'
-                        step='0.00'
-                        min='0'
+                        className='form-control vatto'
                         disabled
-                        value={qty * price + ((qty * price) / 100) * vat}
                       />
                     </td>
-
-                    <td
-                      className='delete__button'
-                      onClick={() => remove(index)}
-                    >
-                      <i className='fas fa-trash-alt'></i>
-                    </td>
+                    {formList.length !== 1 && (
+                      <td
+                        className='delete__button'
+                        onClick={() => handleDeleteClick(i)}
+                      >
+                        <i className='fas fa-trash-alt'></i>
+                      </td>
+                    )}
                   </tr>
-                  <tr id='addr1'></tr>
                 </tbody>
               );
             })}
           </table>
-          {/* </Form.Row> */}
-          <section>
-            <Button onClick={append}>
-              <i className='fas fa-plus-circle'>Add item</i>
-            </Button>
-            <Button
-              onClick={() =>
-                reset({
-                  test: [{ firstName: 'Bill', lastName: 'Luo' }],
-                })
-              }
-            >
-              <i className='fas fa-trash-alt'>reset</i>
-            </Button>
-          </section>
         </div>
       </div>
-      {/* czwarta */}
-
-      <div className='row' style={{ marginTop: 1 + 'rem' }}>
-        <div className='col-lg-6'></div>
-
-        <div className='col-lg-6'>
-          <div className='row clearfix' style={{ marginTop: 20 + 'px' }}>
-            <div className='pull-right col-md-4'>
-              <table
-                className='table table-bordered table-hover'
-                id='tab_logic_total'
-              >
-                <tbody>
-                  <tr>
-                    <th className='text-center'>Sub Total</th>
-                    <td className='text-center'>
-                      <input
-                        type='number'
-                        name='sub_total'
-                        placeholder='0.00'
-                        className='form-control'
-                        id='sub_total'
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th className='text-center'>Tax Amount</th>
-                    <td className='text-center'>
-                      <input
-                        type='number'
-                        name='tax_amount'
-                        id='tax_amount'
-                        placeholder='0.00'
-                        className='form-control'
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th className='text-center'>Grand Total</th>
-                    <td className='text-center'>
-                      <input
-                        type='number'
-                        name='total_amount'
-                        id='total_amount'
-                        placeholder='0.00'
-                        className='form-control'
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+      <div className='row'>
+        <div className='col-xs-6 col-md-8'>
+          <div className='row'>
+            <div className='col-xs-6 col-md-8'>
+              <Button onClick={handleAddClick}>
+                <i className='fas fa-plus-circle'> Add item </i>
+              </Button>
+            </div>
+            <div className='col-xs-6 col-md-4'>
+              <Col xs={8}>
+                <Form.Label>Currency</Form.Label>
+                <Form.Control
+                  name='currency'
+                  ref={register}
+                  as='select'
+                  onChange={(e) => setCurrency(e.target.value)}
+                >
+                  {currencies.map((cur) => (
+                    <option key={cur} value={cur}>
+                      {cur}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Col>
             </div>
           </div>
+        </div>
+        <div className='col-xs-6 col-md-4'>
+          <table
+            className='table table-bordered table-hover'
+            id='tab_logic_total'
+          >
+            <tbody>
+              <tr>
+                <th className='text-center'>Sub Total</th>
+                <td className='text-center'>
+                  <Form.Control
+                    ref={register}
+                    disabled
+                    value={calcSubTotal()}
+                    type='number'
+                    name='sub_total'
+                    placeholder='0.00'
+                    className='form-control'
+                    id='sub_total'
+                  />
+                </td>
+                <th className='text-center'>{currency}</th>
+              </tr>
+
+              <tr>
+                <th className='text-center'>Tax Amount</th>
+                <td className='text-center'>
+                  <Form.Control
+                    ref={register}
+                    disabled
+                    value={calcSTaxTotal()}
+                    type='number'
+                    name='tax_amountTotal'
+                    id='tax_amount'
+                    placeholder='0.00'
+                    className='form-control'
+                  />
+                </td>
+                <th className='text-center'>{currency}</th>
+              </tr>
+              <tr>
+                <th className='text-center'>Grand Total</th>
+                <td className='text-center'>
+                  <Form.Control
+                    ref={register}
+                    disabled
+                    value={calcGrandTotal()}
+                    type='number'
+                    name='total_amount'
+                    id='total_amount'
+                    placeholder='0.00'
+                    className='form-control'
+                  />
+                </td>
+                <th className='text-center'>{currency}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-xs-6 col-md-10'></div>
+        <div className='col-md-2'>
+          <Button className='invoice__save' type='submit'>
+            <i className='fas fa-save'> Save Invoice </i>
+          </Button>
         </div>
       </div>
     </Form>
