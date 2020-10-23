@@ -1,9 +1,11 @@
 .form__invoice {
   margin: 2rem 0 4rem 0;
+  border: 2px solid #f1f1f1;
+  padding: 1rem;
 }
 
 .form__invoice .form-control {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .form__invoice label {
@@ -41,67 +43,33 @@
 }
 
 hr {
-  margin-top: 30px;
+  margin-top: 15px;
+  margin-bottom: 8px;
 }
 
 h2 {
+  font-size: 25px;
   font-weight: 200;
 }
 
-button {
-  display: block;
-  appearance: none;
-  margin-top: 40px;
-  border: 1px solid #333;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
+label.form-label {
+  font-size: 14px;
 }
 
-pre {
-  color: white;
-  white-space: pre;
+.form__invoice .btn {
+  background-color: #343a40;
+  border: none;
 }
 
-ul {
-  margin: 0;
-  padding: 0;
+th.text-center {
+  font-size: 14px;
 }
 
-section,
-li {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-  margin-bottom: 20px;
-  /* height: 30px; */
+.invoice__save {
+  background-color: #003415 !important;
 }
 
-section {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-section > button {
-  margin: 0;
-  padding: 10px;
-  height: 40px;
-}
-
-li > input,
-li > button {
-  margin: 0;
-  padding: 10px;
-  height: 40px;
-}
-
-.counter {
-  font-weight: 400;
-  background: white;
-  color: black;
-  padding: 10px 15px;
-  border-radius: 4px;
-  position: fixed;
-  top: 20px;
-  right: 20px;
+.invoice__save:hover,
+.invoice__save:active {
+  background-color: #038a39 !important;
 }
