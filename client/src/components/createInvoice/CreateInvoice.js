@@ -210,6 +210,7 @@ const Invoices = () => {
               <tr>
                 <th className='text-center'> # </th>
                 <th className='text-center'> Product name</th>
+                <th className='text-center'> Unit Cost</th>
                 <th className='text-center'> Qty </th>
                 <th className='text-center'> Price excluding VAT</th>
                 <th className='text-center'> VAT %</th>
@@ -219,7 +220,15 @@ const Invoices = () => {
 
             {fields.map(
               (
-                { id, productName, qty, priceNoVat, vat = 23, totalMoney },
+                {
+                  id,
+                  productName,
+                  unitCost,
+                  qty = 1,
+                  priceNoVat,
+                  vat = 23,
+                  totalMoney,
+                },
                 index
               ) => {
                 return (
@@ -231,6 +240,15 @@ const Invoices = () => {
                           ref={register()}
                           name={`items[${index}].productName`}
                           defaultValue={productName}
+                          type='text'
+                          className='form-control'
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          ref={register()}
+                          name={`items[${index}].unitCost`}
+                          defaultValue={unitCost}
                           type='text'
                           className='form-control'
                         />
@@ -255,6 +273,7 @@ const Invoices = () => {
                           className='form-control'
                         />
                       </td>
+
                       <td>
                         <Form.Control
                           ref={register()}
