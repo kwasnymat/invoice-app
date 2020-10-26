@@ -1,92 +1,38 @@
 import React, { useState } from 'react';
 
 import { Form, Button, Col } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch, useFieldArray } from 'react-hook-form';
+
+import SubPrice from './SubPrice';
 
 import './CreateInvoice.scss';
 
 const Invoices = () => {
-  const [formList, setFormList] = useState([
-    {
-      productName: '',
-      qty: '',
-      priceNoVat: '',
-      vat: 23,
-      priceWithVat: '',
-    },
-  ]);
+  const { register, control, handleSubmit, watch } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  });
+
   const selectedCurrency = '$';
   const [currency, setCurrency] = useState(selectedCurrency);
 
   const currencies = ['$', '€', 'zł'];
 
-  const [invoiceNr, setinvoiceNr] = useState('');
-  const [dateInvoice, setldateInvoice] = useState('');
-
-  const submitValue = (e) => {
-    e.preventDefault();
-    const frmdetails = {
-      'Invoice numer': invoiceNr,
-      'Date on Invoicee': dateInvoice,
-    };
-    console.log(frmdetails);
+  const onSubmit = (data) => {
+    console.log(JSON.stringify(data, null, 4));
   };
+  const items = watch('items');
+  console.log(items);
 
-  const { register } = useForm();
-  //   const onSubmit = (data) => console.log(data);
-
-  const handleInputChange = (e, index) => {
-    console.log(e);
-    console.log(index);
-    const { name, value } = e.target;
-    const list = [...formList];
-    console.log(list);
-    list[index][name] = value;
-    // list[index][priceWithVat].value = (
-    //   qty * priceNoVat +
-    //   ((qty * priceNoVat) / 100) * vat
-    // ).toFixed(2);
-    console.log(list);
-    setFormList(list);
-  };
-
-  const calcGrandTotal = () => {
-    return formList
-      .reduce(
-        (prev, cur) =>
-          prev +
-          cur.qty * cur.priceNoVat +
-          ((cur.qty * cur.priceNoVat) / 100) * cur.vat,
-        0
-      )
-      .toFixed(2);
-  };
   const calcSubTotal = () => {
-    return formList
-      .reduce((prev, cur) => prev + cur.qty * cur.priceNoVat, 0)
-      .toFixed(2);
-  };
-
-  const calcSTaxTotal = () => {
-    return (calcGrandTotal() - calcSubTotal()).toFixed(2);
-  };
-
-  const handleDeleteClick = (index) => {
-    const list = [...formList];
-    list.splice(index, 1);
-
-    setFormList(list);
-  };
-
-  const handleAddClick = () => {
-    setFormList([
-      ...formList,
-      { productName: '', qty: '', priceNoVat: '', vat: 23, priceWithVat: '' },
-    ]);
+    let sum = (a) => a.reduce((x, y) => x + y);
+    let sumAmount = sum(items.map((x) => Number(x.totalMoney)));
+    return sumAmount.toFixed(2);
   };
 
   return (
-    <Form className='form__invoice' onSubmit={submitValue}>
+    <Form className='form__invoice' onSubmit={handleSubmit(onSubmit)}>
       <h2>Invoice </h2>
       {/* pierwsza */}
       <div className='row' size='sm'>
@@ -108,7 +54,6 @@ const Invoices = () => {
             <Col xs={4}>
               <Form.Label>Date Of Invoice</Form.Label>
               <Form.Control
-                onChange={(e) => setldateInvoice(e.target.value)}
                 name='dateInvoice'
                 type='date'
                 size='sm'
@@ -130,7 +75,7 @@ const Invoices = () => {
           <Form.Row>
             <Col xs={8}>
               <Form.Label>Company name</Form.Label>
-              <Form.Control size='sm' ref={register} name='companyName' />
+              <Form.Control size='sm' ref={register} name='SellerCompanyName' />
             </Col>
           </Form.Row>
           <Form.Row>
@@ -140,7 +85,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='companyStreet'
+                name='SellerCompanyStreet'
               />
             </Col>
           </Form.Row>
@@ -151,7 +96,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='companyZip'
+                name='SellerCompanyZip'
               />
             </Col>
             <Col xs={5}>
@@ -160,7 +105,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='companyCity'
+                name='SellerCompanyCity'
               />
             </Col>
           </Form.Row>
@@ -171,7 +116,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='companyVat'
+                name='SellerCompanyVat'
               />
             </Col>
           </Form.Row>
@@ -182,7 +127,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='companyPhone'
+                name='SellerCompanyPhone'
               />
             </Col>
           </Form.Row>
@@ -196,7 +141,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='Buyercompanyname'
+                name='BuyerCompanyname'
               />
             </Col>
           </Form.Row>
@@ -207,7 +152,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='BuyercompanyStreet'
+                name='BuyerCompanyStreet'
               />
             </Col>
           </Form.Row>
@@ -218,7 +163,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='BuyercompanyZip'
+                name='BuyerCompanyZip'
               />
             </Col>
             <Col xs={5}>
@@ -227,7 +172,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='BuyercompanyCity'
+                name='BuyerCompanyCity'
               />
             </Col>
           </Form.Row>
@@ -238,7 +183,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='BuyercompanyVat'
+                name='BuyerCompanyVat'
               />
             </Col>
           </Form.Row>
@@ -249,7 +194,7 @@ const Invoices = () => {
                 type='name'
                 size='sm'
                 ref={register}
-                name='BuyercompanyPhone'
+                name='BuyerCompanyPhone'
               />
             </Col>
           </Form.Row>
@@ -272,82 +217,72 @@ const Invoices = () => {
               </tr>
             </thead>
 
-            {formList.map((x, i) => {
-              return (
-                <tbody key={i}>
-                  <tr id='addr0'>
-                    <td>{i + 1}</td>
-                    <td>
-                      <Form.Control
-                        ref={register}
-                        name='productName'
-                        value={x.productName}
-                        onChange={(e) => handleInputChange(e, i)}
-                        type='text'
-                        className='form-control'
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        ref={register}
-                        name='qty'
-                        value={x.qty}
-                        onChange={(e) => {
-                          handleInputChange(e, i);
-                          setinvoiceNr(e.target.value);
-                        }}
-                        type='number'
-                        className='form-control '
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        ref={register}
-                        name='priceNoVat'
-                        value={x.priceNoVat}
-                        onChange={(e) => handleInputChange(e, i)}
-                        type='number'
-                        className='form-control '
-                        step='0.00'
-                        min='0'
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        ref={register}
-                        name='vat'
-                        value={x.vat}
-                        onChange={(e) => handleInputChange(e, i)}
-                        type='number'
-                        className='form-control '
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        ref={register}
-                        name='priceWithVat'
-                        onChange={(e) => handleInputChange(e, i)}
-                        value={(
-                          x.qty * x.priceNoVat +
-                          ((x.qty * x.priceNoVat) / 100) * x.vat
-                        ).toFixed(2)}
-                        type='number'
-                        className='form-control vatto'
-                        disabled
-                      />
-                    </td>
-                    {formList.length !== 1 && (
+            {fields.map(
+              (
+                { id, productName, qty, priceNoVat, vat = 23, totalMoney },
+                index
+              ) => {
+                return (
+                  <tbody key={index}>
+                    <tr id='addr0'>
+                      <td>{index + 1}</td>
+                      <td>
+                        <Form.Control
+                          ref={register()}
+                          name={`items[${index}].productName`}
+                          defaultValue={productName}
+                          type='text'
+                          className='form-control'
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          ref={register()}
+                          name={`items[${index}].qty`}
+                          defaultValue={qty}
+                          type='number'
+                          className='form-control'
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          ref={register()}
+                          name={`items[${index}].priceNoVat`}
+                          defaultValue={priceNoVat}
+                          type='number'
+                          step='0.00'
+                          min='0'
+                          className='form-control'
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          ref={register()}
+                          name={`items[${index}].vat`}
+                          defaultValue={vat}
+                          type='number'
+                          className='form-control'
+                        />
+                      </td>
+                      <td>
+                        <SubPrice
+                          defaultValue={totalMoney}
+                          register={register}
+                          control={control}
+                          index={index}
+                        />
+                      </td>
                       <td
                         className='delete__button'
-                        onClick={() => handleDeleteClick(i)}
+                        onClick={() => remove(index)}
                       >
                         <i className='fas fa-trash-alt'></i>
                       </td>
-                    )}
-                  </tr>
-                </tbody>
-              );
-            })}
+                    </tr>
+                  </tbody>
+                );
+              }
+            )}
           </table>
         </div>
       </div>
@@ -355,7 +290,7 @@ const Invoices = () => {
         <div className='col-xs-6 col-md-8'>
           <div className='row'>
             <div className='col-xs-6 col-md-8'>
-              <Button onClick={handleAddClick}>
+              <Button onClick={() => append({})}>
                 <i className='fas fa-plus-circle'> Add item </i>
               </Button>
             </div>
@@ -389,8 +324,8 @@ const Invoices = () => {
                 <td className='text-center'>
                   <Form.Control
                     ref={register}
-                    disabled
-                    value={calcSubTotal()}
+                    readOnly
+                    value={items && calcSubTotal()}
                     type='number'
                     name='sub_total'
                     placeholder='0.00'
@@ -406,8 +341,8 @@ const Invoices = () => {
                 <td className='text-center'>
                   <Form.Control
                     ref={register}
-                    disabled
-                    value={calcSTaxTotal()}
+                    readOnly
+                    // value={calcSTaxTotal()}
                     type='number'
                     name='tax_amountTotal'
                     id='tax_amount'
@@ -422,8 +357,8 @@ const Invoices = () => {
                 <td className='text-center'>
                   <Form.Control
                     ref={register}
-                    disabled
-                    value={calcGrandTotal()}
+                    readOnly
+                    // value={handleInputChange()}
                     type='number'
                     name='total_amount'
                     id='total_amount'
