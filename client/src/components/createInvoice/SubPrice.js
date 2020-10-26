@@ -12,13 +12,12 @@ const SubPrice = ({ control, index, register, defaultValue, onChange }) => {
 
   return (
     <Form.Control
-      onChange={(e) => onChange(e, index)}
       defaultValue={defaultValue}
       ref={register()}
       name={`items[${index}].totalMoney`}
       value={(
-        (value.qty || 0) * (value.priceNoVat || 0) +
-        (((value.qty || 0) * (value.priceNoVat || 0)) / 100) * (value.vat || 0)
+        (value.qty || 0) * (value.unitCost || 0) +
+        (((value.qty || 0) * (value.unitCost || 0)) / 100) * (value.vat || 0)
       ).toFixed(2)}
     />
   );
