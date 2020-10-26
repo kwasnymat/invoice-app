@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import { Form, Button, Col } from 'react-bootstrap';
-import { useForm, useWatch, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 
-import SubPrice from './SubPrice';
+import VatPrice from './VatPrice';
+import NoVatPrice from './NoVatPrice';
 
 import './CreateInvoice.scss';
 
@@ -25,10 +26,23 @@ const Invoices = () => {
   const items = watch('items');
   console.log(items);
 
-  const calcSubTotal = () => {
+  const calcGrantTotal = () => {
     let sum = (a) => a.reduce((x, y) => x + y);
     let sumAmount = sum(items.map((x) => Number(x.totalMoney)));
     return sumAmount.toFixed(2);
+  };
+
+  const calcSubTotal = () => {
+    let sum = (a) => a.reduce((x, y) => x + y);
+    let sumAmount = sum(items.map((x) => Number(x.priceNoVat)));
+    return sumAmount.toFixed(2);
+  };
+
+  const calcTaxTotal = () => {
+    let sum = (a) => a.reduce((x, y) => x + y);
+    let sumGrandTotal = sum(items.map((x) => Number(x.totalMoney)));
+    let sumSubTotal = sum(items.map((x) => Number(x.priceNoVat)));
+    return (sumGrandTotal - sumSubTotal).toFixed(2);
   };
 
   return (
@@ -221,7 +235,6 @@ const Invoices = () => {
             {fields.map(
               (
                 {
-                  id,
                   productName,
                   unitCost,
                   qty = 1,
@@ -263,9 +276,10 @@ const Invoices = () => {
                         />
                       </td>
                       <td>
-                        <Form.Control
-                          ref={register()}
-                          name={`items[${index}].priceNoVat`}
+                        <NoVatPrice
+                          index={index}
+                          register={register}
+                          control={control}
                           defaultValue={priceNoVat}
                           type='number'
                           step='0.00'
@@ -284,7 +298,7 @@ const Invoices = () => {
                         />
                       </td>
                       <td>
-                        <SubPrice
+                        <VatPrice
                           defaultValue={totalMoney}
                           register={register}
                           control={control}
@@ -361,7 +375,7 @@ const Invoices = () => {
                   <Form.Control
                     ref={register}
                     readOnly
-                    // value={calcSTaxTotal()}
+                    value={items && calcTaxTotal()}
                     type='number'
                     name='tax_amountTotal'
                     id='tax_amount'
@@ -377,7 +391,7 @@ const Invoices = () => {
                   <Form.Control
                     ref={register}
                     readOnly
-                    // value={handleInputChange()}
+                    value={items && calcGrantTotal()}
                     type='number'
                     name='total_amount'
                     id='total_amount'
