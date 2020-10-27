@@ -12,6 +12,7 @@ const NoVatPrice = ({ control, index, register, defaultValue }) => {
 
   return (
     <Form.Control
+      type='number'
       readOnly
       defaultValue={defaultValue}
       ref={register()}
