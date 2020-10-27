@@ -1,0 +1,100 @@
+.form__invoice {
+  margin: 2rem 0 4rem 0;
+  border: 2px solid #f1f1f1;
+  padding: 1rem;
+}
+
+.form__invoice .form-control {
+  font-size: 12px;
+}
+
+.form__invoice label {
+  margin-bottom: 0.2rem;
+}
+
+.invoice__label {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.company__details {
+  margin: 0 auto;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 0.25rem;
+}
+
+.delete__button {
+  vertical-align: middle;
+}
+p {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #bf1650;
+}
+
+p::before {
+  display: inline;
+  content: '⚠ ';
+}
+
+.delete__button:hover,
+.delete__button:active {
+  cursor: pointer;
+}
+
+.form-row {
+  justify-content: center;
+}
+
+hr {
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: 200;
+}
+
+label.form-label {
+  font-size: 14px;
+}
+
+.form__invoice .btn {
+  background-color: #343a40;
+  border: none;
+}
+
+th.text-center {
+  font-size: 14px;
+}
+
+.invoice__save {
+  background-color: #003415 !important;
+}
+
+.invoice__save:hover,
+.invoice__save:active {
+  background-color: #038a39 !important;
+}
+
+@media (max-width: 768px) {
+  .choose__curency {
+    margin-bottom: 1rem;
+    max-width: 7rem;
+  }
+}
+@media (max-width: 400px) {
+  .form__invoice {
+    font-size: 0.8rem;
+  }
+  th.text-center {
+    font-size: 0.7rem;
+  }
+}
