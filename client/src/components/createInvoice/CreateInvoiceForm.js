@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Form, Button, Col } from 'react-bootstrap';
 
-import { useForm } from 'react-hook-form';
-
 import { ErrorMessage } from '@hookform/error-message';
 
 import VatPrice from './VatPrice';
@@ -133,7 +131,6 @@ const CreateInvoiceForm = ({
               <Form.Control
                 type='name'
                 size='sm'
-                ref={register}
                 name='SellerCompanyVat'
                 ref={register({
                   required: 'Seller vat number is required.',
@@ -148,7 +145,6 @@ const CreateInvoiceForm = ({
               <Form.Control
                 type='number'
                 size='sm'
-                ref={register}
                 name='SellerCompanyPhone'
                 ref={register({
                   required: 'Seller phone number is required.',
@@ -177,7 +173,6 @@ const CreateInvoiceForm = ({
               <Form.Control
                 type='name'
                 size='sm'
-                ref={register}
                 name='BuyerCompanyStreet'
                 ref={register({ required: 'Buyer street is required.' })}
               />
@@ -224,7 +219,6 @@ const CreateInvoiceForm = ({
               <Form.Control
                 type='name'
                 size='sm'
-                ref={register}
                 name='BuyerCompanyPhone'
                 ref={register({ required: 'Buyer phone number is required.' })}
               />
@@ -301,7 +295,6 @@ const CreateInvoiceForm = ({
                       </td>
                       <td>
                         <Form.Control
-                          ref={register()}
                           name={`items[${index}].qty`}
                           defaultValue={qty}
                           type='number'
