@@ -18,13 +18,14 @@ const Navigation = () => {
     setExpanded((prevExpanded) => !prevExpanded);
   }, []);
 
-  const { createInvoice, yourInvoices, login, signup, home } = routes;
+  const { createInvoice, yourInvoices, login, signup, home, single } = routes;
 
   const navigationLinks = [
     { name: createInvoice.name, link: createInvoice.link },
     { name: yourInvoices.name, link: yourInvoices.link },
     { name: login.name, link: login.link },
     { name: signup.name, link: signup.link },
+    { name: single.name, link: single.link },
   ];
 
   const renderNavLinks = () =>
@@ -39,7 +40,7 @@ const Navigation = () => {
   return (
     <div className='Navigation'>
       <Navbar expanded={expanded} fixed='top' bg='light' expand='md'>
-        <NavLink to='/' className='nav__brand' exact to={home.link}>
+        <NavLink className='nav__brand' exact to={home.link}>
           <Navbar.Brand>
             <img className='navbar-brand' src={logo} alt='invoiceApp logo' />
           </Navbar.Brand>
