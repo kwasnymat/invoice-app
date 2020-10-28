@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { useForm, useFieldArray } from 'react-hook-form';
-// import { useHistory } from 'react-router-dom';
 
 import CreateInvoiceForm from './CreateInvoiceForm';
 
@@ -16,7 +15,7 @@ const Invoices = () => {
   const [currency, setCurrency] = useState(selectedCurrency);
 
   const currencies = ['$', '€', 'zł'];
-  //   const { push } = useHistory();
+
   const onSubmit = (data) => {
     console.log(JSON.stringify(data, null, 4));
   };
