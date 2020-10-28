@@ -10,13 +10,14 @@ import Footer from './components/footer/Footer';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import Invoice from './components/createInvoice/CreateInvoice';
+import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 
 import routes from './routesDefinitions/routes';
 
 import './App.scss';
 
 const App = () => {
-  const { home, createInvoice, yourInvoices, login, signup } = routes;
+  const { home, createInvoice, yourInvoices, login, signup, single } = routes;
   return (
     <Router>
       <Navigation />
@@ -27,6 +28,7 @@ const App = () => {
           <Route path={login.link} component={Login} />
           <Route path={yourInvoices.link} component={Invoices} />
           <Route path={signup.link} component={Signup} />
+          <Route path={single.link} component={SingleInvoice} />
           <Route />
         </Switch>
       </div>
