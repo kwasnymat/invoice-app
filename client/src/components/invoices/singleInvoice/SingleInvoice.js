@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchInvoice } from '../../store/actions.js';
 
 import './SingleInvoice.scss';
 
-const SingleInvoice = () => {
+const SingleInvoice = ({ match }) => {
+  const { invoice } = useSelector(({ invoices }) => invoices);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const invoiceId = match.params.id;
+    dispatch(fetchInvoice(invoiceId));
+  }, [dispatch, match.params.id]);
+
+  console.log(invoice);
+
+  const {
+    invoiceNumber,
+    dateInvoice,
+    cityInvoice,
+    SellerCompanyName,
+    SellerCompanyStreet,
+    SellerCompanyZip,
+    SellerCompanyCity,
+    SellerCompanyVat,
+    SellerCompanyPhone,
+    BuyerCompanyName,
+    BuyerCompanyStreet,
+    BuyerCompanyZip,
+    BuyerCompanyCity,
+    BuyerCompanyVat,
+    BuyerCompanyPhone,
+    currency,
+    sub_total,
+    tax_amountTotal,
+    total_amount,
+    items,
+  } = invoice;
+
+  console.log(items);
+
   return (
     <div className='container'>
       <div className='col-md-12'>
@@ -18,37 +56,43 @@ const SingleInvoice = () => {
                 Invoice
               </a>
             </span>
-            (Company Name)
           </div>
 
           <div className='invoice-header'>
             <div className='invoice-from'>
               <small>Seller</small>
               <address className='m-t-5 m-b-5'>
-                <strong className='text-inverse'>(Company name)</strong>
+                <strong className='text-inverse'>{SellerCompanyName}</strong>
                 <br></br>
-                (Street)<br></br>
-                (Zip Code, City) <br></br>
-                (Vat Id)<br></br>
-                (Phone number)
+                {SellerCompanyStreet}
+                <br></br>
+                {SellerCompanyZip}
+                {SellerCompanyCity} <br></br>
+                {SellerCompanyVat}
+                <br></br>
+                {SellerCompanyPhone}
               </address>
             </div>
             <div className='invoice-to'>
               <small>Buyer</small>
               <address className='m-t-5 m-b-5'>
-                <strong className='text-inverse'>(Company name)</strong>
+                <strong className='text-inverse'> {BuyerCompanyName}</strong>
                 <br></br>
-                (Street)<br></br>
-                (Zip Code, City) <br></br>
-                (Vat Id)<br></br>
-                (Phone number)
+                {BuyerCompanyStreet}
+                <br></br>
+                {BuyerCompanyZip} {BuyerCompanyCity} <br></br>
+                {BuyerCompanyVat}
+                <br></br>
+                {BuyerCompanyPhone}
               </address>
             </div>
             <div className='invoice-date'>
               <small>Invoice </small>
-              <div className='date text-inverse m-t-5'>(Invoice date)</div>
+              <div className='date text-inverse m-t-5'> {invoiceNumber}</div>
               <div className='invoice-detail'>
-                (Invoice number)<br></br>
+                {dateInvoice}
+                <br></br>
+                {cityInvoice}
               </div>
             </div>
           </div>
@@ -58,69 +102,75 @@ const SingleInvoice = () => {
               <table className='table table-invoice'>
                 <thead>
                   <tr>
-                    <th>(Products)</th>
+                    <th>Products</th>
 
                     <th className='text-center' width='10%'>
-                      (Unit cost)
+                      Unit cost
                     </th>
                     <th className='text-center' width='10%'>
-                      (Qty)
+                      Qty
                     </th>
                     <th className='text-center' width='10%'>
-                      (Price excluding VAT)
+                      Price excluding VAT
                     </th>
                     <th className='text-center' width='10%'>
-                      (VAT %)
+                      VAT %
                     </th>
                     <th className='text-right' width='20%'>
-                      (Price including VAT)
+                      Price including VAT
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span className='text-inverse'>(products name)</span>
-                    </td>
-                    <td className='text-center'>(1 )</td>
-                    <td className='text-center'>(2 )</td>
-                    <td className='text-right'>(2)</td>
-                    <td className='text-right'>(23)</td>
-                    <td className='text-right'>(22)</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span className='text-inverse'>(products name)</span>
-                      <br></br>
-                    </td>
-                    <td className='text-center'>(1 )</td>
-                    <td className='text-center'>(2 )</td>
-                    <td className='text-right'>(2)</td>
-                    <td className='text-right'>(23)</td>
-                    <td className='text-right'>(22)</td>
-                  </tr>
-                </tbody>
+                {items &&
+                  items.map((item, id) => {
+                    const {
+                      productName,
+                      unitCost,
+                      qty,
+                      priceNoVat,
+                      vat,
+                      totalMoney,
+                    } = item;
+                    return (
+                      <tbody key={id}>
+                        <tr>
+                          <td className='text-center'>{productName}</td>
+                          <td className='text-center'>
+                            {unitCost} {currency}
+                          </td>
+                          <td className='text-center'>{qty}</td>
+                          <td className='text-center'>
+                            {priceNoVat} {currency}
+                          </td>
+                          <td className='text-center'>{vat} %</td>
+                          <td className='text-center'>
+                            {totalMoney} {currency}{' '}
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
               </table>
             </div>
             <div className='invoice-price'>
               <div className='invoice-price-left'>
                 <div className='invoice-price-row'>
                   <div className='sub-price'>
-                    <small>(Subtotal)</small>
-                    <span className='text-inverse'>(45)</span>
+                    <small>Subtotal</small>
+                    <span className='text-inverse'>{sub_total}</span>
                   </div>
                   <div className='sub-price'>
                     <i className='fa fa-plus text-muted'></i>
                   </div>
                   <div className='sub-price'>
-                    <small>(Tax value)</small>
-                    <span className='text-inverse'>(3)</span>
+                    <small>Tax value</small>
+                    <span className='text-inverse'>{tax_amountTotal})</span>
                   </div>
                 </div>
               </div>
               <div className='invoice-price-right'>
-                <small>(Grand total)</small>{' '}
-                <span className='f-w-600'>(43)</span>
+                <small>Grand total</small>{' '}
+                <span className='f-w-600'>{total_amount}</span>
               </div>
             </div>
           </div>
