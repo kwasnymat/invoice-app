@@ -71,6 +71,7 @@ const CreateInvoiceForm = ({
       </div>
       {/* druga */}
       <hr />
+
       <div className='row '>
         <div className=' col-lg-6 '>
           <Form.Label className='invoice__label'>Seller</Form.Label>
@@ -227,7 +228,6 @@ const CreateInvoiceForm = ({
           </Form.Row>
         </div>
       </div>
-
       <hr />
       {/* trzecia */}
       <div className='row'>
