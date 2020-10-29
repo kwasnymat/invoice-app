@@ -17,7 +17,7 @@ import routes from './routesDefinitions/routes';
 import './App.scss';
 
 const App = () => {
-  const { home, createInvoice, yourInvoices, login, signup, single } = routes;
+  const { home, createInvoice, yourInvoices, login, signup } = routes;
   return (
     <Router>
       <Navigation />
@@ -26,9 +26,9 @@ const App = () => {
           <Route exact path={home.link} />
           <Route path={createInvoice.link} component={Invoice} />
           <Route path={login.link} component={Login} />
-          <Route path={yourInvoices.link} component={Invoices} />
+          <Route exact path={yourInvoices.link} component={Invoices} />
+          <Route path={`${yourInvoices.link}/:id`} component={SingleInvoice} />
           <Route path={signup.link} component={Signup} />
-          <Route path={single.link} component={SingleInvoice} />
           <Route />
         </Switch>
       </div>
