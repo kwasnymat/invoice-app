@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import invoiceReducer from './components/invoices/store/reducer';
+import invoiceReducer from './components/store/reducer';
 // import sharedReducer from './shared/store/reducer';
 
 const rootReducer = combineReducers({
