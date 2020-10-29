@@ -1,52 +1,115 @@
-exports.getInvoice = (req, res, next) => {
-  res.status(200).json({
-    invoices: [
-      {
-        _id: '1',
-        invoiceNumber: '238/16',
-        dateInvoice: '2020-01-02',
-        cityInvoice: 'Bielsko-Biała',
-        SellerCompanyName: 'Bax Spółka Akcyjna',
-        SellerCompanyStreet: 'Korfantego 1/12',
-        SellerCompanyZip: '40-004',
-        SellerCompanyCity: 'Katowice',
-        SellerCompanyVat: '928272628262',
-        SellerCompanyPhone: '262526272',
-        BuyerCompanyName: 'Wall District',
-        BuyerCompanyStreet: 'Cansas 20',
-        BuyerCompanyZip: '098272',
-        BuyerCompanyCity: 'Warszawa',
-        BuyerCompanyVat: '82728276282',
-        BuyerCompanyPhone: '827625282',
-        currency: '$',
-        sub_total: '20222',
-        tax_amountTotal: '1200',
-        total_amount: '30200',
-        items: [
-          {
-            productName: 'Biurko',
-            unitCost: '200',
-            qty: '3',
-            priceNoVat: '100',
-            vat: '23',
-            totalMoney: '200',
-          },
-        ],
-      },
-    ],
-  });
+const Invoice = require('../models/post');
+
+const { validationResult } = require('express-validator');
+const post = require('../models/post');
+
+exports.getInvoices = async (req, res, next) => {
+  try {
+    const invoices = await Invoice.find();
+    res.status(200).json({
+      message: 'Fetched invoices successfully.',
+      invoices: invoices,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 };
 
-exports.createInvoice = (req, res, next) => {
-  const invoiceNumber = req.body.invoiceNumber;
-  const content = req.body.content;
+exports.createInvoice = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed, entered data is incorrect.');
+    error.statusCode = 422;
+    throw error;
+  }
+  const {
+    invoiceNumber,
+    dateInvoice,
+    cityInvoice,
+    SellerCompanyName,
+    SellerCompanyStreet,
+    SellerCompanyZip,
+    SellerCompanyCity,
+    SellerCompanyVat,
+    SellerCompanyPhone,
+    BuyerCompanyName,
+    BuyerCompanyStreet,
+    BuyerCompanyZip,
+    BuyerCompanyCity,
+    BuyerCompanyVat,
+    BuyerCompanyPhone,
+    currency,
+    sub_total,
+    tax_amountTotal,
+    total_amount,
+    items,
+    productName,
+    unitCost,
+    qty,
+    priceNoVat,
+    vat,
+    totalMoney,
+  } = req.body;
 
-  res.status(201).json({
-    message: 'Invoice created',
-    invoice: {
-      id: new Date().toISOString(),
-      invoiceNumber: invoiceNumber,
-      content: content,
-    },
+  const invoice = new Invoice({
+    invoiceNumber,
+    dateInvoice,
+    cityInvoice,
+    SellerCompanyName,
+    SellerCompanyStreet,
+    SellerCompanyZip,
+    SellerCompanyCity,
+    SellerCompanyVat,
+    SellerCompanyPhone,
+    BuyerCompanyName,
+    BuyerCompanyStreet,
+    BuyerCompanyZip,
+    BuyerCompanyCity,
+    BuyerCompanyVat,
+    BuyerCompanyPhone,
+    currency,
+    sub_total,
+    tax_amountTotal,
+    total_amount,
+    items,
+    productName,
+    unitCost,
+    qty,
+    priceNoVat,
+    vat,
+    totalMoney,
   });
+
+  try {
+    await invoice.save();
+    res.status(201).json({
+      invoice,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+exports.getInvoice = async (req, res, next) => {
+  const invoiceId = req.params.invoiceId;
+  const invoice = await post.findById(invoiceId);
+  try {
+    if (!invoice) {
+      const error = new Error('Could not find invoice.');
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(200).json({ message: 'Invoice fetched.', invoice: invoice });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 };
