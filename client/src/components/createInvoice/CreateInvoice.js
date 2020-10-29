@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
 import { useForm, useFieldArray } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import CreateInvoiceForm from './CreateInvoiceForm';
+
+import { addInvoice } from '../store/actions';
 
 const Invoices = () => {
   const { register, control, handleSubmit, watch, errors } = useForm();
@@ -11,13 +14,15 @@ const Invoices = () => {
     name: 'items',
   });
 
+  const dispatch = useDispatch();
+
   const selectedCurrency = '$';
   const [currency, setCurrency] = useState(selectedCurrency);
 
   const currencies = ['$', '€', 'zł'];
 
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 4));
+  const onSubmit = (invoice) => {
+    dispatch(addInvoice(invoice));
   };
   const items = watch('items');
 
