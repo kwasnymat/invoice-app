@@ -19,9 +19,11 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 mongoose
+
   .connect(
-    'mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority'
+    `mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority`
   )
+
   .then((result) => {
     app.listen(8080);
   })

@@ -25,7 +25,6 @@ const Navigation = () => {
     { name: yourInvoices.name, link: yourInvoices.link },
     { name: login.name, link: login.link },
     { name: signup.name, link: signup.link },
-    { name: single.name, link: single.link },
   ];
 
   const renderNavLinks = () =>
