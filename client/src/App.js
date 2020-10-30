@@ -11,6 +11,7 @@ import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import Invoice from './components/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
+import EditInvoice from './components/invoices/editInvoice/EditInvoice';
 
 import routes from './routesDefinitions/routes';
 
@@ -27,8 +28,17 @@ const App = () => {
           <Route path={createInvoice.link} component={Invoice} />
           <Route path={login.link} component={Login} />
           <Route exact path={yourInvoices.link} component={Invoices} />
-          <Route path={`${yourInvoices.link}/:id`} component={SingleInvoice} />
+          <Route
+            exact
+            path={`${yourInvoices.link}/:id`}
+            component={SingleInvoice}
+          />
+          <Route
+            path={`${yourInvoices.link}/edit/:id`}
+            component={EditInvoice}
+          />
           <Route path={signup.link} component={Signup} />
+
           <Route />
         </Switch>
       </div>
