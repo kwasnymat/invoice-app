@@ -7,17 +7,16 @@ const NoVatPrice = ({ control, index, register, defaultValue }) => {
   const value = useWatch({
     control,
     name: `items[${index}]`,
-    defaultValue: {},
+    defaultValue: defaultValue,
   });
 
   return (
     <Form.Control
       type='number'
       readOnly
-      defaultValue={defaultValue}
-      ref={register()}
-      name={`items[${index}].[priceNoVat]`}
-      value={((value.qty || 0) * (value.unitCost || 0)).toFixed(2)}
+      ref={register}
+      name={`items[${index}].priceNoVat`}
+      value={value && ((value.qty || 0) * (value.unitCost || 0)).toFixed(2)}
     />
   );
 };
