@@ -7,15 +7,14 @@ const VatPrice = ({ control, index, register, defaultValue }) => {
   const value = useWatch({
     control,
     name: `items[${index}]`,
-    defaultValue: {},
+    defaultValue: defaultValue,
   });
 
   return (
     <Form.Control
       type='number'
       readOnly
-      defaultValue={defaultValue}
-      ref={register()}
+      ref={register}
       name={`items[${index}].totalMoney`}
       value={
         value &&
