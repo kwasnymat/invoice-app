@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { NavLink } from 'react-router-dom';
 import { fetchInvoice } from '../../store/actions.js';
 
 import './SingleInvoice.scss';
@@ -14,9 +14,8 @@ const SingleInvoice = ({ match }) => {
     dispatch(fetchInvoice(invoiceId));
   }, [dispatch, match.params.id]);
 
-  console.log(invoice);
-
   const {
+    _id,
     invoiceNumber,
     dateInvoice,
     cityInvoice,
@@ -39,8 +38,6 @@ const SingleInvoice = ({ match }) => {
     items,
   } = invoice;
 
-  console.log(items);
-
   return (
     <div className='container'>
       <div className='col-md-12'>
@@ -52,9 +49,12 @@ const SingleInvoice = ({ match }) => {
                 Export as PDF
               </a>
               <a href='/' className='btn btn-sm btn-white m-b-10 p-l-5'>
-                <i className='fa fa-print t-plus-1 fa-fw fa-lg'></i> Print
+                <i className='fa fa-print t-plus-1 fa-fw fa-lg'></i> Prissnt
                 Invoice
               </a>
+              <NavLink to={`/invoices/edit/${_id}`}>
+                <span className='glyphicon glyphicon-edit'>Editsssss</span>
+              </NavLink>
             </span>
           </div>
 
