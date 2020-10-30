@@ -19,7 +19,7 @@ export const invoiceFetchSuccess = (invoice) => {
 export const fetchInvoices = () => async (dispatch) => {
   try {
     const response = await axios.get('http://localhost:8080/feed/invoices');
-    console.log(response.data);
+
     const { invoices } = response.data;
     dispatch(invoicesFetchSuccess(invoices));
   } catch (err) {
@@ -28,7 +28,6 @@ export const fetchInvoices = () => async (dispatch) => {
 };
 
 export const fetchInvoice = (invoiceId) => async (dispatch) => {
-  console.log(invoiceId);
   try {
     const invoice = await axios.get(
       `http://localhost:8080/feed/invoices/${invoiceId}`
@@ -41,8 +40,20 @@ export const fetchInvoice = (invoiceId) => async (dispatch) => {
 
 export const addInvoice = (invoice) => async (dispatch) => {
   try {
-    //   dispatch(loaderOn());
     await axios.post('http://localhost:8080/feed/invoice', invoice);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editInvoice = (invoiceId, invoiceData) => async (dispatch) => {
+  try {
+    console.log(`http://localhost:8080/feed/invoices/${invoiceId}`);
+
+    await axios.put(
+      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      invoiceData
+    );
   } catch (err) {
     console.log(err);
   }
