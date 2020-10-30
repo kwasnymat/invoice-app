@@ -3,6 +3,7 @@ import * as types from './types';
 const initialState = {
   invoices: [],
   invoice: {},
+  form: {},
   //   currentPage: 1,
   //   totalPages: 1,
 };
@@ -27,6 +28,14 @@ const invoiceReducer = (state = initialState, action) => {
         invoices: state.invoices.filter(
           (invoice) => invoice.id !== action.payload
         ),
+      };
+    case types.UPDATE_INVOICE:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          [action.id]: action.value,
+        },
       };
     default:
       return state;
