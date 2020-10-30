@@ -25,6 +25,7 @@ const Invoices = () => {
     dispatch(addInvoice(invoice));
   };
   const items = watch('items');
+  console.log(items);
 
   const calcGrantTotal = () => {
     let sum = (a) => a.reduce((x, y) => x + y);
