@@ -10,6 +10,8 @@ router.get('/invoices', feedController.getInvoices);
 
 router.get('/invoices/:invoiceId', feedController.getInvoice);
 
+router.put('/invoices/:invoiceId', feedController.updateInvoice);
+
 router.post('/invoice', feedController.createInvoice);
 
 module.exports = router;
