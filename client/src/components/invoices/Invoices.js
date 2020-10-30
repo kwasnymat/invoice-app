@@ -15,8 +15,6 @@ const Invoices = () => {
     dispatch(fetchInvoices());
   }, [dispatch]);
 
-  console.log(invoices);
-
   const generaterInvoices = () =>
     invoices.map((invoice, id) => {
       const {
