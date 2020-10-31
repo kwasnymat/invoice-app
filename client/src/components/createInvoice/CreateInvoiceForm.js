@@ -3,6 +3,7 @@ import React from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 
 import { ErrorMessage } from '@hookform/error-message';
+import { CalcGrantTotal, CalcSubTotal, CalcTaxTotal } from './calc/Calc';
 
 import VatPrice from './VatPrice';
 import NoVatPrice from './NoVatPrice';
@@ -10,11 +11,13 @@ import NoVatPrice from './NoVatPrice';
 import './CreateInvoiceForm.scss';
 
 const CreateInvoiceForm = ({
+  watch,
+  setValue,
   onSubmit,
   currency,
-  calcGrantTotal,
-  calcSubTotal,
-  calcTaxTotal,
+  //   calcGrantTotal,
+  //   calcSubTotal,
+  //   calcTaxTotal,
   register,
   setCurrency,
   currencies,
@@ -296,6 +299,7 @@ const CreateInvoiceForm = ({
                       <td>
                         <Form.Control
                           name={`items[${index}].qty`}
+                          onChange={() => setValue(`items[${index}].vat`, '2')}
                           defaultValue={qty}
                           type='number'
                           className='form-control'
@@ -311,6 +315,7 @@ const CreateInvoiceForm = ({
                       </td>
                       <td>
                         <NoVatPrice
+                          setValue={setValue}
                           index={index}
                           register={register}
                           control={control}
@@ -358,6 +363,9 @@ const CreateInvoiceForm = ({
               }
             )}
           </table>
+          {items && <CalcGrantTotal setValue={setValue} watch={watch} />}
+          {items && <CalcSubTotal setValue={setValue} watch={watch} />}
+          {items && <CalcTaxTotal setValue={setValue} watch={watch} />}
         </div>
       </div>
       <div className='row'>
@@ -398,8 +406,6 @@ const CreateInvoiceForm = ({
                 <td className='text-center'>
                   <Form.Control
                     ref={register}
-                    readOnly
-                    value={items && calcSubTotal()}
                     name='sub_total'
                     placeholder='0.00'
                     className='form-control'
@@ -415,7 +421,6 @@ const CreateInvoiceForm = ({
                   <Form.Control
                     ref={register}
                     readOnly
-                    value={items && calcTaxTotal()}
                     name='tax_amountTotal'
                     id='tax_amount'
                     placeholder='0.00'
@@ -430,7 +435,6 @@ const CreateInvoiceForm = ({
                   <Form.Control
                     ref={register}
                     readOnly
-                    value={items && calcGrantTotal()}
                     name='total_amount'
                     id='total_amount'
                     placeholder='0.00'
