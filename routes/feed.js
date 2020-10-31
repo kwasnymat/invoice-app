@@ -14,4 +14,6 @@ router.put('/invoices/:invoiceId', feedController.updateInvoice);
 
 router.post('/invoice', feedController.createInvoice);
 
+router.delete('/invoices/:invoiceId', feedController.deleteInvoice);
+
 module.exports = router;
