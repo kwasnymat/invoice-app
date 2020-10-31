@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { useWatch } from 'react-hook-form';
+import { useWatch, Controller } from 'react-hook-form';
 import { Form } from 'react-bootstrap';
 
-const NoVatPrice = ({ control, index, register, defaultValue }) => {
+const NoVatPrice = ({ control, index, register, defaultValue, setValue }) => {
   const value = useWatch({
     control,
     name: `items[${index}]`,
     defaultValue: defaultValue,
   });
+  console.log(index);
 
   return (
     <Form.Control

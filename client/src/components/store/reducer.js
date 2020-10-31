@@ -3,7 +3,6 @@ import * as types from './types';
 const initialState = {
   invoices: [],
   invoice: {},
-  form: {},
   //   currentPage: 1,
   //   totalPages: 1,
 };
@@ -14,7 +13,7 @@ const invoiceReducer = (state = initialState, action) => {
       return {
         ...state,
         invoices: action.payload.invoices,
-        // currentPage: action.payload.currentPage,
+        // currentPage: action.payload.invoicurrentPageces,
         // totalPages: action.payload.totalPages,
       };
     case types.FETCH_INVOICE:
@@ -26,15 +25,15 @@ const invoiceReducer = (state = initialState, action) => {
       return {
         ...state,
         invoices: state.invoices.filter(
-          (invoice) => invoice.id !== action.payload
+          (invoice) => invoice._id !== action.payload
         ),
       };
     case types.UPDATE_INVOICE:
       return {
         ...state,
-        form: {
-          ...state.form,
-          [action.id]: action.value,
+        invoice: {
+          ...state.invoice,
+          [action.invoiceId]: action.invoiceData,
         },
       };
     default:
