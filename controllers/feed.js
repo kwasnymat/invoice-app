@@ -3,6 +3,29 @@ const Invoice = require('../models/post');
 const { validationResult } = require('express-validator');
 const post = require('../models/post');
 
+// exports.getInvoices = async (req, res, next) => {
+//   const currentPage = req.query.page || 1;
+//   const perPage = 2;
+//   try {
+//     const totalItems = await Post.find().countDocuments();
+//     const invoices = await Invoice.find()
+//       .skip((currentPage - 1) * perPage)
+//       .limit(perPage);
+
+//     res.status(200).json({
+//       message: 'Fetched invoices successfully.',
+//       invoices: invoices,
+//       totalItems: totalItems,
+//       currentPage: currentPage,
+//     });
+//   } catch (err) {
+//     if (!err.statusCode) {
+//       err.statusCode = 500;
+//     }
+//     next(err);
+//   }
+// };
+
 exports.getInvoices = async (req, res, next) => {
   try {
     const invoices = await Invoice.find();
@@ -186,6 +209,26 @@ exports.updateInvoice = async (req, res, next) => {
     invoice.totalMoney = totalMoney;
     const result = await invoice.save();
     res.status(200).json({ message: 'Invoice updated!', invoice: result });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+exports.deleteInvoice = async (req, res, next) => {
+  const invoiceId = req.params.invoiceId;
+  try {
+    const invoice = await Invoice.findById(invoiceId);
+
+    if (!invoice) {
+      const error = new Error('Could not find invoice.');
+      error.statusCode = 404;
+      throw error;
+    }
+    await Invoice.findByIdAndRemove(invoiceId);
+    res.status(200).json({ message: 'Invoice deleted.' });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
