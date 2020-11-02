@@ -3,35 +3,21 @@ const Invoice = require('../models/post');
 const { validationResult } = require('express-validator');
 const post = require('../models/post');
 
-// exports.getInvoices = async (req, res, next) => {
-//   const currentPage = req.query.page || 1;
-//   const perPage = 2;
-//   try {
-//     const totalItems = await Post.find().countDocuments();
-//     const invoices = await Invoice.find()
-//       .skip((currentPage - 1) * perPage)
-//       .limit(perPage);
-
-//     res.status(200).json({
-//       message: 'Fetched invoices successfully.',
-//       invoices: invoices,
-//       totalItems: totalItems,
-//       currentPage: currentPage,
-//     });
-//   } catch (err) {
-//     if (!err.statusCode) {
-//       err.statusCode = 500;
-//     }
-//     next(err);
-//   }
-// };
-
 exports.getInvoices = async (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 5;
+  console.log(currentPage);
+
   try {
-    const invoices = await Invoice.find();
+    const totalItems = await Invoice.find().countDocuments();
+    const invoices = await Invoice.find()
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
     res.status(200).json({
       message: 'Fetched invoices successfully.',
       invoices: invoices,
+      totalItems: Number(totalItems),
+      currentPage: Number(currentPage),
     });
   } catch (err) {
     if (!err.statusCode) {
