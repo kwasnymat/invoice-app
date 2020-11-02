@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const feedRoutes = require('./routes/feed');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -18,8 +19,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/feed', feedRoutes);
-mongoose
+app.use('/auth', authRoutes);
 
+mongoose
   .connect(
     `mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority`
   )
