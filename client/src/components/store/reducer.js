@@ -3,8 +3,8 @@ import * as types from './types';
 const initialState = {
   invoices: [],
   invoice: {},
-  //   currentPage: 1,
-  //   totalPages: 1,
+  currentPage: 1,
+  totalItems: 1,
 };
 
 const invoiceReducer = (state = initialState, action) => {
@@ -13,8 +13,8 @@ const invoiceReducer = (state = initialState, action) => {
       return {
         ...state,
         invoices: action.payload.invoices,
-        // currentPage: action.payload.invoicurrentPageces,
-        // totalPages: action.payload.totalPages,
+        currentPage: action.payload.currentPage,
+        totalItems: action.payload.totalItems,
       };
     case types.FETCH_INVOICE:
       return {
