@@ -2,18 +2,13 @@ import axios from 'axios';
 
 import * as types from './types';
 
-// export const invoicesFetchSuccess = (invoices, totalItems) => {
-//   return {
-//     type: types.FETCH_INVOICES,
-//     payload: (invoices, totalItems),
-//   };
-// };
-export const invoicesFetchSuccess = (invoices) => {
+export const invoicesFetchSuccess = (invoices, totalItems, currentPage) => {
   return {
     type: types.FETCH_INVOICES,
-    payload: { invoices },
+    payload: { invoices, totalItems, currentPage },
   };
 };
+
 export const invoiceFetchSuccess = (invoice) => {
   return {
     type: types.FETCH_INVOICE,
@@ -35,28 +30,14 @@ export const invoiceUpdateSucces = (invoiceId, invoiceData) => {
   };
 };
 
-// export const fetchInvoices = (pageNumber = '1', queryUrl = '') => async (
-//   dispatch
-// ) => {
-//   console.log(pageNumber);
-//   try {
-//     const response = await axios.get(
-//       `http://localhost:8080/feed/invoices?page=` + pageNumber
-//     );
-
-//     const { invoices, totalItems, currentPage } = response.data;
-//     dispatch(invoicesFetchSuccess(invoices, totalItems, currentPage));
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-export const fetchInvoices = () => async (dispatch) => {
+export const fetchInvoices = (pageNumber) => async (dispatch) => {
   try {
-    const response = await axios.get('http://localhost:8080/feed/invoices');
-
-    const { invoices } = response.data;
-    dispatch(invoicesFetchSuccess(invoices));
+    const response = await axios.get(
+      `http://localhost:8080/feed/invoices?page=${pageNumber}`
+    );
+    console.log(response);
+    const { invoices, totalItems, currentPage } = response.data;
+    dispatch(invoicesFetchSuccess(invoices, totalItems, currentPage));
   } catch (err) {
     console.log(err);
   }
@@ -94,9 +75,7 @@ export const editInvoice = (invoiceId, invoiceData) => async (dispatch) => {
 };
 
 export const deleteInvoice = (invoiceId) => async (dispatch) => {
-  console.log(invoiceId);
   try {
-    console.log(invoiceId);
     console.log(`http://localhost:8080/feed/invoices/${invoiceId}`);
     await axios.delete(`http://localhost:8080/feed/invoices/${invoiceId}`);
     dispatch(invoiceDeleteSuccess(invoiceId));
