@@ -41,7 +41,6 @@ const Invoices = () => {
       return (
         <tbody key={_id}>
           <tr>
-            <td className='text-center'>{totalItems}</td>
             <td className='text-center'>{invoiceNumber}</td>
             <td className='text-center'>{dateInvoice}</td>
             <td className='text-center'>{BuyerCompanyName} </td>
@@ -71,7 +70,6 @@ const Invoices = () => {
         <Table responsive='sm custab'>
           <thead>
             <tr>
-              <th className='text-center'>#</th>
               <th className='text-center'> Invoice number</th>
               <th className='text-center'> Invoice date</th>
               <th className='text-center'> Recipient</th>
@@ -85,7 +83,6 @@ const Invoices = () => {
       </div>
       <div className='pagination'>
         <Pagination
-          hideDisabled
           activePage={currentPage}
           itemsCountPerPage={5}
           totalItemsCount={totalItems}
