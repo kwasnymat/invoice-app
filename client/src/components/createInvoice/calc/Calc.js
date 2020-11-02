@@ -2,7 +2,6 @@ let sum = (a) => a.reduce((x, y) => x + y);
 
 export const CalcGrantTotal = ({ setValue, watch }) => {
   const items = watch('items');
-  console.log(items);
   let sumAmount = sum(items.map((x) => Number(x.totalMoney)));
   const outputGrantTotal = sumAmount.toFixed(2);
   setValue('total_amount', outputGrantTotal);
