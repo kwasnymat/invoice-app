@@ -15,9 +15,6 @@ const CreateInvoiceForm = ({
   setValue,
   onSubmit,
   currency,
-  //   calcGrantTotal,
-  //   calcSubTotal,
-  //   calcTaxTotal,
   register,
   setCurrency,
   currencies,
@@ -257,6 +254,7 @@ const CreateInvoiceForm = ({
                   priceNoVat,
                   vat = 23,
                   totalMoney,
+                  elo = ((qty || 0) * (unitCost || 0)).toFixed(2),
                 },
                 index
               ) => {
@@ -299,7 +297,6 @@ const CreateInvoiceForm = ({
                       <td>
                         <Form.Control
                           name={`items[${index}].qty`}
-                          onChange={() => setValue(`items[${index}].vat`, '2')}
                           defaultValue={qty}
                           type='number'
                           className='form-control'
