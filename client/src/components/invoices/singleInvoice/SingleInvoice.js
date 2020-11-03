@@ -2,11 +2,19 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { fetchInvoice } from '../store/actions';
+import Loader from '../../layout/loader/Loader';
+import { useLocation } from 'react-router-dom';
 
 import './SingleInvoice.scss';
 
 const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
+
+  const { isLoading } = useSelector(({ shared }) => shared);
+
+  //   const location = useLocation();
+  //   const datas = location.state.params;
+  //   console.log(datas);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +46,9 @@ const SingleInvoice = ({ match }) => {
     items,
   } = invoice;
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className='container'>
       <div className='col-md-12'>
         <div className='invoice'>
