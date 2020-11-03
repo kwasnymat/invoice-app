@@ -38,10 +38,10 @@ export const fetchInvoices = (pageNumber) => async (dispatch) => {
     const response = await axios.get(
       `http://localhost:8080/feed/invoices?page=${pageNumber}`
     );
-    console.log(response);
     const { invoices, totalItems, currentPage } = response.data;
-    dispatch(loaderOff());
+
     dispatch(invoicesFetchSuccess(invoices, totalItems, currentPage));
+    dispatch(loaderOff());
   } catch (err) {
     dispatch(loaderOff());
   }
@@ -61,7 +61,6 @@ export const fetchInvoice = (invoiceId) => async (dispatch) => {
 };
 
 export const addInvoice = (invoiceData, history) => async (dispatch) => {
-  console.log(invoiceData);
   try {
     dispatch(loaderOn());
     const response = await axios.post(
@@ -93,14 +92,20 @@ export const editInvoice = (invoiceId, invoiceData, history) => async (
   }
 };
 
-export const deleteInvoice = (invoiceId) => async (dispatch) => {
+export const deleteInvoice = (invoiceId, history) => async (dispatch) => {
   try {
     dispatch(loaderOn());
-    console.log(`http://localhost:8080/feed/invoices/${invoiceId}`);
-    await axios.delete(`http://localhost:8080/feed/invoices/${invoiceId}`);
+    const remove = await axios.delete(
+      `http://localhost:8080/feed/invoices/${invoiceId}`
+    );
+    history.push(`/invoices`);
+    const { message } = remove.data;
+    const status = remove.status;
     dispatch(loaderOff());
     dispatch(invoiceDeleteSuccess(invoiceId));
+    dispatch(toasterOn(message, status));
   } catch (err) {
+    dispatch(toasterOn(err.message));
     dispatch(loaderOff());
   }
 };
