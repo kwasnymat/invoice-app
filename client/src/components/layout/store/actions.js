@@ -8,12 +8,12 @@ export const loaderOff = () => ({
   type: types.LOADER_OFF,
 });
 
-export const toasterOn = ({ message, type }) => ({
+export const toasterOn = (message, status) => ({
   type: types.TOASTER_ON,
-  payload: { message, type },
+  payload: { message, status },
 });
 
-export const toasterOff = ({ message, type }) => ({
+export const toasterOff = (message, status) => ({
   type: types.TOASTER_OFF,
-  payload: { message, type },
+  payload: { message, status },
 });
