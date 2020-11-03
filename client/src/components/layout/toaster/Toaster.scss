@@ -1,0 +1,29 @@
+.toaster {
+  margin-right: 2rem;
+  margin-top: 1rem;
+  position: absolute;
+  min-width: 300px;
+  z-index: 99;
+  color: black;
+  text-transform: none;
+  right: 0;
+
+  .failed {
+    font-weight: 600;
+    background-color: #343a40;
+    color: white;
+  }
+
+  .success {
+    text-align: center;
+    font-weight: 500;
+    background-color: #75a87e;
+    color: black;
+  }
+
+  .toaster__message {
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+}
