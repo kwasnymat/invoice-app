@@ -49,41 +49,58 @@ export const fetchInvoices = (pageNumber) => async (dispatch) => {
 
 export const fetchInvoice = (invoiceId) => async (dispatch) => {
   try {
+    dispatch(loaderOn());
     const invoice = await axios.get(
       `http://localhost:8080/feed/invoices/${invoiceId}`
     );
+    dispatch(loaderOff());
     dispatch(invoiceFetchSuccess(invoice));
   } catch (err) {
-    console.log(err);
+    dispatch(loaderOff());
   }
 };
 
-export const addInvoice = (invoice) => async (dispatch) => {
+export const addInvoice = (invoiceData, history) => async (dispatch) => {
+  console.log(invoiceData);
   try {
-    await axios.post('http://localhost:8080/feed/invoice', invoice);
+    dispatch(loaderOn());
+    const response = await axios.post(
+      'http://localhost:8080/feed/invoice',
+      invoiceData
+    );
+    const { invoice } = response.data;
+    dispatch(loaderOff());
+    history.push(`/invoices/${invoice._id}`);
   } catch (err) {
-    console.log(err);
+    dispatch(loaderOff());
   }
 };
 
-export const editInvoice = (invoiceId, invoiceData) => async (dispatch) => {
+export const editInvoice = (invoiceId, invoiceData, history) => async (
+  dispatch
+) => {
   try {
+    dispatch(loaderOn());
     await axios.put(
       `http://localhost:8080/feed/invoices/${invoiceId}`,
       invoiceData
     );
     dispatch(invoiceUpdateSucces(invoiceId, invoiceData));
+    dispatch(loaderOff());
+    history.push(`/invoices/${invoiceId}`);
   } catch (err) {
-    console.log(err);
+    dispatch(loaderOff());
   }
 };
 
 export const deleteInvoice = (invoiceId) => async (dispatch) => {
   try {
+    dispatch(loaderOn());
     console.log(`http://localhost:8080/feed/invoices/${invoiceId}`);
     await axios.delete(`http://localhost:8080/feed/invoices/${invoiceId}`);
+    dispatch(loaderOff());
     dispatch(invoiceDeleteSuccess(invoiceId));
   } catch (err) {
-    console.log(err);
+    dispatch(loaderOff());
   }
 };
