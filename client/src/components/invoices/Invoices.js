@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { fetchInvoices, deleteInvoice } from './store/actions';
 
-import { Table, Navbar } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
 import Loader from '../layout/loader/Loader';
-
+import { useHistory } from 'react-router-dom';
 import './Invoices.scss';
 
 const Invoices = () => {
@@ -16,23 +16,15 @@ const Invoices = () => {
   );
 
   const { isLoading } = useSelector(({ shared }) => shared);
+  const history = useHistory();
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchInvoices());
   }, [dispatch]);
 
-  //   const isListofInvoicesEmpty = !invoices.length && !isLoading && (
-  //     <Navbar bg='light'>
-  //       <span style={{ fontSize: '1.25rem' }}>
-  //         There is currently no match for your search. Please revise your search
-  //         and try again.
-  //       </span>
-  //     </Navbar>
-  //   );
-
   const deleteInvoiceHandler = (invoiceId) => {
-    dispatch(deleteInvoice(invoiceId));
+    dispatch(deleteInvoice(invoiceId, history));
   };
 
   const handlePageClick = (values) => {
@@ -65,12 +57,13 @@ const Invoices = () => {
             </td>
             <td className='text-center'>
               <NavLink to={`/invoices/${_id}`}>
-                <span className='glyphicon glyphicon-edit'></span> Edit
+                <i class='fas fa-info-circle detailsId_button' />
               </NavLink>
-              <a href='/' className='btn btn-danger btn-xs'>
-                <span className='glyphicon glyphicon-remove'></span> Del
-              </a>
-              <button onClick={() => deleteInvoiceHandler(_id)}>delete</button>
+
+              <i
+                onClick={() => deleteInvoiceHandler(_id)}
+                className='fas fa-trash-alt deleteId_button'
+              />
             </td>
           </tr>
         </tbody>
