@@ -2,6 +2,7 @@ import React from 'react';
 
 import Navigation from './components/layout/navigation/Navigation';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Invoices from './components/invoices/Invoices';
 import Footer from './components/layout/footer/Footer';
@@ -10,6 +11,7 @@ import Signup from './components/auth/signup/Signup';
 import Invoice from './components/invoices/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 import EditInvoice from './components/invoices/editInvoice/EditInvoice';
+import Toaster from './components/layout/toaster/Toaster';
 
 import routes from './routes/routes';
 
@@ -17,10 +19,20 @@ import './App.scss';
 
 const App = () => {
   const { home, createInvoice, yourInvoices, login, signup } = routes;
+
+  const { isToasterVisible, message, status } = useSelector(
+    ({ shared }) => shared
+  );
+
+  const showToaster = isToasterVisible ? (
+    <Toaster message={message} status={status} />
+  ) : null;
+
   return (
     <Router>
       <Navigation />
       <div className='container'>
+        {showToaster}
         <Switch>
           <Route exact path={home.link} />
           <Route path={createInvoice.link} component={Invoice} />
