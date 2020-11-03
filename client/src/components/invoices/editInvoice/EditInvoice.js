@@ -6,19 +6,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import VatPrice from '../createInvoice/VatPrice';
 import NoVatPrice from '../createInvoice/NoVatPrice';
 import { fetchInvoice, editInvoice } from '../store/actions';
+import Loader from '../../layout/loader/Loader';
 
 import { Form, Button, Col } from 'react-bootstrap';
-
+import { useHistory } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 
 const EditInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
+  const { isLoading } = useSelector(({ shared }) => shared);
   const { register, control, handleSubmit, watch, errors, reset } = useForm({
     defaultValues: {
       items: [invoice],
     },
   });
   let counter = 0;
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -41,8 +44,8 @@ const EditInvoice = ({ match }) => {
 
   const currencies = ['$', '€', 'zł'];
 
-  const onSubmit = (invoiceData) => {
-    dispatch(editInvoice(invoice._id, invoiceData));
+  const onSubmit = async (invoiceData) => {
+    dispatch(editInvoice(invoice._id, invoiceData, history));
   };
   const items = watch('items');
 
@@ -65,7 +68,9 @@ const EditInvoice = ({ match }) => {
     return (sumGrandTotal - sumSubTotal).toFixed(2);
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Form className='form__invoice' onSubmit={handleSubmit(onSubmit)}>
       <h2>Invoice </h2>
       {/* pierwsza */}
