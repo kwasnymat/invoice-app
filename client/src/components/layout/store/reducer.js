@@ -2,9 +2,9 @@ import * as types from './types';
 
 const initialState = {
   isLoading: false,
-  isVisible: false,
+  isToasterVisible: false,
   message: '',
-  type: '',
+  status: '',
 };
 
 const sharedReducer = (state = initialState, action) => {
@@ -23,15 +23,15 @@ const sharedReducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload.message,
-        type: action.payload.type,
-        isVisible: true,
+        status: action.payload.status,
+        isToasterVisible: true,
       };
     case types.TOASTER_OFF:
       return {
         ...state,
-        isVisible: false,
+        isToasterVisible: false,
         message: action.payload.message,
-        type: action.payload.type,
+        status: action.payload.status,
       };
     default:
       return state;
