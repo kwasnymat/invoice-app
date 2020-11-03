@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { fetchInvoice } from '../store/actions';
+import { fetchInvoice, deleteInvoice } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
-import { useLocation } from 'react-router-dom';
+import logo from '../../../assets/logo.png';
 
 import './SingleInvoice.scss';
 
@@ -12,15 +13,16 @@ const SingleInvoice = ({ match }) => {
 
   const { isLoading } = useSelector(({ shared }) => shared);
 
-  //   const location = useLocation();
-  //   const datas = location.state.params;
-  //   console.log(datas);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
     const invoiceId = match.params.id;
     dispatch(fetchInvoice(invoiceId));
   }, [dispatch, match.params.id]);
+
+  const deleteInvoiceHandler = (invoiceId) => {
+    dispatch(deleteInvoice(invoiceId, history));
+  };
 
   const {
     _id,
@@ -49,88 +51,110 @@ const SingleInvoice = ({ match }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className='container'>
-      <div className='col-md-12'>
-        <div className='invoice'>
-          <div className='invoice-company text-inverse f-w-600'>
-            <span className='pull-right hidden-print'>
-              <a href='/' className='btn btn-sm btn-white m-b-10 p-l-5'>
-                <i className='fa fa-file t-plus-1 text-danger fa-fw fa-lg'></i>{' '}
-                Export as PDF
-              </a>
-              <a href='/' className='btn btn-sm btn-white m-b-10 p-l-5'>
-                <i className='fa fa-print t-plus-1 fa-fw fa-lg'></i> Prissnt
-                Invoice
-              </a>
-              <NavLink to={`/invoices/edit/${_id}`}>
-                <span className='glyphicon glyphicon-edit'>Editsssss</span>
-              </NavLink>
-            </span>
+    <div className='invoice__generator'>
+      <p className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'>
+        <i className='fa fa-file t-plus-1 text-danger fa-fw fa-lg'></i> Export
+        as PDF
+      </p>
+      <p className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'>
+        <i className='fa fa-print t-plus-1 fa-fw fa-lg'></i> Print Invoice
+      </p>
+      <p
+        className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'
+        onClick={() => deleteInvoiceHandler(_id)}
+      >
+        <i className='fas fa-trash-alt t-plus-1 fa-fw fa-lg'></i> Delete Invoice
+      </p>
+      <p className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice editInvoice__button'>
+        <NavLink to={`/invoices/edit/${_id}`}>
+          <i className='fas fa-edit t-plus-1 fa-fw fa-lg' />
+          Edit Invoice
+        </NavLink>
+      </p>
+      <div className='container inv my-5 py-5 invoice__page'>
+        <div className='row'>
+          <div className='col-xs-6 col-md-3'></div>
+          <div className='col-xs-6 col-md-9'></div>
+        </div>
+        <div className='row'>
+          <div className='col-xs-6 col-md-8'>
+            <img
+              className='invoiceCompany__logo'
+              src={logo}
+              alt='invoiceApp logo'
+            />
+          </div>
+          <div className='col-xs-6 col-md-4'>
+            <h1 className='font-weight-lighter py-1 px-3'>INVOICE</h1>
+          </div>
+        </div>
+        <div className='row contact__details'>
+          <div className='col-xs-4 col-md-4 seller__details'>
+            <p className='mb-2 invoice__title'>INVOICER</p>
+            <h3>
+              <p className='mb-0'>{SellerCompanyName} </p>
+            </h3>
+            <p className='mb-0'>{SellerCompanyStreet} </p>
+            <p className='mb-0'>
+              {SellerCompanyZip} {SellerCompanyCity}
+            </p>
+            <p className='mb-0'>Vat: {SellerCompanyVat}</p>
+            <p className='mb-0'>Cell: {SellerCompanyPhone}</p>
+          </div>
+          <div className='col-xs-4 col-md-4 buyer__details'>
+            <p className='mb-2 invoice__title'>INVOICE TO</p>
+            <h6>
+              <p className='mb-0'>{BuyerCompanyName} </p>
+            </h6>
+            <p className='mb-0'>{BuyerCompanyStreet} </p>
+            <p className='mb-0'>
+              {BuyerCompanyZip} {BuyerCompanyCity}
+            </p>
+            <p className='mb-0'>Vat: {BuyerCompanyVat}</p>
+            <p className='mb-0'>Cell: {BuyerCompanyPhone}</p>
           </div>
 
-          <div className='invoice-header'>
-            <div className='invoice-from'>
-              <small>Seller</small>
-              <address className='m-t-5 m-b-5'>
-                <strong className='text-inverse'>{SellerCompanyName}</strong>
-                <br></br>
-                {SellerCompanyStreet}
-                <br></br>
-                {SellerCompanyZip}
-                {SellerCompanyCity} <br></br>
-                {SellerCompanyVat}
-                <br></br>
-                {SellerCompanyPhone}
-              </address>
-            </div>
-            <div className='invoice-to'>
-              <small>Buyer</small>
-              <address className='m-t-5 m-b-5'>
-                <strong className='text-inverse'> {BuyerCompanyName}</strong>
-                <br></br>
-                {BuyerCompanyStreet}
-                <br></br>
-                {BuyerCompanyZip} {BuyerCompanyCity} <br></br>
-                {BuyerCompanyVat}
-                <br></br>
-                {BuyerCompanyPhone}
-              </address>
-            </div>
-            <div className='invoice-date'>
-              <small>Invoice </small>
-              <div className='date text-inverse m-t-5'> {invoiceNumber}</div>
-              <div className='invoice-detail'>
-                {dateInvoice}
-                <br></br>
-                {cityInvoice}
+          <div className='col-xs-4 col-md-4'>
+            <div className='row'>
+              <div className='col-lg-12'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Invoice No</td>
+                      <td className='px-3'>:</td>
+                      <td>{invoiceNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>Date</td>
+                      <td className='px-3'>:</td>
+                      <td>{dateInvoice}</td>
+                    </tr>
+                    <tr>
+                      <td>City</td>
+                      <td className='px-3'>:</td>
+                      <td>{cityInvoice}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-
-          <div className='invoice-content'>
-            <div className='table-responsive'>
-              <table className='table table-invoice'>
-                <thead>
-                  <tr>
-                    <th>Products</th>
-
-                    <th className='text-center' width='10%'>
-                      Unit cost
-                    </th>
-                    <th className='text-center' width='10%'>
-                      Qty
-                    </th>
-                    <th className='text-center' width='10%'>
-                      Price excluding VAT
-                    </th>
-                    <th className='text-center' width='10%'>
-                      VAT %
-                    </th>
-                    <th className='text-right' width='20%'>
-                      Price including VAT
-                    </th>
-                  </tr>
-                </thead>
+        </div>
+        <div className='row'>
+          <div className='col-lg-12'>
+            <table className='table table-striped'>
+              <thead>
+                <tr>
+                  <th scope='col'>NO</th>
+                  <th scope='col'>ITEM DESCREPTION</th>
+                  <th scope='col'>UNIT COST</th>
+                  <th scope='col'>QTY</th>
+                  <th scope='col'>PRICE EX VAT</th>
+                  <th scope='col'> VAT %</th>
+                  <th scope='col'>TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
                 {items &&
                   items.map((item, id) => {
                     const {
@@ -142,71 +166,76 @@ const SingleInvoice = ({ match }) => {
                       totalMoney,
                     } = item;
                     return (
-                      <tbody key={id}>
-                        <tr>
-                          <td className='text-center'>{productName}</td>
-                          <td className='text-center'>
-                            {unitCost} {currency}
-                          </td>
-                          <td className='text-center'>{qty}</td>
-                          <td className='text-center'>
-                            {priceNoVat} {currency}
-                          </td>
-                          <td className='text-center'>{vat} %</td>
-                          <td className='text-center'>
-                            {totalMoney} {currency}{' '}
-                          </td>
-                        </tr>
-                      </tbody>
+                      <tr key={id}>
+                        <td>{id + 1} </td>
+                        <td>
+                          <b>{productName}</b>
+                        </td>
+                        <td>
+                          {unitCost} {currency}
+                        </td>
+                        <td>{qty}</td>
+                        <td>
+                          {priceNoVat} {currency}
+                        </td>
+                        <td>{vat} %</td>
+                        <td>
+                          {totalMoney} {currency}
+                        </td>
+                      </tr>
                     );
                   })}
-              </table>
-            </div>
-            <div className='invoice-price'>
-              <div className='invoice-price-left'>
-                <div className='invoice-price-row'>
-                  <div className='sub-price'>
-                    <small>Subtotal</small>
-                    <span className='text-inverse'>{sub_total}</span>
-                  </div>
-                  <div className='sub-price'>
-                    <i className='fa fa-plus text-muted'></i>
-                  </div>
-                  <div className='sub-price'>
-                    <small>Tax value</small>
-                    <span className='text-inverse'>{tax_amountTotal})</span>
-                  </div>
-                </div>
-              </div>
-              <div className='invoice-price-right'>
-                <small>Grand total</small>{' '}
-                <span className='f-w-600'>{total_amount}</span>
-              </div>
+
+                <tr>
+                  <td colSpan='5'></td>
+                  <td>
+                    <b>SUB Total</b>
+                  </td>
+                  <td>
+                    <b>
+                      {sub_total} {currency}
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan='5'></td>
+                  <td>
+                    <b>TAX VAT AMOUNT</b>
+                  </td>
+                  <td>
+                    <b>
+                      {tax_amountTotal} {currency}
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan='5'></td>
+                  <td>
+                    <b>GRAND TOTAL</b>
+                  </td>
+                  <td>
+                    <b>
+                      {total_amount} {currency}
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className='row mt-5'>
+          <div className='col-lg-6'>
+            <div className='invoice-note'>
+              * Make invoice payable to {SellerCompanyName}
+              <br></br>* Payment is due within 14 days<br></br>* If you have any
+              questions concerning this invoice, contact {SellerCompanyName}{' '}
+              cell: {SellerCompanyPhone}
             </div>
           </div>
-
-          <div className='invoice-note'>
-            * Make invoice payable to (company name)<br></br>* Payment is due
-            within 14 days<br></br>* If you have any questions concerning this
-            invoice, contact (company name, email)
-          </div>
-
-          <br></br>
-          <div className='invoice-footer'>
-            <p className='text-center m-b-5 f-w-600'>
-              THANK YOU FOR YOUR BUSINESS
-            </p>
-            <p className='text-center'>
-              <span className='m-r-10'>
-                <i className='fa fa-fw fa-lg fa-globe'></i> baxu.com
-              </span>
-              <span className='m-r-10'>
-                <i className='fa fa-fw fa-lg fa-phone-volume'></i> tel
-              </span>
-              <span className='m-r-10'>
-                <i className='fa fa-fw fa-lg fa-envelope'></i> email
-              </span>
-            </p>
+          <div className='col-lg-3'></div>
+          <div className='col-lg-3 text-center'>
+            <p className='signature'>signature</p>
+            <p className='signature__company'>{SellerCompanyName}</p>
           </div>
         </div>
       </div>
