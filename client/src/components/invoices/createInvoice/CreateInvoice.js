@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
 import { useForm, useFieldArray } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CreateInvoiceForm from './CreateInvoiceForm';
-
+import { useHistory } from 'react-router-dom';
 import { addInvoice } from '../store/actions';
+import Loader from '../../layout/loader/Loader';
 
 const Invoices = () => {
+  const { isLoading } = useSelector(({ shared }) => shared);
   const {
     register,
     control,
@@ -21,7 +23,7 @@ const Invoices = () => {
     control,
     name: 'items',
   });
-
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const selectedCurrency = '$';
@@ -30,11 +32,13 @@ const Invoices = () => {
   const currencies = ['$', '€', 'zł'];
 
   const onSubmit = (invoice) => {
-    dispatch(addInvoice(invoice));
+    dispatch(addInvoice(invoice, history));
   };
   const items = watch('items');
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <CreateInvoiceForm
       useWatch={useWatch}
       watch={watch}
