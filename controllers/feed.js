@@ -14,7 +14,7 @@ exports.getInvoices = async (req, res, next) => {
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
     res.status(200).json({
-      message: 'Fetched invoices successfully.',
+      message: 'Fetched invoices successfully!',
       invoices: invoices,
       totalItems: Number(totalItems),
       currentPage: Number(currentPage),
@@ -30,7 +30,7 @@ exports.getInvoices = async (req, res, next) => {
 exports.createInvoice = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
+    const error = new Error('Validation failed, entered data is incorrect!');
     error.statusCode = 422;
     throw error;
   }
@@ -110,11 +110,11 @@ exports.getInvoice = async (req, res, next) => {
   const invoice = await post.findById(invoiceId);
   try {
     if (!invoice) {
-      const error = new Error('Could not find invoice.');
+      const error = new Error('Could not find invoice!');
       error.statusCode = 404;
       throw error;
     }
-    res.status(200).json({ message: 'Invoice fetched.', invoice: invoice });
+    res.status(200).json({ message: 'Invoice fetched!', invoice: invoice });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -163,7 +163,7 @@ exports.updateInvoice = async (req, res, next) => {
   try {
     const invoice = await Invoice.findById(invoiceId);
     if (!invoice) {
-      const error = new Error('Could not find invoice.');
+      const error = new Error('Could not find invoice!');
       error.statusCode = 404;
       throw error;
     }
@@ -209,12 +209,12 @@ exports.deleteInvoice = async (req, res, next) => {
     const invoice = await Invoice.findById(invoiceId);
 
     if (!invoice) {
-      const error = new Error('Could not find invoice.');
+      const error = new Error('Could not find invoice!');
       error.statusCode = 404;
       throw error;
     }
     await Invoice.findByIdAndRemove(invoiceId);
-    res.status(200).json({ message: 'Invoice deleted.' });
+    res.status(200).json({ message: 'Invoice deleted!' });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
