@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import * as types from './types';
 
+import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
+
 export const invoicesFetchSuccess = (invoices, totalItems, currentPage) => {
   return {
     type: types.FETCH_INVOICES,
@@ -32,14 +34,16 @@ export const invoiceUpdateSucces = (invoiceId, invoiceData) => {
 
 export const fetchInvoices = (pageNumber) => async (dispatch) => {
   try {
+    dispatch(loaderOn());
     const response = await axios.get(
       `http://localhost:8080/feed/invoices?page=${pageNumber}`
     );
     console.log(response);
     const { invoices, totalItems, currentPage } = response.data;
+    dispatch(loaderOff());
     dispatch(invoicesFetchSuccess(invoices, totalItems, currentPage));
   } catch (err) {
-    console.log(err);
+    dispatch(loaderOff());
   }
 };
 

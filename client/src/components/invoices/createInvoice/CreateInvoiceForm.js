@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 
 import { ErrorMessage } from '@hookform/error-message';
-import { CalcGrantTotal, CalcSubTotal, CalcTaxTotal } from './calc/Calc';
+import { CalcGrantTotal, CalcSubTotal, CalcTaxTotal } from './Calc';
 
 import VatPrice from './VatPrice';
 import NoVatPrice from './NoVatPrice';

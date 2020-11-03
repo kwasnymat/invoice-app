@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 
-import routes from '../../routesDefinitions/routes';
-import logo from '../../assets/logo.png';
+import routes from '../../../routes/routes';
+import logo from '../../../assets/logo.png';
 
 import './Navigation.scss';
 

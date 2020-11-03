@@ -1,7 +1,7 @@
-const Invoice = require('../models/post');
+const Invoice = require('../models/invoice');
 
 const { validationResult } = require('express-validator');
-const post = require('../models/post');
+const post = require('../models/invoice');
 
 exports.getInvoices = async (req, res, next) => {
   const currentPage = req.query.page || 1;

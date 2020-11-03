@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchInvoices, deleteInvoice } from '../store/actions';
+import { fetchInvoices, deleteInvoice } from './store/actions';
 
-import { Table } from 'react-bootstrap';
+import { Table, Navbar } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
+
+import Loader from '../layout/loader/Loader';
 
 import './Invoices.scss';
 
@@ -13,10 +15,21 @@ const Invoices = () => {
     ({ invoices }) => invoices
   );
 
+  const { isLoading } = useSelector(({ shared }) => shared);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchInvoices());
   }, [dispatch]);
+
+  //   const isListofInvoicesEmpty = !invoices.length && !isLoading && (
+  //     <Navbar bg='light'>
+  //       <span style={{ fontSize: '1.25rem' }}>
+  //         There is currently no match for your search. Please revise your search
+  //         and try again.
+  //       </span>
+  //     </Navbar>
+  //   );
 
   const deleteInvoiceHandler = (invoiceId) => {
     dispatch(deleteInvoice(invoiceId));
@@ -64,7 +77,9 @@ const Invoices = () => {
       );
     });
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className='row'>
       <div className='col-lg-12'>
         <Table responsive='sm custab'>

@@ -1,19 +1,17 @@
 import React from 'react';
 
-// import { Nav, Form, Button } from 'react-bootstrap';
-
-import Navigation from './components/navigation/Navigation';
+import Navigation from './components/layout/navigation/Navigation';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Invoices from './components/invoices/Invoices';
-import Footer from './components/footer/Footer';
-import Login from './components/login/Login';
-import Signup from './components/signup/Signup';
-import Invoice from './components/createInvoice/CreateInvoice';
+import Footer from './components/layout/footer/Footer';
+import Login from './components/auth/login/Login';
+import Signup from './components/auth/signup/Signup';
+import Invoice from './components/invoices/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 import EditInvoice from './components/invoices/editInvoice/EditInvoice';
 
-import routes from './routesDefinitions/routes';
+import routes from './routes/routes';
 
 import './App.scss';
 

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
-import VatPrice from '../../createInvoice/VatPrice';
-import NoVatPrice from '../../createInvoice/NoVatPrice';
-import { fetchInvoice } from '../../store/actions';
-import { editInvoice } from '../../store/actions';
+import VatPrice from '../createInvoice/VatPrice';
+import NoVatPrice from '../createInvoice/NoVatPrice';
+import { fetchInvoice, editInvoice } from '../store/actions';
+
 import { Form, Button, Col } from 'react-bootstrap';
 
 import { ErrorMessage } from '@hookform/error-message';
