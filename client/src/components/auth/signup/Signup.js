@@ -9,7 +9,6 @@ const Signup = () => {
     <div class='signup-form'>
       <form>
         <h2>Sign Up</h2>
-        <p>Please fill the form to create an account!</p>
         <hr />
         <div class='form-group'>
           <div class='input-group'>
