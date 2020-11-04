@@ -67,9 +67,14 @@ export const addInvoice = (invoiceData, history) => async (dispatch) => {
       'http://localhost:8080/feed/invoice',
       invoiceData
     );
-    const { invoice } = response.data;
+    const { invoice, message } = response.data;
+    const status = response.status;
+    console.log(message);
+    console.log(response);
     dispatch(loaderOff());
     history.push(`/invoices/${invoice._id}`);
+    dispatch(toasterOn(message, status));
+    console.log(status);
   } catch (err) {
     dispatch(loaderOff());
   }
@@ -80,13 +85,16 @@ export const editInvoice = (invoiceId, invoiceData, history) => async (
 ) => {
   try {
     dispatch(loaderOn());
-    await axios.put(
+    const edit = await axios.put(
       `http://localhost:8080/feed/invoices/${invoiceId}`,
       invoiceData
     );
+    history.push(`/invoices/${invoiceId}`);
+    const { message } = edit.data;
+    const status = edit.status;
     dispatch(invoiceUpdateSucces(invoiceId, invoiceData));
     dispatch(loaderOff());
-    history.push(`/invoices/${invoiceId}`);
+    dispatch(toasterOn(message, status));
   } catch (err) {
     dispatch(loaderOff());
   }
