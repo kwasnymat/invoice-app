@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { fetchInvoice, deleteInvoice } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
 import logo from '../../../assets/logo.png';
+import { Document, Page } from 'react-pdf';
 
 import './SingleInvoice.scss';
 
@@ -12,6 +13,12 @@ const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
 
   const { isLoading } = useSelector(({ shared }) => shared);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   const history = useHistory();
   const dispatch = useDispatch();
