@@ -27,6 +27,21 @@ exports.getInvoices = async (req, res, next) => {
   }
 };
 
+exports.getInvoicesAll = async (req, res, next) => {
+  try {
+    const invoicesAll = await Invoice.find();
+    res.status(200).json({
+      message: 'Fetched invoices successfully!',
+      invoicesAll: invoicesAll,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 exports.createInvoice = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

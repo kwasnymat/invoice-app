@@ -1,7 +1,7 @@
 .custab {
   border: 1px solid #ccc;
-  padding: 5px;
-  margin: 5% 0;
+  padding: 1rem;
+  margin: 2rem 0;
   box-shadow: 3px 3px 2px #ccc;
   transition: 0.5s;
 }
@@ -16,16 +16,97 @@
   height: 5%;
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.invoices__thead th {
+  font-size: 1.2rem !important;
+  vertical-align: middle !important;
 }
 
 .deleteId_button,
 .detailsId_button {
-  color: #343a40;
+  margin-right: 0.7rem;
+  margin-left: 0.7rem;
+  color: #924444 !important;
   cursor: pointer;
   font-size: 1.5rem;
 }
 
 .deleteId_button:hover,
 .detailsId_button:hover {
-  color: #7a838b;
+  color: #d47b7b !important;
+}
+
+.active__page {
+  background-color: #bb5353 !important;
+  border-color: #bb5353 !important;
+}
+.page-link {
+  color: black;
+}
+
+@media (max-width: 602px) {
+  .invoices__thead th {
+    font-size: 0.9rem !important;
+  }
+  .recipment__details td {
+    font-size: 0.9rem;
+  }
+  .deleteId_button,
+  .detailsId_button {
+    font-size: 1.2rem;
+  }
+  .deleteId_button {
+    margin-top: 0.5rem;
+  }
+}
+@media (max-width: 420px) {
+  .invoices__thead th {
+    font-size: 0.8rem !important;
+  }
+  .recipment__details td {
+    font-size: 0.8rem;
+  }
+  .deleteId_button,
+  .detailsId_button {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 388px) {
+  .invoices__thead th {
+    font-size: 0.7rem !important;
+  }
+  .recipment__details td {
+    font-size: 0.7rem;
+  }
+  .deleteId_button,
+  .detailsId_button {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 353px) {
+  .invoices__thead th {
+    font-size: 0.6rem !important;
+  }
+  .recipment__details td {
+    font-size: 0.6rem;
+  }
+  .deleteId_button,
+  .detailsId_button {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 318px) {
+  .invoices__thead th {
+    font-size: 0.5rem !important;
+  }
+  .recipment__details td {
+    font-size: 0.5rem;
+  }
+  .deleteId_button,
+  .detailsId_button {
+    font-size: 0.7rem;
+  }
 }

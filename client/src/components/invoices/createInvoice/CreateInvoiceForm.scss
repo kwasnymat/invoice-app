@@ -67,8 +67,12 @@ label.form-label {
 }
 
 .form__invoice .btn {
-  background-color: #343a40;
+  background-color: #bb5353;
   border: none;
+}
+.form__invoice .btn:hover,
+.form__invoice .btn:active {
+  background-color: #552323 !important;
 }
 
 th.text-center {
@@ -76,12 +80,12 @@ th.text-center {
 }
 
 .invoice__save {
-  background-color: #003415 !important;
+  background-color: #bb5353 !important;
 }
 
 .invoice__save:hover,
 .invoice__save:active {
-  background-color: #038a39 !important;
+  background-color: #552323 !important;
 }
 
 @media (max-width: 768px) {

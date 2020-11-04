@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { fetchInvoice, deleteInvoice } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
 import logo from '../../../assets/logo.png';
-import { Document, Page } from 'react-pdf';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -15,12 +14,6 @@ const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
 
   const { isLoading } = useSelector(({ shared }) => shared);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -119,7 +112,9 @@ const SingleInvoice = ({ match }) => {
             />
           </div>
           <div className='col-xs-6 col-md-4'>
-            <h1 className='font-weight-lighter py-1 px-3'>INVOICE</h1>
+            <h1 className='font-weight-lighter py-1 px-3 invoice__titleMain'>
+              INVOICE
+            </h1>
           </div>
         </div>
         <div className='row contact__details'>
@@ -148,7 +143,7 @@ const SingleInvoice = ({ match }) => {
             <p className='mb-0'>Cell: {BuyerCompanyPhone}</p>
           </div>
 
-          <div className='col-xs-4 col-md-4'>
+          <div className='col-xs-4 col-md-4 invoice__createDetails'>
             <div className='row'>
               <div className='col-lg-12'>
                 <table>
@@ -176,7 +171,7 @@ const SingleInvoice = ({ match }) => {
         </div>
         <div className='row'>
           <div className='col-lg-12'>
-            <table className='table table-striped'>
+            <table className='table table-striped table__positions'>
               <thead>
                 <tr>
                   <th scope='col'>NO</th>
@@ -267,7 +262,7 @@ const SingleInvoice = ({ match }) => {
             </div>
           </div>
           <div className='col-lg-3'></div>
-          <div className='col-lg-3 text-center'>
+          <div className='col-lg-3 text-center signature__main'>
             <p className='signature'>signature</p>
             <p className='signature__company'>{SellerCompanyName}</p>
           </div>

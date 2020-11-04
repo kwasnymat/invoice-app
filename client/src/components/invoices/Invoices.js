@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 import { fetchInvoices, deleteInvoice } from './store/actions';
 
 import { Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
-
+import FilterBar from '../layout/filterBar/FilterBar';
 import Loader from '../layout/loader/Loader';
-import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import './Invoices.scss';
 
 const Invoices = () => {
@@ -17,12 +18,26 @@ const Invoices = () => {
   );
 
   const { isLoading } = useSelector(({ shared }) => shared);
+  const [dataInvoices, setData] = useState();
   const history = useHistory();
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchInvoices());
   }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInvoicesAll = async () => {
+      const allInvoices = await axios('http://localhost:8080/feed/invoicesAll');
+      const { invoicesAll } = allInvoices.data;
+      setData(invoicesAll);
+    };
+
+    fetchInvoicesAll();
+  }, []);
+
+  console.log(dataInvoices);
+  //   console.log(dataInvoices.allInv);
 
   const deleteInvoiceHandler = (invoiceId) => {
     dispatch(deleteInvoice(invoiceId, history));
@@ -45,7 +60,7 @@ const Invoices = () => {
       } = invoice;
 
       return (
-        <tbody key={_id}>
+        <tbody key={_id} className='recipment__details'>
           <tr>
             <td className='text-center'>{invoiceNumber}</td>
             <td className='text-center'>{dateInvoice}</td>
@@ -71,39 +86,56 @@ const Invoices = () => {
       );
     });
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className='row'>
-      <div className='col-lg-12'>
-        <Table responsive='sm custab'>
-          <thead>
-            <tr>
-              <th className='text-center'> Invoice number</th>
-              <th className='text-center'> Invoice date</th>
-              <th className='text-center'> Recipient</th>
-              <th className='text-center'> Vat amount </th>
-              <th className='text-center'> Total amount</th>
-              <th className='text-center'> Action</th>
-            </tr>
-          </thead>
-          {generaterInvoices()}
-        </Table>
-      </div>
-      <div className='pagination'>
-        <Pagination
-          activePage={currentPage}
-          itemsCountPerPage={5}
-          totalItemsCount={totalItems}
-          pageRangeDisplayed={5}
-          onChange={handlePageClick}
-          itemClass='page-item'
-          linkClass='page-link'
-          firstPageText='First'
-          lastPageText='Last'
-        />
-      </div>
-    </div>
+  const isListEmpty = !invoices.length && !isLoading && (
+    <Navbar bg='light'>
+      <span style={{ fontSize: '1.25rem' }}>
+        There is currently no match for your search. Please revise your search
+        and try again.
+      </span>
+    </Navbar>
+  );
+  console.log(dataInvoices);
+  return (
+    <>
+      {dataInvoices && <FilterBar dataInvoices={dataInvoices} />}
+      {isListEmpty}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className='row'>
+          <div className='col-lg-12'>
+            <Table responsive='sm custab'>
+              <thead className='invoices__thead'>
+                <tr>
+                  <th className='text-center'> Invoice number</th>
+                  <th className='text-center'> Invoice date</th>
+                  <th className='text-center'> Recipient</th>
+                  <th className='text-center'> Vat amount </th>
+                  <th className='text-center'> Total amount</th>
+                  <th className='text-center'> Action</th>
+                </tr>
+              </thead>
+              {generaterInvoices()}
+            </Table>
+          </div>
+          <div className='pagination'>
+            <Pagination
+              activeLinkClass='active__page'
+              hideDisabled
+              activePage={currentPage}
+              itemsCountPerPage={5}
+              totalItemsCount={totalItems}
+              pageRangeDisplayed={5}
+              onChange={handlePageClick}
+              itemClass='page-item'
+              linkClass='page-link'
+              firstPageText='First'
+              lastPageText='Last'
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 export default Invoices;
