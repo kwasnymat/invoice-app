@@ -21,9 +21,13 @@ const Toaster = ({ message, status }) => {
 
   return (
     <Toast className='toaster' onClick={toasterQuit}>
-      <Toast.Header className={status === 200 ? 'success' : 'failed'}>
+      <Toast.Header
+        className={status === 200 || status === 201 ? 'success' : 'failed'}
+      >
         <strong className='mr-auto '>
-          {status === 200 ? 'Success!' : 'Something went wrong!'}
+          {status === 200 || status === 201
+            ? 'Success!'
+            : 'Something went wrong!'}
         </strong>
         <small>now</small>
       </Toast.Header>
