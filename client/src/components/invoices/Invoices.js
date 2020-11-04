@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
 import { fetchInvoices, deleteInvoice } from './store/actions';
 
 import { Table } from 'react-bootstrap';
@@ -57,7 +58,7 @@ const Invoices = () => {
             </td>
             <td className='text-center'>
               <NavLink to={`/invoices/${_id}`}>
-                <i class='fas fa-info-circle detailsId_button' />
+                <i className='fas fa-info-circle detailsId_button' />
               </NavLink>
 
               <i
