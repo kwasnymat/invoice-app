@@ -96,6 +96,7 @@ exports.createInvoice = async (req, res, next) => {
     await invoice.save();
     res.status(201).json({
       invoice,
+      message: 'Invoice created!',
     });
   } catch (err) {
     if (!err.statusCode) {
