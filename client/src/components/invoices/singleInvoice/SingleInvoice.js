@@ -6,6 +6,8 @@ import { fetchInvoice, deleteInvoice } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
 import logo from '../../../assets/logo.png';
 import { Document, Page } from 'react-pdf';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 import './SingleInvoice.scss';
 
@@ -55,15 +57,40 @@ const SingleInvoice = ({ match }) => {
     items,
   } = invoice;
 
+  const exportToPdfInvoice = () => {
+    html2canvas(document.querySelector('#capture')).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 5, 190, 160);
+      pdf.save(`Invoice nr: ${invoiceNumber}.pdf`);
+    });
+  };
+
+  const printInvoice = () => {
+    html2canvas(document.querySelector('#capture')).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 5, 190, 160);
+      pdf.autoPrint();
+      window.open(pdf.output('bloburl'), '_blank');
+    });
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
     <div className='invoice__generator'>
-      <p className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'>
+      <p
+        className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'
+        onClick={exportToPdfInvoice}
+      >
         <i className='fa fa-file t-plus-1 text-danger fa-fw fa-lg'></i> Export
         as PDF
       </p>
-      <p className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'>
+      <p
+        className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'
+        onClick={printInvoice}
+      >
         <i className='fa fa-print t-plus-1 fa-fw fa-lg'></i> Print Invoice
       </p>
       <p
@@ -78,7 +105,7 @@ const SingleInvoice = ({ match }) => {
           Edit Invoice
         </NavLink>
       </p>
-      <div className='container inv my-5 py-5 invoice__page'>
+      <div className='container inv my-5 py-5 invoice__page' id='capture'>
         <div className='row'>
           <div className='col-xs-6 col-md-3'></div>
           <div className='col-xs-6 col-md-9'></div>
