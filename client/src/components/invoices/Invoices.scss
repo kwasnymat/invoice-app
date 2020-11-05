@@ -1,6 +1,6 @@
 .custab {
-  border: 1px solid #ccc;
-  padding: 1rem;
+  border-left: 1px solid #ccc;
+
   margin: 2rem 0;
   box-shadow: 3px 3px 2px #ccc;
   transition: 0.5s;
@@ -17,6 +17,15 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+.invoice__noMatch {
+  background-color: #bb5353;
+}
+.invoice__noMatch span {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0 auto;
 }
 
 .invoices__thead th {
@@ -71,6 +80,9 @@
   .deleteId_button,
   .detailsId_button {
     font-size: 1rem;
+  }
+  .invoice__noMatch span {
+    font-size: 0.9rem;
   }
 }
 @media (max-width: 388px) {
