@@ -7,7 +7,6 @@ const feedController = require('../controllers/feed');
 const router = express.Router();
 
 router.get('/invoices', feedController.getInvoices);
-router.get('/invoicesAll', feedController.getInvoicesAll);
 
 router.get('/invoices/:invoiceId', feedController.getInvoice);
 

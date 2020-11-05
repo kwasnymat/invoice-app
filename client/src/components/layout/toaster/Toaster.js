@@ -13,7 +13,7 @@ const Toaster = ({ message, status }) => {
       dispatch(toasterOff({ message: '', status: '' }));
     }, 2000);
     return () => clearTimeout(timer);
-  });
+  }, [dispatch]);
 
   const toasterQuit = () => {
     dispatch(toasterOff({ type: '', status: '' }));
