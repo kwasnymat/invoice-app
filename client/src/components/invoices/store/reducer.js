@@ -2,9 +2,11 @@ import * as types from './types';
 
 const initialState = {
   invoices: [],
+  allInvoices: [],
   invoice: {},
   currentPage: 1,
-  totalItems: 1,
+  totalPages: 1,
+  query: '',
 };
 
 const invoiceReducer = (state = initialState, action) => {
@@ -13,13 +15,19 @@ const invoiceReducer = (state = initialState, action) => {
       return {
         ...state,
         invoices: action.payload.invoices,
+        allInvoices: action.payload.allInvoices,
         currentPage: action.payload.currentPage,
-        totalItems: action.payload.totalItems,
+        totalPages: action.payload.totalPages,
       };
     case types.FETCH_INVOICE:
       return {
         ...state,
         invoice: action.payload,
+      };
+    case types.SAVE_QUERY:
+      return {
+        ...state,
+        query: action.payload,
       };
     case types.DELETE_INVOICE:
       return {
