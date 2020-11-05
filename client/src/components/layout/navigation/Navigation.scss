@@ -5,19 +5,22 @@ $color-primary: #343a40;
   margin-bottom: 1rem;
 
   .inactive {
-    color: $color-primary;
+    color: black;
     text-decoration: none;
     border-bottom: none;
   }
+  .Navigation .nav__link {
+    font-size: 20px;
+    font-weight: 600 !important;
+  }
 
   .active {
+    color: #bb5353;
     text-decoration: none;
-    border-bottom: 2px solid $color-primary;
   }
 
   .inactive:hover {
     color: $color-primary;
-    // text-decoration: none;
   }
 
   .nav__link {

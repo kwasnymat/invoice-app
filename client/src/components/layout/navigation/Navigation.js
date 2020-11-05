@@ -18,7 +18,7 @@ const Navigation = () => {
     setExpanded((prevExpanded) => !prevExpanded);
   }, []);
 
-  const { createInvoice, yourInvoices, login, signup, home, single } = routes;
+  const { createInvoice, yourInvoices, login, signup, home } = routes;
 
   const navigationLinks = [
     { name: createInvoice.name, link: createInvoice.link },
