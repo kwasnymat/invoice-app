@@ -2,30 +2,42 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Button, Navbar, Form } from 'react-bootstrap';
-
+import {
+  createQueryString,
+  createQueryStore,
+} from '../../invoices/queryFuncs/queryFuncs';
 import { fetchInvoices } from '../../invoices/store/actions';
-
+import { saveQuery } from '../../invoices/store/actions';
 import './FilterBar.scss';
 
-const FilterBar = ({ dataInvoices }) => {
+const FilterBar = ({ allInvoices }) => {
   const dispatch = useDispatch();
   const { handleSubmit, register } = useForm();
 
   const SubmitForm = (values) => {
     const queryString = createQueryString(values);
-    console.log(values);
-    console.log(queryString);
+    const queryStringStore = createQueryStore(values);
+    dispatch(saveQuery(queryStringStore));
+    dispatch(fetchInvoices(queryString));
   };
   const ResetForm = () => {
     dispatch(fetchInvoices());
+    dispatch(saveQuery(''));
   };
-  const createQueryString = (values) => {
-    const filteredValues = Object.entries(values).filter(
-      ([, value]) => value !== 'Filter all'
-    );
-    const url = new URLSearchParams(filteredValues).toString();
-    return url && `?${url}`;
-  };
+
+  const uniqueInvoices = [
+    ...new Map(
+      allInvoices.map(
+        (item) => (
+          /*eslint no-sequences: */
+          [item.invoiceNumber, item],
+          [item.dateInvoice, item],
+          [item.BuyerCompanyName, item]
+        )
+      )
+    ).values(),
+  ];
+
   return (
     <Form onSubmit={handleSubmit(SubmitForm)}>
       <Navbar className='filter__bar custab' expand='lg'>
@@ -38,7 +50,7 @@ const FilterBar = ({ dataInvoices }) => {
             name='invoiceNumber'
           >
             <option>-------</option>
-            {dataInvoices.map((inv) => (
+            {uniqueInvoices.map((inv) => (
               <option value={inv.invoiceNumber} key={inv._id}>
                 {inv.invoiceNumber}
               </option>
@@ -51,12 +63,12 @@ const FilterBar = ({ dataInvoices }) => {
             ref={register}
             className='form__control'
             as='select'
-            name='invoiceDate'
+            name='dateInvoice'
           >
             <option>-------</option>
-            {dataInvoices.map((inv) => (
-              <option value={inv.BuyerCompanyVat} key={inv._id}>
-                {inv.BuyerCompanyVat}
+            {uniqueInvoices.map((inv) => (
+              <option value={inv.dateInvoice} key={inv._id}>
+                {inv.dateInvoice}
               </option>
             ))}
           </Form.Control>
@@ -67,22 +79,22 @@ const FilterBar = ({ dataInvoices }) => {
             ref={register}
             className='form__control'
             as='select'
-            name='dateInvoice'
+            name='BuyerCompanyName'
           >
             <option>-------</option>
-            {dataInvoices.map((inv) => (
-              <option value={inv.dateInvoice} key={inv._id}>
-                {inv.dateInvoice}
+            {uniqueInvoices.map((inv) => (
+              <option value={inv.BuyerCompanyName} key={inv._id}>
+                {inv.BuyerCompanyName}
               </option>
             ))}
           </Form.Control>
         </Form.Group>
 
-        <Button type='submit'>
-          Filter <i class='fas fa-filter' />
+        <Button type='submit' variant='secondary'>
+          Filter <i className='fas fa-filter' />
         </Button>
         <Button type='reset' variant='secondary' onClick={ResetForm}>
-          Reset <i class='fas fa-sync-alt' />
+          Reset <i className='fas fa-sync-alt' />
         </Button>
       </Navbar>
     </Form>
