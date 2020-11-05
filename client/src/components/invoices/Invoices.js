@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { fetchInvoices, deleteInvoice } from './store/actions';
-
 import { Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import FilterBar from '../layout/filterBar/FilterBar';
 import Loader from '../layout/loader/Loader';
-import axios from 'axios';
 import './Invoices.scss';
 
 const Invoices = () => {
-  const { invoices, currentPage, totalItems } = useSelector(
+  const { invoices, currentPage, totalPages, allInvoices, query } = useSelector(
     ({ invoices }) => invoices
   );
 
   const { isLoading } = useSelector(({ shared }) => shared);
-  const [dataInvoices, setData] = useState();
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -26,29 +23,18 @@ const Invoices = () => {
     dispatch(fetchInvoices());
   }, [dispatch]);
 
-  useEffect(() => {
-    const fetchInvoicesAll = async () => {
-      const allInvoices = await axios('http://localhost:8080/feed/invoicesAll');
-      const { invoicesAll } = allInvoices.data;
-      setData(invoicesAll);
-    };
-
-    fetchInvoicesAll();
-  }, []);
-
-  console.log(dataInvoices);
-  //   console.log(dataInvoices.allInv);
-
   const deleteInvoiceHandler = (invoiceId) => {
     dispatch(deleteInvoice(invoiceId, history));
   };
 
   const handlePageClick = (values) => {
-    dispatch(fetchInvoices(values));
+    const url = new URLSearchParams({ page: values }).toString();
+    dispatch(fetchInvoices(`?${url}&${query}`));
   };
 
+  const totalItems = totalPages * invoices.length;
   const generaterInvoices = () =>
-    invoices.map((invoice, id) => {
+    invoices.map((invoice) => {
       const {
         invoiceNumber,
         dateInvoice,
@@ -86,19 +72,18 @@ const Invoices = () => {
       );
     });
 
-  const isListEmpty = !invoices.length && !isLoading && (
-    <Navbar bg='light'>
-      <span style={{ fontSize: '1.25rem' }}>
-        There is currently no match for your search. Please revise your search
-        and try again.
+  const isInvoicesListEmpty = !invoices.length && !isLoading && (
+    <Navbar className='invoice__noMatch custab'>
+      <span>
+        There is no match for your search. Please revise your filters and try
+        again.
       </span>
     </Navbar>
   );
-  console.log(dataInvoices);
+
   return (
     <>
-      {dataInvoices && <FilterBar dataInvoices={dataInvoices} />}
-      {isListEmpty}
+      <FilterBar allInvoices={allInvoices} />
       {isLoading ? (
         <Loader />
       ) : (
@@ -115,23 +100,24 @@ const Invoices = () => {
                   <th className='text-center'> Action</th>
                 </tr>
               </thead>
+
               {generaterInvoices()}
             </Table>
-          </div>
-          <div className='pagination'>
-            <Pagination
-              activeLinkClass='active__page'
-              hideDisabled
-              activePage={currentPage}
-              itemsCountPerPage={5}
-              totalItemsCount={totalItems}
-              pageRangeDisplayed={5}
-              onChange={handlePageClick}
-              itemClass='page-item'
-              linkClass='page-link'
-              firstPageText='First'
-              lastPageText='Last'
-            />
+            {isInvoicesListEmpty}
+            <div className='pagination'>
+              <Pagination
+                activeLinkClass='active__page'
+                activePage={currentPage}
+                itemsCountPerPage={invoices.length}
+                totalItemsCount={totalItems}
+                pageRangeDisplayed={totalPages}
+                onChange={handlePageClick}
+                itemClass='page-item'
+                linkClass='page-link'
+                firstPageText='First'
+                lastPageText='Last'
+              />
+            </div>
           </div>
         </div>
       )}
