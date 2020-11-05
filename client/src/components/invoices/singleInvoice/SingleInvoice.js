@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -14,13 +14,13 @@ const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
 
   const { isLoading } = useSelector(({ shared }) => shared);
-
+  const invoiceId = match.params.id;
   const history = useHistory();
   const dispatch = useDispatch();
+
   useEffect(() => {
-    const invoiceId = match.params.id;
     dispatch(fetchInvoice(invoiceId));
-  }, [dispatch, match.params.id]);
+  }, [dispatch, invoiceId]);
 
   const deleteInvoiceHandler = (invoiceId) => {
     dispatch(deleteInvoice(invoiceId, history));
