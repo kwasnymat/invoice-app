@@ -4,10 +4,10 @@ import * as types from './types';
 
 import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
 
-export const invoicesFetchSuccess = (invoices, totalItems, currentPage) => {
+export const invoicesFetchSuccess = (payload) => {
   return {
     type: types.FETCH_INVOICES,
-    payload: { invoices, totalItems, currentPage },
+    payload,
   };
 };
 
@@ -25,6 +25,13 @@ export const invoiceDeleteSuccess = (invoiceId) => {
   };
 };
 
+export const saveQuery = (query) => {
+  return {
+    type: types.SAVE_QUERY,
+    payload: query,
+  };
+};
+
 export const invoiceUpdateSucces = (invoiceId, invoiceData) => {
   return {
     type: types.UPDATE_INVOICE,
@@ -32,16 +39,14 @@ export const invoiceUpdateSucces = (invoiceId, invoiceData) => {
   };
 };
 
-export const fetchInvoices = (pageNumber) => async (dispatch) => {
+export const fetchInvoices = (queryFilter = '') => async (dispatch) => {
   try {
     dispatch(loaderOn());
     const response = await axios.get(
-      `http://localhost:8080/feed/invoices?page=${pageNumber}`
+      `http://localhost:8080/feed/invoices${queryFilter}`
     );
-    const { invoices, totalItems, currentPage } = response.data;
-
-    dispatch(invoicesFetchSuccess(invoices, totalItems, currentPage));
     dispatch(loaderOff());
+    dispatch(invoicesFetchSuccess(response.data));
   } catch (err) {
     dispatch(loaderOff());
   }
@@ -69,12 +74,9 @@ export const addInvoice = (invoiceData, history) => async (dispatch) => {
     );
     const { invoice, message } = response.data;
     const status = response.status;
-    console.log(message);
-    console.log(response);
     dispatch(loaderOff());
     history.push(`/invoices/${invoice._id}`);
     dispatch(toasterOn(message, status));
-    console.log(status);
   } catch (err) {
     dispatch(loaderOff());
   }
