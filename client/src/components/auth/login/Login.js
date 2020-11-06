@@ -6,7 +6,7 @@ import './Login.scss';
 const Login = () => {
   return (
     <div className='signup-form'>
-      <form>
+      <div className='form__sign'>
         <h2>Member Login</h2>
         <hr />
         <div className='form-group'>
@@ -46,7 +46,7 @@ const Login = () => {
             Sign Up
           </button>
         </div>
-      </form>
+      </div>
       <div className='text-center'>
         <NavLink
           exact
