@@ -46,32 +46,18 @@ const FilterBar = ({ allInvoices }) => {
           <Form.Control
             ref={register}
             className='form__control'
-            as='select'
             name='invoiceNumber'
-          >
-            <option>-------</option>
-            {uniqueInvoices.map((inv) => (
-              <option value={inv.invoiceNumber} key={inv._id}>
-                {inv.invoiceNumber}
-              </option>
-            ))}
-          </Form.Control>
+            placeholder='type invoice number '
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Invoicte date</Form.Label>
           <Form.Control
             ref={register}
             className='form__control'
-            as='select'
+            type='date'
             name='dateInvoice'
-          >
-            <option>-------</option>
-            {uniqueInvoices.map((inv) => (
-              <option value={inv.dateInvoice} key={inv._id}>
-                {inv.dateInvoice}
-              </option>
-            ))}
-          </Form.Control>
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Recipient name</Form.Label>
