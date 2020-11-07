@@ -31,7 +31,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority`
+    `mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
 
   .then((result) => {
