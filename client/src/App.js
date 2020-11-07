@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Navigation from './components/layout/navigation/Navigation';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { loadUser } from './components/auth/store/actions';
 import Invoices from './components/invoices/Invoices';
 import Footer from './components/layout/footer/Footer';
 import Login from './components/auth/login/Login';
@@ -23,6 +23,12 @@ const App = () => {
   const { isToasterVisible, message, status } = useSelector(
     ({ shared }) => shared
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
 
   const showToaster = isToasterVisible ? (
     <Toaster message={message} status={status} />
