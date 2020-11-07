@@ -1,0 +1,4 @@
+{
+    "mongo":"mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority",
+    "jwt": "invoiceApp_jwt"
+}
