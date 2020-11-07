@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Modal, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { fetchInvoices, deleteInvoice, saveQuery } from './store/actions';
@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import FilterBar from '../layout/filterBar/FilterBar';
 import Loader from '../layout/loader/Loader';
+import ModalPop from '../layout/modalPop/ModalPop';
 import './Invoices.scss';
 
 const Invoices = () => {
@@ -15,10 +16,15 @@ const Invoices = () => {
     ({ invoices }) => invoices
   );
 
-  const { isLoading } = useSelector(({ shared }) => shared);
-  const history = useHistory();
+  const [show, setShow] = useState(false);
+  const [idInvoice, setId] = useState();
+  const handleClose = () => setShow(false);
 
+  const { isLoading } = useSelector(({ shared }) => shared);
+
+  const history = useHistory();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchInvoices());
     dispatch(saveQuery(''));
@@ -75,7 +81,10 @@ const Invoices = () => {
                 </NavLink>
 
                 <i
-                  onClick={() => deleteInvoiceHandler(_id)}
+                  onClick={() => {
+                    setShow(true);
+                    setId(_id);
+                  }}
                   className='fas fa-trash-alt deleteId_button'
                 />
               </td>
@@ -93,6 +102,7 @@ const Invoices = () => {
       </span>
     </Navbar>
   );
+  console.log(idInvoice);
   return (
     <>
       <FilterBar allInvoices={allInvoices} />
@@ -100,6 +110,14 @@ const Invoices = () => {
         <Loader />
       ) : (
         <div className='row'>
+          {show && (
+            <ModalPop
+              idInvoice={idInvoice}
+              closeModal={handleClose}
+              show={show}
+              deleteInvoiceHandler={deleteInvoiceHandler}
+            />
+          )}
           <div className='col-lg-12'>
             {invoices.length !== 0 && generaterInvoices()}
             {isInvoicesListEmpty}
