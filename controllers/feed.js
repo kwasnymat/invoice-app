@@ -8,6 +8,7 @@ exports.getInvoices = async (req, res, next) => {
     const { page = 1, limit = 6, ...params } = req.query;
 
     const invoices = await Invoice.find(params)
+      .sort({ dateInvoice: -1 })
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit));
 

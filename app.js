@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
+const config = require('config');
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use((req, res, next) => {
 app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 
+const db = config.get('mongo');
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -30,10 +33,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://baxuu:invoiceapp@cluster0.4xlun.mongodb.net/invoiceapp?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
   .then((result) => {
     app.listen(8080);
