@@ -35,13 +35,6 @@ exports.login = async (req, res, next) => {
 };
 
 exports.signup = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed');
-    error.statusCode = 422;
-    error.data = errors.array();
-    throw error;
-  }
   const { username, email, password } = req.body;
 
   try {
@@ -72,5 +65,16 @@ exports.signup = async (req, res, next) => {
       err.statusCode = 500;
     }
     next(err);
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user)
+      return res.status(400).json({ message: 'User does not exists!' });
+    res.json(user);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
   }
 };
