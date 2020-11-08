@@ -26,6 +26,7 @@ const invoiceReducer = (state = initialState, action) => {
       };
     case types.LOGIN_SUCCESS:
     case types.REGISTER_SUCCESS:
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -46,9 +47,9 @@ const invoiceReducer = (state = initialState, action) => {
       };
     case types.GET_ERRORS:
       return {
-        errorMessage: action.payload.msg,
-        errorStatus: action.payload.status,
-        idMessage: action.payload.id,
+        errorMessage: action.payload.errorMessage,
+        errorStatus: action.payload.errorStatus,
+        idMessage: action.payload.idMessage,
       };
     case types.CLEAR_ERRORS:
       return {
