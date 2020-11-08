@@ -1,23 +1,8 @@
 import axios from 'axios';
-import { get } from 'react-hook-form';
 
 import * as types from './types';
 
-// import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
-
-// export const registerUserSuccess = (payload) => {
-//   return {
-//     type: types.REGISTER_USER,
-//     payload,
-//   };
-// };
-
-// export const registerUserFail = (payload) => {
-//   return {
-//     type: types.REG_FAILED,
-//     payload,
-//   };
-// };
+import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
 
 export const getErrors = (errorMessage, errorStatus, idMessage = null) => {
   return {
@@ -44,53 +29,88 @@ export const userLoading = () => {
   };
 };
 
+export const userRegisteredSuccess = (res) => {
+  return {
+    type: types.REGISTER_SUCCESS,
+    payload: res,
+  };
+};
+
+export const userLoginSuccess = (res) => {
+  return {
+    type: types.LOGIN_SUCCESS,
+    payload: res,
+  };
+};
+
 export const loadUser = () => async (dispatch, getState) => {
   dispatch(userLoading());
-  const token = getState().auth.token;
-  const configuration = {
-    headers: {
-      'Content=type': 'application/json',
-    },
-  };
-  if (token) {
-    configuration.headers['x-auth-token'] = token;
-  }
+
   try {
     const response = await axios.get(
       'http://localhost:8080/auth/user',
-      configuration
+      tokenConfig(getState)
     );
     dispatch(userLoaded(response.data));
   } catch (err) {
-    dispatch(
-      getErrors(
-        err.response
-        // err.response.data,
-        // err.response.status
-      )
-    );
+    console.log(err.response);
+    dispatch(getErrors(err.response.data.message, err.response.status));
     dispatch({
       type: types.AUTH_ERROR,
     });
   }
 };
-
-export const registerUser = (userData) => async (dispatch) => {
+export const loginUser = (userData, history) => async (dispatch) => {
   try {
-    // dispatch(loaderOn());
+    const response = await axios.post(
+      'http://localhost:8080/auth/login',
+      userData
+    );
+    history.push(`/invoices/`);
+    dispatch(userLoginSuccess(response.data));
+  } catch (err) {
+    dispatch(
+      getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL')
+    );
+    dispatch({
+      type: types.LOGIN_FAIL,
+    });
+  }
+};
+
+export const registerUser = (userData, history) => async (dispatch) => {
+  try {
     const response = await axios.put(
       'http://localhost:8080/auth/signup',
       userData
     );
-    const { message } = response.data;
-    const status = response.status;
-    console.log(response);
+    history.push(`/invoices/`);
+    // const { message } = response.data;
+    // const status = response.status;
+    // console.log(response);
     // dispatch(loaderOff());
-    // dispatch(registerUserSuccess(response.data));
+    dispatch(userRegisteredSuccess(response.data));
     // dispatch(toasterOn(message, status));
   } catch (err) {
-    // dispatch(registerUserFail(err.response.data.message));
-    // dispatch(toasterOn(err.response.data.message));
-    // dispatch(loaderOff());
+    dispatch(
+      getErrors(err.response.data.message, err.response.status, 'REGISTER_FAIL')
+    );
+    dispatch({
+      type: types.REGISTER_FAIL,
+    });
   }
+};
+
+export const tokenConfig = (getState) => {
+  const token = getState().auth.token;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  if (token) {
+    config.headers['x-auth-token'] = token;
+  }
+
+  return config;
 };
