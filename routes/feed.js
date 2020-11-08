@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 
 const { body } = require('express-validator');
 
@@ -6,14 +7,14 @@ const feedController = require('../controllers/feed');
 
 const router = express.Router();
 
-router.get('/invoices', feedController.getInvoices);
+router.get('/invoices', auth, feedController.getInvoices);
 
-router.get('/invoices/:invoiceId', feedController.getInvoice);
+router.get('/invoices/:invoiceId', auth, feedController.getInvoice);
 
-router.put('/invoices/:invoiceId', feedController.updateInvoice);
+router.put('/invoices/:invoiceId', auth, feedController.updateInvoice);
 
-router.post('/invoice', feedController.createInvoice);
+router.post('/invoice', auth, feedController.createInvoice);
 
-router.delete('/invoices/:invoiceId', feedController.deleteInvoice);
+router.delete('/invoices/:invoiceId', auth, feedController.deleteInvoice);
 
 module.exports = router;
