@@ -15,4 +15,10 @@ router.put(
   authController.signup
 );
 
+router.put(
+  '/login',
+
+  authController.signup
+);
+
 module.exports = router;
