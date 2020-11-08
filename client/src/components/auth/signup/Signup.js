@@ -13,9 +13,7 @@ import { NavLink } from 'react-router-dom';
 
 const Signup = () => {
   const { isLoading } = useSelector(({ shared }) => shared);
-  const { errorMessage, errorStatus, idMessage } = useSelector(
-    ({ auth }) => auth
-  );
+  const { errorMessage, idMessage } = useSelector(({ auth }) => auth);
   const [msg, setMsg] = useState(null);
   const handleClearMsg = () => setMsg(null);
 
