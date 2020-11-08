@@ -1,10 +1,10 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
-import { registerUser } from '../store/actions';
+import { registerUser, clearErrors } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
 
 import './Signup.scss';
@@ -13,21 +13,41 @@ import { NavLink } from 'react-router-dom';
 
 const Signup = () => {
   const { isLoading } = useSelector(({ shared }) => shared);
+  const { errorMessage, errorStatus, idMessage } = useSelector(
+    ({ auth }) => auth
+  );
+  const [msg, setMsg] = useState(null);
+  const handleClearMsg = () => setMsg(null);
+
+  const history = useHistory();
 
   const { register, handleSubmit, errors, getValues } = useForm();
 
   const dispatch = useDispatch();
 
   const addUser = (userData) => {
-    dispatch(registerUser(userData));
+    // dispatch(clearErrors());
+    handleClearMsg();
+    dispatch(registerUser(userData, history));
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  useEffect(() => {
+    if (idMessage === 'REGISTER_FAIL') {
+      setMsg(errorMessage);
+      const timer = setTimeout(() => {
+        dispatch(clearErrors());
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setMsg(null);
+    }
+  }, [dispatch, errorMessage, idMessage]);
+
+  return (
     <Form className='signup-form' onSubmit={handleSubmit(addUser)}>
       <div className='form__sign'>
         <h2>Sign Up</h2>
+        {msg && <Alert variant='danger'>{msg}</Alert>}
         <hr />
         <div className='form-group'>
           <div className='input-group'>
