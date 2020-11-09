@@ -12,6 +12,8 @@ import Invoice from './components/invoices/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 import EditInvoice from './components/invoices/editInvoice/EditInvoice';
 import Toaster from './components/layout/toaster/Toaster';
+import AuthRoute from './components/layout/authRoute/AuthRoute';
+// import UserProfile from './components/layout/userProfile/UserProfile';
 
 import routes from './routes/routes';
 
@@ -28,7 +30,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadUser());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showToaster = isToasterVisible ? (
     <Toaster message={message} status={status} />
@@ -40,22 +43,35 @@ const App = () => {
       <div className='container'>
         {showToaster}
         <Switch>
-          <Route exact path={home.link} />
-          <Route path={createInvoice.link} component={Invoice} />
-          <Route path={login.link} component={Login} />
-          <Route exact path={yourInvoices.link} component={Invoices} />
-          <Route
+          <AuthRoute exact path={home.link} type='guest' />
+
+          <AuthRoute
+            path={createInvoice.link}
+            component={Invoice}
+            type='private'
+          />
+          <AuthRoute path={login.link} component={Login} type='guest' />
+          <AuthRoute
+            exact
+            path={yourInvoices.link}
+            component={Invoices}
+            type='private'
+          />
+          <AuthRoute
             exact
             path={`${yourInvoices.link}/:id`}
             component={SingleInvoice}
+            type='private'
           />
-          <Route
+          <AuthRoute
             path={`${yourInvoices.link}/edit/:id`}
             component={EditInvoice}
+            type='private'
           />
-          <Route path={signup.link} component={Signup} />
+          <Route path={signup.link} component={Signup} type='guest' />
+          {/* <Route path='/userProfile' component={UserProfile} type='guest' /> */}
 
-          <Route />
+          <Router />
         </Switch>
       </div>
       <Footer />
