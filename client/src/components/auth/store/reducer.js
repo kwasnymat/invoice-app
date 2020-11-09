@@ -25,7 +25,6 @@ const invoiceReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case types.LOGIN_SUCCESS:
-    case types.REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,

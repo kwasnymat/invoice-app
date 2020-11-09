@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import * as types from './types';
 
-import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
+// import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
 
 export const getErrors = (errorMessage, errorStatus, idMessage = null) => {
   return {
@@ -43,9 +43,12 @@ export const userLoginSuccess = (res) => {
   };
 };
 
+export const logout = () => ({
+  type: types.LOGOUT_SUCCESS,
+});
+
 export const loadUser = () => async (dispatch, getState) => {
   dispatch(userLoading());
-
   try {
     const response = await axios.get(
       'http://localhost:8080/auth/user',
@@ -53,7 +56,6 @@ export const loadUser = () => async (dispatch, getState) => {
     );
     dispatch(userLoaded(response.data));
   } catch (err) {
-    console.log(err.response);
     dispatch(getErrors(err.response.data.message, err.response.status));
     dispatch({
       type: types.AUTH_ERROR,
