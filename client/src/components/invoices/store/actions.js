@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as types from './types';
 
 import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
+import { tokenConfig } from '../../auth/store/actions';
 
 export const invoicesFetchSuccess = (payload) => {
   return {
@@ -39,11 +40,16 @@ export const invoiceUpdateSucces = (invoiceId, invoiceData) => {
   };
 };
 
-export const fetchInvoices = (queryFilter = '') => async (dispatch) => {
+export const fetchInvoices = (queryFilter = '') => async (
+  dispatch,
+  getState
+) => {
+  console.log(tokenConfig(getState));
   try {
     dispatch(loaderOn());
     const response = await axios.get(
-      `http://localhost:8080/feed/invoices${queryFilter}`
+      `http://localhost:8080/feed/invoices${queryFilter}`,
+      tokenConfig(getState)
     );
     dispatch(loaderOff());
     dispatch(invoicesFetchSuccess(response.data));
@@ -52,11 +58,12 @@ export const fetchInvoices = (queryFilter = '') => async (dispatch) => {
   }
 };
 
-export const fetchInvoice = (invoiceId) => async (dispatch) => {
+export const fetchInvoice = (invoiceId) => async (dispatch, getState) => {
   try {
     dispatch(loaderOn());
     const invoice = await axios.get(
-      `http://localhost:8080/feed/invoices/${invoiceId}`
+      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      tokenConfig(getState)
     );
     dispatch(loaderOff());
     dispatch(invoiceFetchSuccess(invoice));
@@ -65,12 +72,16 @@ export const fetchInvoice = (invoiceId) => async (dispatch) => {
   }
 };
 
-export const addInvoice = (invoiceData, history) => async (dispatch) => {
+export const addInvoice = (invoiceData, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch(loaderOn());
     const response = await axios.post(
       'http://localhost:8080/feed/invoice',
-      invoiceData
+      invoiceData,
+      tokenConfig(getState)
     );
     const { invoice, message } = response.data;
     const status = response.status;
@@ -83,13 +94,15 @@ export const addInvoice = (invoiceData, history) => async (dispatch) => {
 };
 
 export const editInvoice = (invoiceId, invoiceData, history) => async (
-  dispatch
+  dispatch,
+  getState
 ) => {
   try {
     dispatch(loaderOn());
     const edit = await axios.put(
       `http://localhost:8080/feed/invoices/${invoiceId}`,
-      invoiceData
+      invoiceData,
+      tokenConfig(getState)
     );
     history.push(`/invoices/${invoiceId}`);
     const { message } = edit.data;
@@ -102,11 +115,15 @@ export const editInvoice = (invoiceId, invoiceData, history) => async (
   }
 };
 
-export const deleteInvoice = (invoiceId, history) => async (dispatch) => {
+export const deleteInvoice = (invoiceId, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch(loaderOn());
     const remove = await axios.delete(
-      `http://localhost:8080/feed/invoices/${invoiceId}`
+      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      tokenConfig(getState)
     );
     history.push(`/invoices`);
     const { message } = remove.data;
