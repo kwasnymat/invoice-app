@@ -102,7 +102,7 @@ const Invoices = () => {
       </span>
     </Navbar>
   );
-  console.log(idInvoice);
+
   return (
     <>
       <FilterBar allInvoices={allInvoices} />
