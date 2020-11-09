@@ -5,14 +5,14 @@ import { useForm } from 'react-hook-form';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import { registerUser, clearErrors } from '../store/actions';
-import Loader from '../../layout/loader/Loader';
+// import Loader from '../../layout/loader/Loader';
 
 import './Signup.scss';
 
 import { NavLink } from 'react-router-dom';
 
 const Signup = () => {
-  const { isLoading } = useSelector(({ shared }) => shared);
+  //   const { isLoading } = useSelector(({ shared }) => shared);
   const { errorMessage, idMessage } = useSelector(({ auth }) => auth);
   const [msg, setMsg] = useState(null);
   const handleClearMsg = () => setMsg(null);
