@@ -5,13 +5,13 @@ import { useForm } from 'react-hook-form';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import { loginUser, clearErrors } from '../store/actions';
-import Loader from '../../layout/loader/Loader';
+// import Loader from '../../layout/loader/Loader';
 import { NavLink } from 'react-router-dom';
 
 import './Login.scss';
 
 const Login = () => {
-  const { isLoading } = useSelector(({ shared }) => shared);
+  //   const { isLoading } = useSelector(({ shared }) => shared);
   const { errorMessage, idMessage } = useSelector(({ auth }) => auth);
   const [msg, setMsg] = useState(null);
   const handleClearMsg = () => setMsg(null);
