@@ -1,14 +1,17 @@
 import React, { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 
 import routes from '../../../routes/routes';
 import logo from '../../../assets/logo.png';
+import UserProfile from '../userProfile/UserProfile';
 
 import './Navigation.scss';
 
 const Navigation = () => {
   const [expanded, setExpanded] = useState(false);
+  const { isAuth, user } = useSelector(({ auth }) => auth);
 
   const handleExpandChange = useCallback(() => {
     setExpanded(false);
@@ -18,23 +21,53 @@ const Navigation = () => {
     setExpanded((prevExpanded) => !prevExpanded);
   }, []);
 
-  const { createInvoice, yourInvoices, login, signup, home } = routes;
+  const { home } = routes;
 
-  const navigationLinks = [
-    { name: createInvoice.name, link: createInvoice.link },
-    { name: yourInvoices.name, link: yourInvoices.link },
-    { name: login.name, link: login.link },
-    { name: signup.name, link: signup.link },
-  ];
-
-  const renderNavLinks = () =>
-    navigationLinks.map(({ name, link }) => (
-      <div className='nav__link nav-link' key={name}>
-        <NavLink className='inactive' activeClassName='active' to={link}>
-          {name}
+  const authLinks = (
+    <>
+      <div className='nav__link nav-link'>
+        <NavLink
+          onClick={handleExpandChange}
+          className='inactive'
+          activeClassName='active'
+          to='/create-invoice'
+        >
+          <i className='fas fa-folder-plus'></i> Create Invoice
         </NavLink>
       </div>
-    ));
+      <div className='nav__link nav-link'>
+        <NavLink
+          className='inactive'
+          onClick={handleExpandChange}
+          activeClassName='active'
+          to='/invoices'
+        >
+          <i className='fas fa-file-invoice'></i> Your Invoices
+        </NavLink>
+      </div>
+      <div className='nav__link nav-link'>
+        <UserProfile
+          username={user ? user.username : null}
+          handleExpandChange={handleExpandChange}
+        />
+      </div>
+    </>
+  );
+
+  const guestLinks = (
+    <>
+      <div className='nav__link nav-link' onClick={handleExpandChange}>
+        <NavLink className='inactive' activeClassName='active' to='/login'>
+          <i className='fas fa-user'></i> Login
+        </NavLink>
+      </div>
+      <div className='nav__link nav-link' onClick={handleExpandChange}>
+        <NavLink className='inactive' activeClassName='active' to='/sign-up'>
+          <i className='fas fa-sign-in-alt'></i> Sign up
+        </NavLink>
+      </div>
+    </>
+  );
 
   return (
     <div className='Navigation'>
@@ -49,9 +82,7 @@ const Navigation = () => {
           aria-controls='basic-navbar-nav'
         />
         <Navbar.Collapse>
-          <Nav onClick={handleExpandChange} className='ml-auto'>
-            {renderNavLinks()}
-          </Nav>
+          <Nav className='ml-auto'>{isAuth ? authLinks : guestLinks}</Nav>
         </Navbar.Collapse>
       </Navbar>
     </div>
