@@ -1,9 +1,12 @@
 .signup-form p {
+  padding: 1px;
   text-transform: none;
   font-weight: 500;
   font-size: 0.8rem;
   color: #bf1650;
   margin: auto 4px;
+  border: 2px solid pink;
+  background-color: pink;
 }
 
 .signup-form p::before {

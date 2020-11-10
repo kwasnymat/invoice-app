@@ -70,7 +70,8 @@ exports.signup = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.userId).select('-password');
+    const user = await User.findById(req.user).select('-password');
+
     if (!user)
       return res.status(400).json({ message: 'User does not exists!' });
     res.json(user);

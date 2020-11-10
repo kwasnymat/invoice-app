@@ -44,7 +44,12 @@ export const fetchInvoices = (queryFilter = '') => async (
   dispatch,
   getState
 ) => {
+  console.log(queryFilter);
+  const creator = getState().auth.user._id;
+  const mul = { creator: creator };
+
   console.log(tokenConfig(getState));
+  console.log(queryFilter);
   try {
     dispatch(loaderOn());
     const response = await axios.get(

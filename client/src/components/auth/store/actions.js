@@ -43,32 +43,39 @@ export const userLoginSuccess = (res) => {
   };
 };
 
-export const logout = () => ({
-  type: types.LOGOUT_SUCCESS,
-});
+export const logout = () => {
+  console.log('NIE DZIALA');
+  return {
+    type: types.LOGOUT_SUCCESS,
+  };
+};
 
 export const loadUser = () => async (dispatch, getState) => {
   dispatch(userLoading());
+  console.log(tokenConfig(getState));
   try {
     const response = await axios.get(
       'http://localhost:8080/auth/user',
       tokenConfig(getState)
     );
+
+    console.log(response.data);
     dispatch(userLoaded(response.data));
   } catch (err) {
+    console.log(err);
     dispatch(getErrors(err.response.data.message, err.response.status));
     dispatch({
       type: types.AUTH_ERROR,
     });
   }
 };
-export const loginUser = (userData, history) => async (dispatch) => {
+export const loginUser = (userData) => async (dispatch) => {
   try {
     const response = await axios.post(
       'http://localhost:8080/auth/login',
       userData
     );
-    history.push(`/invoices/`);
+    // history.push(`/invoices/`);
     dispatch(userLoginSuccess(response.data));
   } catch (err) {
     dispatch(
@@ -80,13 +87,13 @@ export const loginUser = (userData, history) => async (dispatch) => {
   }
 };
 
-export const registerUser = (userData, history) => async (dispatch) => {
+export const registerUser = (userData) => async (dispatch) => {
   try {
     const response = await axios.put(
       'http://localhost:8080/auth/signup',
       userData
     );
-    history.push(`/invoices/`);
+    // history.push(`/invoices/`);
     // const { message } = response.data;
     // const status = response.status;
     // console.log(response);

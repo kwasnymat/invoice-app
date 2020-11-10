@@ -1,12 +1,15 @@
 import React from 'react';
 
+import { NavDropdown } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../auth/store/actions';
 
-import { NavDropdown } from 'react-bootstrap';
+const UserProfile = ({ username, handleExpandChange }) => {
+  const dispatch = useDispatch();
+  const logoutt = () => {
+    dispatch(logout());
+  };
 
-// import { logout } from '../../flux/actions/authActions';
-
-const userProfile = ({ username, handleExpandChange }) => {
   return (
     <NavDropdown
       title={
@@ -25,7 +28,7 @@ const userProfile = ({ username, handleExpandChange }) => {
       <NavDropdown.Item
         onClick={() => {
           handleExpandChange();
-          logout();
+          logoutt();
         }}
       >
         <i className='fas fa-sign-out-alt'></i> Logout
@@ -34,4 +37,4 @@ const userProfile = ({ username, handleExpandChange }) => {
   );
 };
 
-export default userProfile;
+export default UserProfile;

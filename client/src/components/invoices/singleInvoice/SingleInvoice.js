@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -7,6 +7,7 @@ import Loader from '../../layout/loader/Loader';
 import logo from '../../../assets/logo.png';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import ModalPop from '../../layout/modalPop/ModalPop';
 
 import './SingleInvoice.scss';
 
@@ -14,6 +15,10 @@ const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
 
   const { isLoading } = useSelector(({ shared }) => shared);
+  const [show, setShow] = useState(false);
+  const [idInvoice, setId] = useState();
+  const handleClose = () => setShow(false);
+
   const invoiceId = match.params.id;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -73,6 +78,14 @@ const SingleInvoice = ({ match }) => {
     <Loader />
   ) : (
     <div className='invoice__generator'>
+      {show && (
+        <ModalPop
+          idInvoice={idInvoice}
+          closeModal={handleClose}
+          show={show}
+          deleteInvoiceHandler={deleteInvoiceHandler}
+        />
+      )}
       <p
         className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'
         onClick={exportToPdfInvoice}
@@ -88,7 +101,10 @@ const SingleInvoice = ({ match }) => {
       </p>
       <p
         className='btn btn-sm btn-white m-b-10 p-l-5 action__invoice'
-        onClick={() => deleteInvoiceHandler(_id)}
+        onClick={() => {
+          setShow(true);
+          setId(_id);
+        }}
       >
         <i className='fas fa-trash-alt t-plus-1 fa-fw fa-lg'></i> Delete Invoice
       </p>

@@ -15,6 +15,7 @@ const FilterBar = ({ allInvoices }) => {
   const { handleSubmit, register } = useForm();
 
   const SubmitForm = (values) => {
+    console.log(values);
     const queryString = createQueryString(values);
     const queryStringStore = createQueryStore(values);
     dispatch(saveQuery(queryStringStore));
