@@ -14,10 +14,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  status: {
-    type: String,
-    default: 'New User',
-  },
   invoices: [
     {
       type: Schema.Types.ObjectId,
