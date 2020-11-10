@@ -1,12 +1,13 @@
 const Invoice = require('../models/invoice');
+const User = require('../models/user');
 
 const { validationResult } = require('express-validator');
-const post = require('../models/invoice');
 
 exports.getInvoices = async (req, res, next) => {
   try {
-    const { page = 1, limit = 6, ...params } = req.query;
-
+    const { page = 1, limit = 1, ...params } = req.query;
+    params.creator = req.user;
+    console.log(params);
     const invoices = await Invoice.find(params)
       .sort({ dateInvoice: -1 })
       .limit(Number(limit))
@@ -92,13 +93,17 @@ exports.createInvoice = async (req, res, next) => {
     priceNoVat,
     vat,
     totalMoney,
+    creator: req.user,
   });
 
   try {
     await invoice.save();
+    const user = await User.findById(req.user);
+    await user.save();
     res.status(201).json({
       invoice,
       message: 'Invoice created!',
+      creator: { _id: user._id, name: user.name },
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -110,7 +115,7 @@ exports.createInvoice = async (req, res, next) => {
 
 exports.getInvoice = async (req, res, next) => {
   const invoiceId = req.params.invoiceId;
-  const invoice = await post.findById(invoiceId);
+  const invoice = await Invoice.findById(invoiceId);
   try {
     if (!invoice) {
       const error = new Error('Could not find invoice!');
@@ -170,6 +175,11 @@ exports.updateInvoice = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
+    if (invoice.creator.toString() !== req.user) {
+      const error = new Error('Not authorized!');
+      error.statusCode = 403;
+      throw error;
+    }
     invoice.invoiceNumber = invoiceNumber;
     invoice.dateInvoice = dateInvoice;
     invoice.cityInvoice = cityInvoice;
@@ -217,6 +227,9 @@ exports.deleteInvoice = async (req, res, next) => {
       throw error;
     }
     await Invoice.findByIdAndRemove(invoiceId);
+    const user = await User.findById(req.user);
+    user.invoices.pull(invoiceId);
+    await user.save();
     res.status(200).json({ message: 'Invoice deleted!' });
   } catch (err) {
     if (!err.statusCode) {
