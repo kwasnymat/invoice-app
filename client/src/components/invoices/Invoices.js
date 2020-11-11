@@ -94,14 +94,30 @@ const Invoices = () => {
       })}
     </Table>
   );
-  const isInvoicesListEmpty = !invoices.length && !isLoading && (
-    <Navbar className='invoice__noMatch custab'>
-      <span>
-        There is no match for your search. Please revise your filters and try
-        again.
-      </span>
-    </Navbar>
-  );
+
+  const isInvoicesListEmpty = () => {
+    if (!invoices.length && !isLoading && !query) {
+      return (
+        <Navbar className='invoice__noMatch custab'>
+          <span>
+            You don't have any invoices! Please create one:{' '}
+            <NavLink exact to='/create-invoice' style={{ color: 'black' }}>
+              click
+            </NavLink>
+          </span>
+        </Navbar>
+      );
+    } else if (!invoices.length && !isLoading && query) {
+      return (
+        <Navbar className='invoice__noMatch custab'>
+          <span>
+            There is no match for your search. Please revise your filters and
+            try again.
+          </span>
+        </Navbar>
+      );
+    } else return '';
+  };
 
   return (
     <>
@@ -120,7 +136,8 @@ const Invoices = () => {
           )}
           <div className='col-lg-12'>
             {invoices.length !== 0 && generaterInvoices()}
-            {isInvoicesListEmpty}
+
+            {isInvoicesListEmpty()}
             <div className='pagination'>
               {invoices.length !== 0 && (
                 <Pagination
