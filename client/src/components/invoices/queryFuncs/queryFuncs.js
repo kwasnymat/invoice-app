@@ -1,6 +1,6 @@
 export const createQueryString = (values) => {
   const filteredValues = Object.entries(values).filter(
-    ([, value]) => value !== '-------'
+    ([, value]) => value !== '-------' && value !== ''
   );
   const url = new URLSearchParams(filteredValues).toString();
   return url && `?${url}`;
@@ -8,7 +8,7 @@ export const createQueryString = (values) => {
 
 export const createQueryStore = (values) => {
   const filteredValues = Object.entries(values).filter(
-    ([, value]) => value !== '-------'
+    ([, value]) => value !== '-------' && value !== ''
   );
   const url = new URLSearchParams(filteredValues).toString();
   return url && `${url}`;
