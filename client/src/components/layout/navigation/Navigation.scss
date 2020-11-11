@@ -2,7 +2,6 @@ $color-primary: #343a40;
 
 .Navigation {
   height: 7.6vh;
-  margin-bottom: 1rem;
 
   .inactive {
     color: black;
@@ -30,6 +29,12 @@ $color-primary: #343a40;
   .dropdown-menu {
     right: -30px;
     left: auto;
+    float: left;
+  }
+  .dropdown-item.active,
+  .dropdown-item:active {
+    color: black;
+    background-color: #fff;
   }
 
   .nav__brand {

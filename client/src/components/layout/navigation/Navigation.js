@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 import routes from '../../../routes/routes';
 import logo from '../../../assets/logo.png';
@@ -72,18 +72,20 @@ const Navigation = () => {
   return (
     <div className='Navigation'>
       <Navbar expanded={expanded} fixed='top' bg='light' expand='md'>
-        <NavLink className='nav__brand' exact to={home.link}>
-          <Navbar.Brand>
-            <img className='navbar-brand' src={logo} alt='invoiceApp logo' />
-          </Navbar.Brand>
-        </NavLink>
-        <Navbar.Toggle
-          onClick={handleNavChange}
-          aria-controls='basic-navbar-nav'
-        />
-        <Navbar.Collapse>
-          <Nav className='ml-auto'>{isAuth ? authLinks : guestLinks}</Nav>
-        </Navbar.Collapse>
+        <Container>
+          <NavLink className='nav__brand' exact to={home.link}>
+            <Navbar.Brand>
+              <img className='navbar-brand' src={logo} alt='invoiceApp logo' />
+            </Navbar.Brand>
+          </NavLink>
+          <Navbar.Toggle
+            onClick={handleNavChange}
+            aria-controls='basic-navbar-nav'
+          />
+          <Navbar.Collapse>
+            <Nav className='ml-auto'>{isAuth ? authLinks : guestLinks}</Nav>
+          </Navbar.Collapse>
+        </Container>
       </Navbar>
     </div>
   );
