@@ -13,6 +13,7 @@ import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 import EditInvoice from './components/invoices/editInvoice/EditInvoice';
 import Toaster from './components/layout/toaster/Toaster';
 import AuthRoute from './components/layout/authRoute/AuthRoute';
+import Home from './components/layout/home/Home';
 // import UserProfile from './components/layout/userProfile/UserProfile';
 
 import routes from './routes/routes';
@@ -40,11 +41,10 @@ const App = () => {
   return (
     <Router>
       <Navigation />
+      <AuthRoute exact path={home.link} component={Home} />
       <div className='container'>
         {showToaster}
         <Switch>
-          <AuthRoute exact path={home.link} type='guest' />
-
           <AuthRoute
             path={createInvoice.link}
             component={Invoice}
@@ -68,8 +68,7 @@ const App = () => {
             component={EditInvoice}
             type='private'
           />
-          <Route path={signup.link} component={Signup} type='guest' />
-          {/* <Route path='/userProfile' component={UserProfile} type='guest' /> */}
+          <AuthRoute path={signup.link} component={Signup} type='guest' />
 
           <Router />
         </Switch>
