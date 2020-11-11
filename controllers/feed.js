@@ -5,16 +5,15 @@ const { validationResult } = require('express-validator');
 
 exports.getInvoices = async (req, res, next) => {
   try {
-    const { page = 1, limit = 1, ...params } = req.query;
+    const { page = 1, limit = 5, ...params } = req.query;
     params.creator = req.user;
-    console.log(params);
     const invoices = await Invoice.find(params)
       .sort({ dateInvoice: -1 })
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit));
 
     const countedInvoces = await Invoice.countDocuments(params);
-    const invoicesAll = await Invoice.find();
+    const invoicesAll = await Invoice.find({ creator: req.user });
     res.status(200).json({
       message: 'Fetched invoices successfully!',
       invoices: invoices,
@@ -99,6 +98,7 @@ exports.createInvoice = async (req, res, next) => {
   try {
     await invoice.save();
     const user = await User.findById(req.user);
+    user.invoices.push(invoice);
     await user.save();
     res.status(201).json({
       invoice,
