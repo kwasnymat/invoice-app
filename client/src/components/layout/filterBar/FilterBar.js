@@ -31,9 +31,8 @@ const FilterBar = ({ allInvoices }) => {
       allInvoices.map(
         (item) => (
           /*eslint no-sequences: */
-          [item.invoiceNumber, item],
-          [item.dateInvoice, item],
-          [item.BuyerCompanyName, item]
+
+          [item.dateInvoice, item], [item.BuyerCompanyName, item]
         )
       )
     ).values(),
