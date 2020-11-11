@@ -1,0 +1,21 @@
+.Home {
+  // Obraz Pexels z Pixabay
+  background-image: url('../../../assets/books.jpg');
+  height: 90vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.homePage {
+  position: relative;
+  top: 6rem;
+}
+
+.redirect {
+  margin: 1rem;
+}
+
+.homePage h5 {
+  color: #bb5353;
+}
