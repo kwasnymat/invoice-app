@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button, Container } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import './Home.scss';
@@ -9,7 +9,7 @@ import './Home.scss';
 const Home = () => {
   const { isAuth } = useSelector(({ auth }) => auth);
 
-  const history = useHistory();
+  //   const history = useHistory();
 
   return (
     <div className='Home'>
@@ -23,20 +23,22 @@ const Home = () => {
             {!isAuth ? (
               <>
                 <h5>Please login or sign up to starting creating!</h5>
-                <Button
-                  type='submit'
-                  className='btn btn-primary btn-lg redirect'
-                  onClick={() => history.push(`/login`)}
-                >
-                  Login
-                </Button>
-                <Button
-                  type='submit'
-                  className='btn btn-primary btn-lg redirect'
-                  onClick={() => history.push(`/sign-up`)}
-                >
-                  Sign up
-                </Button>
+                <NavLink exact to='/login'>
+                  <Button
+                    type='submit'
+                    className='btn btn-primary btn-lg redirect'
+                  >
+                    Login
+                  </Button>
+                </NavLink>
+                <NavLink exact to='/sign-up'>
+                  <Button
+                    type='submit'
+                    className='btn btn-primary btn-lg redirect'
+                  >
+                    Sign up
+                  </Button>
+                </NavLink>
               </>
             ) : null}
           </div>

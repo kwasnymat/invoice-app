@@ -1,8 +1,8 @@
 $color-app: #bb5353;
 
 .Home {
-  // Obraz Pexels z Pixabay
-  background-image: url('../../../assets/books.jpg');
+  // Designed by stories / Freepik
+  background-image: url('../../../assets/3711934.jpg');
   height: 87vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -17,7 +17,9 @@ $color-app: #bb5353;
 .redirect {
   margin: 1rem;
 }
-
+.homePage h1 {
+  color: $color-app;
+}
 .homePage h5 {
   color: $color-app;
 }

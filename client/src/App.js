@@ -41,10 +41,11 @@ const App = () => {
   return (
     <Router>
       <Navigation />
-      <AuthRoute exact path={home.link} component={Home} />
+
       <Container>
         {showToaster}
         <Switch>
+          <AuthRoute exact path={home.link} component={Home} />
           <AuthRoute
             path={createInvoice.link}
             component={CreateInvoice}
