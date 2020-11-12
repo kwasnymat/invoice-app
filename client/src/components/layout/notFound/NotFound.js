@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 import './NotFound.scss';
@@ -12,7 +11,7 @@ const NotFound = () => {
       <div className='mb-4 lead'>
         The page you are looking for was not found.
       </div>
-      <NavLink className='btn btn-link' exact to='/'>
+      <NavLink className='btn btn-link backError' exact to='/'>
         Back to Home
       </NavLink>
     </div>

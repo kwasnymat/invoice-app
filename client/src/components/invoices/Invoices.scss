@@ -89,6 +89,9 @@ $colorFont: #ffffff;
   .invoice__noMatch span {
     font-size: 0.9rem;
   }
+  .invoice__generator {
+    margin-top: 4rem;
+  }
 }
 @media (max-width: 388px) {
   .invoices__thead th {

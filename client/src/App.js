@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Container } from 'react-bootstrap';
 
 import CreateInvoice from './components/invoices/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
@@ -41,7 +42,7 @@ const App = () => {
     <Router>
       <Navigation />
       <AuthRoute exact path={home.link} component={Home} />
-      <div className='container'>
+      <Container>
         {showToaster}
         <Switch>
           <AuthRoute
@@ -73,7 +74,7 @@ const App = () => {
 
           <Router />
         </Switch>
-      </div>
+      </Container>
       <Footer />
     </Router>
   );

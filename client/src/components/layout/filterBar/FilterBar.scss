@@ -77,6 +77,11 @@ $colorFont: #ffffff;
     margin-top: 1rem;
   }
 }
+@media (max-width: 414px) {
+  .filter__bar {
+    margin-top: 3rem !important;
+  }
+}
 @media (max-width: 290px) {
   .form__control {
     width: 12rem !important;
