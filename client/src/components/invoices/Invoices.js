@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { Navbar } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { fetchInvoices, deleteInvoice, saveQuery } from './store/actions';
-import { Table } from 'react-bootstrap';
+import { useHistory, NavLink } from 'react-router-dom';
+import { Navbar, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
+
+import { fetchInvoices, deleteInvoice, saveQuery } from './store/actions';
 import FilterBar from '../layout/filterBar/FilterBar';
-import Loader from '../layout/loader/Loader';
 import ModalPop from '../layout/modalPop/ModalPop';
+import Loader from '../layout/loader/Loader';
+
 import './Invoices.scss';
 
 const Invoices = () => {
-  const { invoices, currentPage, totalPages, allInvoices, query } = useSelector(
+  const { invoices, currentPage, totalPages, query } = useSelector(
     ({ invoices }) => invoices
   );
-
+  const { isLoading } = useSelector(({ shared }) => shared);
   const [show, setShow] = useState(false);
   const [idInvoice, setId] = useState();
   const handleClose = () => setShow(false);
 
-  const { isLoading } = useSelector(({ shared }) => shared);
-
   const history = useHistory();
   const dispatch = useDispatch();
+  const totalItems = totalPages * invoices.length;
 
   useEffect(() => {
     dispatch(fetchInvoices());
@@ -39,7 +39,6 @@ const Invoices = () => {
     dispatch(fetchInvoices(`?${url}&${query}`));
   };
 
-  const totalItems = totalPages * invoices.length;
   const generaterInvoices = () => (
     <Table responsive='sm custab'>
       <thead className='invoices__thead'>
@@ -100,7 +99,7 @@ const Invoices = () => {
       return (
         <Navbar className='invoice__noMatch custab'>
           <span>
-            You don't have any invoices! Please create one:{' '}
+            You don't have any invoices! Click to create one:{' '}
             <NavLink exact to='/create-invoice' style={{ color: 'black' }}>
               click
             </NavLink>
@@ -118,10 +117,9 @@ const Invoices = () => {
       );
     } else return '';
   };
-
   return (
     <>
-      <FilterBar allInvoices={allInvoices} />
+      <FilterBar />
       {isLoading ? (
         <Loader />
       ) : (
@@ -136,7 +134,6 @@ const Invoices = () => {
           )}
           <div className='col-lg-12'>
             {invoices.length !== 0 && generaterInvoices()}
-
             {isInvoicesListEmpty()}
             <div className='pagination'>
               {invoices.length !== 0 && (

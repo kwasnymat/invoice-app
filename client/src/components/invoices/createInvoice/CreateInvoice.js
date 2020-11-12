@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import CreateInvoiceForm from './CreateInvoiceForm';
-import { useHistory } from 'react-router-dom';
-import { addInvoice } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
+import { addInvoice } from '../store/actions';
 
-const Invoices = () => {
+const CreateInvoice = () => {
   const { isLoading } = useSelector(({ shared }) => shared);
+  const { user } = useSelector(({ auth }) => auth);
   const {
     register,
     control,
@@ -18,23 +19,35 @@ const Invoices = () => {
     errors,
     setValue,
     useWatch,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      invoiceNumber: `/${new Date().getFullYear()}`,
+      SellerCompanyCity: user.CompanyCity,
+      SellerCompanyName: user.CompanyName,
+      SellerCompanyStreet: user.CompanyStreet,
+      SellerCompanyVat: user.CompanyVat,
+      SellerCompanyZip: user.CompanyZip,
+      SellerCompanyPhone: user.CompanyPhone,
+      dateInvoice: new Date().toISOString().split('T')[0],
+      cityInvoice: user.CompanyCity,
+    },
+  });
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   });
+
   const history = useHistory();
   const dispatch = useDispatch();
+  const items = watch('items');
 
   const selectedCurrency = '$';
   const [currency, setCurrency] = useState(selectedCurrency);
-
   const currencies = ['$', '€', 'zł'];
 
   const onSubmit = (invoice) => {
     dispatch(addInvoice(invoice, history));
   };
-  const items = watch('items');
 
   return isLoading ? (
     <Loader />
@@ -59,4 +72,4 @@ const Invoices = () => {
   );
 };
 
-export default Invoices;
+export default CreateInvoice;

@@ -1,30 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+
+import { useHistory, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { Form, Button, Alert } from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+
 import { registerUser, clearErrors } from '../store/actions';
-// import Loader from '../../layout/loader/Loader';
+import Loader from '../../layout/loader/Loader';
 
 import './Signup.scss';
 
-import { NavLink } from 'react-router-dom';
-
 const Signup = () => {
-  //   const { isLoading } = useSelector(({ shared }) => shared);
   const { errorMessage, idMessage } = useSelector(({ auth }) => auth);
+  const { isLoading } = useSelector(({ shared }) => shared);
+  const { register, handleSubmit, errors, getValues } = useForm();
+
   const [msg, setMsg] = useState(null);
   const handleClearMsg = () => setMsg(null);
 
   const history = useHistory();
-
-  const { register, handleSubmit, errors, getValues } = useForm();
-
   const dispatch = useDispatch();
 
   const addUser = (userData) => {
-    // dispatch(clearErrors());
     handleClearMsg();
     dispatch(registerUser(userData, history));
   };
@@ -41,7 +39,9 @@ const Signup = () => {
     }
   }, [dispatch, errorMessage, idMessage]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Form className='signup-form' onSubmit={handleSubmit(addUser)}>
       <div className='form__sign'>
         <h2>Sign Up</h2>

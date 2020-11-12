@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { Redirect, Route } from 'react-router';
-
-import * as types from './types';
 
 import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
+import * as types from './types';
 
 export const getErrors = (errorMessage, errorStatus, idMessage = null) => {
   return {
@@ -22,11 +20,6 @@ export const userLoaded = (payload) => {
   return {
     type: types.USER_LOADED,
     payload,
-  };
-};
-export const userLoading = () => {
-  return {
-    type: types.USER_LOADING,
   };
 };
 
@@ -50,9 +43,28 @@ export const logout = () => {
   };
 };
 
+export const editUser = (data) => async (dispatch, getState) => {
+  try {
+    dispatch(loaderOn());
+    const response = await axios.put(
+      'http://localhost:8080/auth/user/edit-user',
+      data,
+      tokenConfig(getState)
+    );
+    const { message } = response.data;
+    const status = response.status;
+    dispatch(loadUser());
+    dispatch(loaderOff());
+    dispatch(toasterOn(message, status));
+  } catch (err) {
+    dispatch(getErrors(err.response.data.message, err.response.status));
+    dispatch({
+      type: types.AUTH_ERROR,
+    });
+  }
+};
+
 export const loadUser = () => async (dispatch, getState) => {
-  dispatch(userLoading());
-  console.log(tokenConfig(getState));
   try {
     const response = await axios.get(
       'http://localhost:8080/auth/user',
@@ -60,7 +72,6 @@ export const loadUser = () => async (dispatch, getState) => {
     );
     dispatch(userLoaded(response.data));
   } catch (err) {
-    console.log(err);
     dispatch(getErrors(err.response.data.message, err.response.status));
     dispatch({
       type: types.AUTH_ERROR,
@@ -69,12 +80,10 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 export const loginUser = (userData, history) => async (dispatch) => {
   try {
-    dispatch(loaderOn());
     const response = await axios.post(
       'http://localhost:8080/auth/login',
       userData
     );
-    dispatch(loaderOff());
     dispatch(userLoginSuccess(response.data));
     history.push(`/invoices/`);
   } catch (err) {
@@ -97,11 +106,11 @@ export const registerUser = (userData, history) => async (dispatch) => {
     history.push(`/login/`);
     const { message } = response.data;
     const status = response.status;
-    console.log(response);
-    dispatch(loaderOff());
     dispatch(userRegisteredSuccess(response.data));
+    dispatch(loaderOff());
     dispatch(toasterOn(message, status));
   } catch (err) {
+    dispatch(loaderOff());
     dispatch(
       getErrors(err.response.data.message, err.response.status, 'REGISTER_FAIL')
     );

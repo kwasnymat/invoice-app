@@ -1,8 +1,16 @@
+$color-app: #bb5353;
+$color-error: #bf1650;
+$color-app-light: #ccc;
+$color-app-dark: #924444;
+$color-app-invoice: #000000;
+$color-app-single: #d47b7b;
+$colorFont: #ffffff;
+
 .custab {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid $color-app-light;
 
   margin: 2rem 0;
-  box-shadow: 3px 3px 2px #ccc;
+  box-shadow: 3px 3px 2px $color-app-light;
   transition: 0.5s;
 }
 
@@ -16,11 +24,11 @@
 }
 
 .invoice__noMatch {
-  background-color: #bb5353;
+  background-color: $color-app;
 }
 .invoice__noMatch span {
   font-size: 1.2rem;
-  color: white;
+  color: $colorFont;
   margin: 0 auto;
 }
 
@@ -33,22 +41,22 @@
 .detailsId_button {
   margin-right: 0.7rem;
   margin-left: 0.7rem;
-  color: #924444 !important;
+  color: $color-app-dark !important;
   cursor: pointer;
   font-size: 1.5rem;
 }
 
 .deleteId_button:hover,
 .detailsId_button:hover {
-  color: #d47b7b !important;
+  color: $color-app-single !important;
 }
 
 .active__page {
-  background-color: #bb5353 !important;
-  border-color: #bb5353 !important;
+  background-color: $color-app !important;
+  border-color: $color-app !important;
 }
 .page-link {
-  color: black;
+  color: $color-app-invoice;
 }
 
 @media (max-width: 602px) {
@@ -66,6 +74,7 @@
     margin-top: 0.5rem;
   }
 }
+
 @media (max-width: 420px) {
   .invoices__thead th {
     font-size: 0.8rem !important;

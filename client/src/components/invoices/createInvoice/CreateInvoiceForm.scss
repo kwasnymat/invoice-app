@@ -1,6 +1,11 @@
+$color-app: #bb5353;
+$color-error: #bf1650;
+$color-app-light: #f1f1f1;
+$color-app-dark: #552323;
+
 .form__invoice {
   margin: 2rem 0 4rem 0;
-  border: 2px solid #f1f1f1;
+  border: 2px solid $color-app-light;
   padding: 1rem;
 }
 
@@ -35,7 +40,7 @@
 p {
   font-weight: 500;
   font-size: 0.8rem;
-  color: #bf1650;
+  color: $color-error;
 }
 
 p::before {
@@ -67,12 +72,12 @@ label.form-label {
 }
 
 .form__invoice .btn {
-  background-color: #bb5353;
+  background-color: $color-app;
   border: none;
 }
 .form__invoice .btn:hover,
 .form__invoice .btn:active {
-  background-color: #552323 !important;
+  background-color: $color-app-dark !important;
 }
 
 th.text-center {
@@ -80,12 +85,24 @@ th.text-center {
 }
 
 .invoice__save {
-  background-color: #bb5353 !important;
+  background-color: $color-app !important;
 }
 
 .invoice__save:hover,
 .invoice__save:active {
-  background-color: #552323 !important;
+  background-color: $color-app-dark !important;
+}
+
+@media (max-width: 991px) {
+  .form__invoice {
+    margin-bottom: 7rem;
+  }
+  .form__invoice .col-md-2 {
+    max-width: 20%;
+  }
+  .choose__curency select.form-control {
+    padding: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -104,7 +121,11 @@ th.text-center {
 }
 
 .form__invoice p {
-  color: red;
+  color: $color-error;
   text-align: center;
   font-weight: 400;
+}
+
+.user_save {
+  margin-top: 2rem;
 }

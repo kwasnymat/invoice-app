@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 import { fetchInvoice, deleteInvoice } from '../store/actions';
+import ModalPop from '../../layout/modalPop/ModalPop';
 import Loader from '../../layout/loader/Loader';
 import logo from '../../../assets/logo.png';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import ModalPop from '../../layout/modalPop/ModalPop';
 
 import './SingleInvoice.scss';
 
 const SingleInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
-
   const { isLoading } = useSelector(({ shared }) => shared);
+
   const [show, setShow] = useState(false);
   const [idInvoice, setId] = useState();
   const handleClose = () => setShow(false);

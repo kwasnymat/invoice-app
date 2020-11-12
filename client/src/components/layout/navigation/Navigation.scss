@@ -1,10 +1,13 @@
 $color-primary: #343a40;
+$color-app: #bb5353;
+$color-app-dark: #000000;
+$colorFont: #ffffff;
 
 .Navigation {
   height: 7.6vh;
 
   .inactive {
-    color: black;
+    color: $color-app-dark;
     text-decoration: none;
     border-bottom: none;
   }
@@ -13,7 +16,7 @@ $color-primary: #343a40;
   }
 
   .active {
-    color: #bb5353;
+    color: $color-app;
     text-decoration: none;
   }
 
@@ -33,8 +36,8 @@ $color-primary: #343a40;
   }
   .dropdown-item.active,
   .dropdown-item:active {
-    color: black;
-    background-color: #fff;
+    color: $color-app-dark;
+    background-color: $colorFont;
   }
 
   .nav__brand {
@@ -49,14 +52,7 @@ $color-primary: #343a40;
   .nav-link {
     padding: 0 0.5rem !important;
   }
-
-  @media (max-width: 768px) {
-    .navbar-brand {
-      width: 100px;
-      height: 50px;
-    }
-    .nav-link {
-      padding: 0.5rem 0.5rem !important;
-    }
+  .nav-link:last-child {
+    padding: 0 0.2rem !important;
   }
 }

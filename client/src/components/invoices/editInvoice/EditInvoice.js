@@ -2,28 +2,36 @@ import React, { useState, useEffect } from 'react';
 
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-
-import VatPrice from '../createInvoice/VatPrice';
-import NoVatPrice from '../createInvoice/NoVatPrice';
-import { fetchInvoice, editInvoice } from '../store/actions';
-import Loader from '../../layout/loader/Loader';
-
+import { ErrorMessage } from '@hookform/error-message';
 import { Form, Button, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { ErrorMessage } from '@hookform/error-message';
+
+import { fetchInvoice, editInvoice } from '../store/actions';
+import NoVatPrice from '../createInvoice/NoVatPrice';
+import VatPrice from '../createInvoice/VatPrice';
+import Loader from '../../layout/loader/Loader';
 
 const EditInvoice = ({ match }) => {
   const { invoice } = useSelector(({ invoices }) => invoices);
   const { isLoading } = useSelector(({ shared }) => shared);
+  const selectedCurrency = '$';
+  const [currency, setCurrency] = useState(selectedCurrency);
+
+  const currencies = ['$', '€', 'zł'];
+
   const { register, control, handleSubmit, watch, errors, reset } = useForm({
     defaultValues: {
       items: [invoice],
     },
   });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  });
   let counter = 0;
   const history = useHistory();
-
   const dispatch = useDispatch();
+  const items = watch('items');
 
   useEffect(() => {
     const invoiceId = match.params.id;
@@ -34,20 +42,9 @@ const EditInvoice = ({ match }) => {
     reset(invoice);
   }, [reset, invoice]);
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'items',
-  });
-
-  const selectedCurrency = '$';
-  const [currency, setCurrency] = useState(selectedCurrency);
-
-  const currencies = ['$', '€', 'zł'];
-
   const onSubmit = async (invoiceData) => {
     dispatch(editInvoice(invoice._id, invoiceData, history));
   };
-  const items = watch('items');
 
   const calcGrantTotal = () => {
     let sum = (a) => a.reduce((x, y) => x + y);
@@ -73,7 +70,6 @@ const EditInvoice = ({ match }) => {
   ) : (
     <Form className='form__invoice' onSubmit={handleSubmit(onSubmit)}>
       <h2>Invoice </h2>
-      {/* pierwsza */}
       <div className='row' size='sm'>
         <div className=' col-lg-6'>
           <Form.Row>
@@ -113,9 +109,7 @@ const EditInvoice = ({ match }) => {
           </Form.Row>
         </div>
       </div>
-
       <hr />
-
       <div className='row '>
         <div className=' col-lg-6 '>
           <Form.Label className='invoice__label'>Seller</Form.Label>
@@ -273,7 +267,6 @@ const EditInvoice = ({ match }) => {
         </div>
       </div>
       <hr />
-
       <div className='row'>
         <div className='col-lg-12'>
           <table className='table table-bordered table-hover' id='tab_logic'>
@@ -288,10 +281,8 @@ const EditInvoice = ({ match }) => {
                 <th className='text-center'> Price including VAT </th>
               </tr>
             </thead>
-
             {fields.map((item, index) => {
               counter++;
-
               return (
                 <tbody key={item.id}>
                   <tr id='addr0'>
@@ -353,7 +344,6 @@ const EditInvoice = ({ match }) => {
                         className='form-control'
                       />
                     </td>
-
                     <td>
                       <Form.Control
                         defaultValue={item.vat}
@@ -439,7 +429,6 @@ const EditInvoice = ({ match }) => {
                 </td>
                 <th className='text-center'>{currency}</th>
               </tr>
-
               <tr>
                 <th className='text-center'>Tax Amount</th>
                 <td className='text-center'>

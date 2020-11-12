@@ -19,6 +19,10 @@ const routes = {
     name: 'Sign up',
     link: '/sign-up',
   },
+  user: {
+    name: 'User',
+    link: '/user',
+  },
 };
 
 export default routes;

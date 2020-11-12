@@ -1,10 +1,14 @@
+$color-app: #bb5353;
+$color-app-dark: #552323;
+$color-app-light: #e1e1e1;
+
 .form-control {
   font-size: 15px;
 }
 .form-control,
 .form-control:focus,
 .input-group-text {
-  border-color: #e1e1e1;
+  border-color: $color-app-light;
 }
 .form-control,
 .btn {
@@ -12,7 +16,7 @@
 }
 .signup-form {
   width: 500px;
-  margin: 7rem auto;
+  margin: 1rem auto;
   padding: 30px 20px;
 }
 .signup-form .form__sign {
@@ -38,13 +42,13 @@
 .signup-form .btn:active {
   font-size: 16px;
   font-weight: bold;
-  background: #bb5353 !important;
+  background: $color-app !important;
   border: none;
-  min-width: 150px;
+  min-width: 100px;
 }
 .signup-form .btn:hover,
 .signup-form .btn:focus {
-  background: #552323 !important;
+  background: $color-app-dark !important;
 }
 
 .signup-form form a:hover {

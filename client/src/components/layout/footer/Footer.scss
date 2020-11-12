@@ -1,9 +1,12 @@
+$color-app-dark: #000000;
+$color-app-invoice: #797474;
+
 .footer__info {
-  color: #797474;
+  color: $color-app-invoice;
 }
 
 .footer__info:hover,
 .footer__info:active {
-  color: #000000;
+  color: $color-app-dark;
   text-decoration: none;
 }

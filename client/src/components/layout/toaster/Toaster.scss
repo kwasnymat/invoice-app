@@ -1,24 +1,29 @@
+$color-app-succes: #75a87e;
+$color-app-dark: #000000;
+$color-app-invoice: #343a40;
+$colorFont: #ffffff;
+
 .toaster {
   margin-right: 2rem;
   margin-top: 1rem;
   position: absolute;
   min-width: 300px;
   z-index: 99;
-  color: black;
+  color: $color-app-dark;
   text-transform: none;
   right: 0;
 
   .failed {
     font-weight: 600;
-    background-color: #343a40;
-    color: white;
+    background-color: $color-app-invoice;
+    color: $colorFont;
   }
 
   .success {
     text-align: center;
     font-weight: 500;
-    background-color: #75a87e;
-    color: black;
+    background-color: $color-app-succes;
+    color: $color-app-dark;
   }
 
   .toaster__message {

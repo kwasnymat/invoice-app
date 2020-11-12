@@ -8,7 +8,7 @@ exports.getInvoices = async (req, res, next) => {
     const { page = 1, limit = 5, ...params } = req.query;
     params.creator = req.user;
     const invoices = await Invoice.find(params)
-      .sort({ dateInvoice: -1 })
+      .sort({ invoiceNumber: -1 })
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit));
 
@@ -30,12 +30,6 @@ exports.getInvoices = async (req, res, next) => {
 };
 
 exports.createInvoice = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect!');
-    error.statusCode = 422;
-    throw error;
-  }
   const {
     invoiceNumber,
     dateInvoice,

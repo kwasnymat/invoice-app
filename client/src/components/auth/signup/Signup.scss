@@ -1,15 +1,33 @@
+$color-error: #bf1650;
+$color-error-light: #ffc0cb;
+
 .signup-form p {
   padding: 1px;
   text-transform: none;
   font-weight: 500;
   font-size: 0.8rem;
-  color: #bf1650;
+  color: $color-error;
   margin: auto 4px;
-  border: 2px solid pink;
-  background-color: pink;
+  border: 2px solid $color-error-light;
+  background-color: $color-error-light;
 }
 
 .signup-form p::before {
   display: inline;
   content: '⚠ ';
+}
+
+@media (max-width: 767px) {
+  .signup-form {
+    width: 400px !important;
+  }
+  .signup-form .form__sign {
+    padding-bottom: 0 !important;
+  }
+  .signup-form .btn {
+    width: 100px !important;
+  }
+  .signup-form .btn {
+    width: 100px !important;
+  }
 }

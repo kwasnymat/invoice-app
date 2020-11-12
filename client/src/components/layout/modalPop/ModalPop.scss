@@ -1,17 +1,20 @@
+$color-app: #bb5353;
+$colorFont: #ffffff;
+
 .modal__message {
   font-size: 1.2rem;
   text-align: center;
-  color: white;
-  background-color: #bb5353 !important;
+  color: $colorFont;
+  background-color: $color-app !important;
 }
 
 .btn-outline-warning {
-  color: #bb5353;
-  border-color: #bb5353;
+  color: $color-app;
+  border-color: $color-app;
 }
 
 .btn-outline-warning:hover {
-  color: white;
-  background-color: #bb5353;
-  border-color: #bb5353;
+  color: $colorFont;
+  background-color: $color-app;
+  border-color: $color-app;
 }

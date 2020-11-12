@@ -1,26 +1,30 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Navbar, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+
+import { fetchInvoices, saveQuery } from '../../invoices/store/actions';
 import {
   createQueryString,
   createQueryStore,
 } from '../../invoices/queryFuncs/queryFuncs';
-import { fetchInvoices } from '../../invoices/store/actions';
-import { saveQuery } from '../../invoices/store/actions';
+
 import './FilterBar.scss';
 
-const FilterBar = ({ allInvoices }) => {
-  const dispatch = useDispatch();
+const FilterBar = () => {
+  const { allInvoices } = useSelector(({ invoices }) => invoices);
   const { handleSubmit, register } = useForm();
 
+  const dispatch = useDispatch();
+
   const SubmitForm = (values) => {
-    console.log(values);
     const queryString = createQueryString(values);
     const queryStringStore = createQueryStore(values);
     dispatch(saveQuery(queryStringStore));
     dispatch(fetchInvoices(queryString));
   };
+
   const ResetForm = () => {
     dispatch(fetchInvoices());
     dispatch(saveQuery(''));
@@ -31,7 +35,6 @@ const FilterBar = ({ allInvoices }) => {
       allInvoices.map(
         (item) => (
           /*eslint no-sequences: */
-
           [item.dateInvoice, item], [item.BuyerCompanyName, item]
         )
       )
@@ -86,7 +89,12 @@ const FilterBar = ({ allInvoices }) => {
         <Button type='submit' variant='secondary'>
           Filter <i className='fas fa-filter' />
         </Button>
-        <Button type='reset' variant='secondary' onClick={ResetForm}>
+        <Button
+          type='reset'
+          variant='secondary'
+          onClick={ResetForm}
+          className='button_resetFilter'
+        >
           Reset <i className='fas fa-sync-alt' />
         </Button>
       </Navbar>

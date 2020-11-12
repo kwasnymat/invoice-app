@@ -1,12 +1,11 @@
 import React from 'react';
 
+import { ErrorMessage } from '@hookform/error-message';
 import { Form, Button, Col } from 'react-bootstrap';
 
-import { ErrorMessage } from '@hookform/error-message';
 import { CalcGrantTotal, CalcSubTotal, CalcTaxTotal } from './Calc';
-
-import VatPrice from './VatPrice';
 import NoVatPrice from './NoVatPrice';
+import VatPrice from './VatPrice';
 
 import './CreateInvoiceForm.scss';
 
@@ -29,7 +28,6 @@ const CreateInvoiceForm = ({
   return (
     <Form className='form__invoice' onSubmit={handleSubmit(onSubmit)}>
       <h2>Invoice </h2>
-      {/* pierwsza */}
       <div className='row' size='sm'>
         <div className=' col-lg-6'>
           <Form.Row>
@@ -69,9 +67,7 @@ const CreateInvoiceForm = ({
           </Form.Row>
         </div>
       </div>
-      {/* druga */}
       <hr />
-
       <div className='row '>
         <div className=' col-lg-6 '>
           <Form.Label className='invoice__label'>Seller</Form.Label>
@@ -229,7 +225,6 @@ const CreateInvoiceForm = ({
         </div>
       </div>
       <hr />
-      {/* trzecia */}
       <div className='row'>
         <div className='col-lg-12'>
           <table className='table table-bordered table-hover' id='tab_logic'>
@@ -244,7 +239,6 @@ const CreateInvoiceForm = ({
                 <th className='text-center'> Price including VAT </th>
               </tr>
             </thead>
-
             {fields.map(
               (
                 {
@@ -254,7 +248,6 @@ const CreateInvoiceForm = ({
                   priceNoVat,
                   vat = 23,
                   totalMoney,
-                  elo = ((qty || 0) * (unitCost || 0)).toFixed(2),
                 },
                 index
               ) => {
@@ -323,7 +316,6 @@ const CreateInvoiceForm = ({
                           className='form-control'
                         />
                       </td>
-
                       <td>
                         <Form.Control
                           name={`items[${index}].vat`}

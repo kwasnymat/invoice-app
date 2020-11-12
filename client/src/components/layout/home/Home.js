@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import { useHistory } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import './Home.scss';
 
@@ -15,8 +15,8 @@ const Home = () => {
     <div className='Home'>
       <Container>
         <div className='homePage'>
-          <div class='col-md-6'>
-            <h1 class='pb-2'>
+          <div className='col-md-6'>
+            <h1 className='pb-2'>
               <strong>Welcome to invoiceApp </strong>{' '}
             </h1>
             <h3>Create custom, professional invoices in a few easy steps.</h3>

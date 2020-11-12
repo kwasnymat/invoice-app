@@ -1,28 +1,26 @@
 import React, { useEffect } from 'react';
-
-import Navigation from './components/layout/navigation/Navigation';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadUser } from './components/auth/store/actions';
-import Invoices from './components/invoices/Invoices';
-import Footer from './components/layout/footer/Footer';
-import Login from './components/auth/login/Login';
-import Signup from './components/auth/signup/Signup';
-import Invoice from './components/invoices/createInvoice/CreateInvoice';
+
+import CreateInvoice from './components/invoices/createInvoice/CreateInvoice';
 import SingleInvoice from './components/invoices/singleInvoice/SingleInvoice';
 import EditInvoice from './components/invoices/editInvoice/EditInvoice';
-import Toaster from './components/layout/toaster/Toaster';
+import Navigation from './components/layout/navigation/Navigation';
 import AuthRoute from './components/layout/authRoute/AuthRoute';
+import NotFound from './components/layout/notFound/NotFound';
+import { loadUser } from './components/auth/store/actions';
+import Toaster from './components/layout/toaster/Toaster';
+import Footer from './components/layout/footer/Footer';
+import Invoices from './components/invoices/Invoices';
+import Signup from './components/auth/signup/Signup';
+import Login from './components/auth/login/Login';
 import Home from './components/layout/home/Home';
-// import UserProfile from './components/layout/userProfile/UserProfile';
-
+import User from './components/user/User';
 import routes from './routes/routes';
 
 import './App.scss';
 
 const App = () => {
-  const { home, createInvoice, yourInvoices, login, signup } = routes;
-
   const { isToasterVisible, message, status } = useSelector(
     ({ shared }) => shared
   );
@@ -31,8 +29,9 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadUser());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
+
+  const { home, createInvoice, yourInvoices, login, signup, user } = routes;
 
   const showToaster = isToasterVisible ? (
     <Toaster message={message} status={status} />
@@ -47,9 +46,10 @@ const App = () => {
         <Switch>
           <AuthRoute
             path={createInvoice.link}
-            component={Invoice}
+            component={CreateInvoice}
             type='private'
           />
+          <AuthRoute path={user.link} component={User} type='private' />
           <AuthRoute path={login.link} component={Login} type='guest' />
           <AuthRoute
             exact
@@ -69,6 +69,7 @@ const App = () => {
             type='private'
           />
           <AuthRoute path={signup.link} component={Signup} type='guest' />
+          <AuthRoute component={NotFound} />
 
           <Router />
         </Switch>

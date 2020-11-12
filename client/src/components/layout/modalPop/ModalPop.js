@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Modal, Button } from 'react-bootstrap';
+
 import './ModalPop.scss';
 
 const ModalPop = ({ deleteInvoiceHandler, closeModal, show, idInvoice }) => {

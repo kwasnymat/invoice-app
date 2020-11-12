@@ -14,6 +14,25 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  CompanyName: {
+    type: String,
+  },
+  CompanyStreet: {
+    type: String,
+  },
+  CompanyZip: {
+    type: String,
+  },
+  CompanyCity: {
+    type: String,
+  },
+  CompanyVat: {
+    type: String,
+  },
+  CompanyPhone: {
+    type: String,
+  },
+
   invoices: [
     {
       type: Schema.Types.ObjectId,

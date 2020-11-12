@@ -3,7 +3,6 @@ import * as types from './types';
 const initialState = {
   token: localStorage.getItem('token'),
   isAuth: null,
-  isLoading: false,
   user: null,
   errorMessage: {},
   errorStatus: null,
@@ -12,16 +11,10 @@ const initialState = {
 
 const invoiceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.USER_LOADING:
-      return {
-        ...state,
-        isLoading: true,
-      };
     case types.USER_LOADED:
       return {
         ...state,
         isAuth: true,
-        isLoading: false,
         user: action.payload,
       };
     case types.LOGIN_SUCCESS:
@@ -30,7 +23,6 @@ const invoiceReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
         isAuth: true,
-        isLoading: false,
       };
     case types.AUTH_ERROR:
     case types.LOGIN_FAIL:
@@ -42,7 +34,6 @@ const invoiceReducer = (state = initialState, action) => {
         token: null,
         user: null,
         isAuth: false,
-        isLoading: false,
       };
     case types.GET_ERRORS:
       return {

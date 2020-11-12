@@ -1,3 +1,10 @@
+$color-app: #bb5353;
+$color-border: #d9dfe3;
+$color-app-light: #f1f1f1;
+$color-app-dark: #000000;
+$color-app-invoice: #313030;
+$colorFont: #ffffff;
+
 .invoice__generator {
   margin-top: 2rem;
 }
@@ -8,13 +15,13 @@
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid transparent;
-  background: #bb5353;
-  color: #fff;
+  background: $color-app;
+  color: $color-app-light;
 }
 .font-weight-lighter {
   font-weight: 300;
-  background: #bb5353;
-  color: #fff;
+  background: $color-app;
+  color: $color-app-light;
 }
 
 .my-3 {
@@ -34,12 +41,12 @@
   padding-right: 1rem !important;
 }
 .border-bottom {
-  border-bottom: 2px solid #000 !important;
+  border-bottom: 2px solid $color-app-dark !important;
   padding: 0px 0px 5px 0px;
 }
 
 p {
-  color: #000;
+  color: $color-app-dark;
 }
 
 p::before {
@@ -56,21 +63,21 @@ p::before {
 }
 
 .invoice-note {
-  color: rgb(49, 48, 48);
+  color: $color-app-invoice;
   text-transform: none;
   font-size: 0.7rem;
 }
 
 .signature {
   font-size: 0.7rem;
-  color: rgb(49, 48, 48);
+  color: $color-app-invoice;
   text-transform: none;
-  border-top: 1px solid black;
+  border-top: 1px solid $color-app-dark;
   margin-bottom: 0;
 }
 
 .signature__company {
-  color: rgb(49, 48, 48);
+  color: $color-app-invoice;
   text-transform: none;
 }
 
@@ -86,9 +93,8 @@ p::before {
 .btn.btn-white[disabled],
 .btn.btn-white[disabled]:focus,
 .btn.btn-white[disabled]:hover {
-  color: #2d353c;
-  background: #fff;
-  border-color: #d9dfe3;
+  background: $colorFont;
+  border-color: $color-border;
 }
 
 .action__invoice {
@@ -96,7 +102,7 @@ p::before {
 }
 
 .editInvoice__button a {
-  color: black;
+  color: $color-app-dark;
   text-decoration: none;
 }
 

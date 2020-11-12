@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Toast } from 'react-bootstrap';
+
 import { useDispatch } from 'react-redux';
+import { Toast } from 'react-bootstrap';
 
 import { toasterOff } from '../../layout/store/actions';
 

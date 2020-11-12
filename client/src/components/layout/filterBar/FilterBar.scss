@@ -1,7 +1,14 @@
+$color-app: #bb5353;
+$color-error: #bf1650;
+$color-app-light: #f1f1f1;
+$color-app-dark: #343a40;
+$color-app-invoice: #131516;
+$colorFont: #ffffff;
+
 .filter__bar {
   justify-content: space-between !important;
   margin-top: 2rem;
-  background-color: #bb5353;
+  background-color: $color-app;
 }
 
 .filter__bar select {
@@ -12,7 +19,7 @@
   width: 13rem !important;
 }
 .filter__bar .form-label {
-  color: white;
+  color: $colorFont;
   font-weight: 500;
 }
 
@@ -33,17 +40,17 @@
 }
 
 .btn-primary {
-  background-color: #343a40 !important;
+  background-color: $color-app-dark !important;
 
   &:hover {
-    background-color: #131516 !important;
+    background-color: $color-app-invoice !important;
   }
 }
 .btn-secondary {
-  background-color: #343a40 !important;
+  background-color: $color-app-dark !important;
 
   &:hover {
-    background-color: #131516 !important;
+    background-color: $color-app-invoice !important;
   }
 }
 
@@ -65,6 +72,9 @@
   }
   .form__control {
     width: 15rem !important;
+  }
+  .button_resetFilter {
+    margin-top: 1rem;
   }
 }
 @media (max-width: 290px) {

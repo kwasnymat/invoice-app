@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
 
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import UserProfile from '../userProfile/UserProfile';
 import routes from '../../../routes/routes';
 import logo from '../../../assets/logo.png';
-import UserProfile from '../userProfile/UserProfile';
 
 import './Navigation.scss';
 

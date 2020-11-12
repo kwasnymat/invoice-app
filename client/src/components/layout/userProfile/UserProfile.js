@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { NavDropdown } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { logout } from '../../auth/store/actions';
 
 const UserProfile = ({ username, handleExpandChange }) => {
@@ -9,6 +11,8 @@ const UserProfile = ({ username, handleExpandChange }) => {
   const logoutt = () => {
     dispatch(logout());
   };
+
+  const history = useHistory();
 
   return (
     <NavDropdown
@@ -19,7 +23,12 @@ const UserProfile = ({ username, handleExpandChange }) => {
         </div>
       }
     >
-      <NavDropdown.Item onClick={handleExpandChange}>
+      <NavDropdown.Item
+        onClick={() => {
+          handleExpandChange();
+          history.push(`/user`);
+        }}
+      >
         {' '}
         <i className='fas fa-user-cog'></i> Settings
       </NavDropdown.Item>
