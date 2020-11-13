@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
 const InvoiceSchema = new Schema(
   {
@@ -116,4 +116,5 @@ const InvoiceSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Invoice', InvoiceSchema);
+const Invoice = model('invoice', InvoiceSchema);
+export default Invoice;

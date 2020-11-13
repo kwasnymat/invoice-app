@@ -1,9 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const feedRoutes = require('./routes/feed');
-const authRoutes = require('./routes/auth');
-const config = require('config');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import feedRoutes from './routes/feed.js';
+import authRoutes from './routes/auth.js';
+import config from 'config';
 
 const app = express();
 
@@ -33,7 +33,11 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
 
   .then((result) => {
     app.listen(8080);

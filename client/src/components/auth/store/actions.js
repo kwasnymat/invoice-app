@@ -78,14 +78,15 @@ export const loadUser = () => async (dispatch, getState) => {
     });
   }
 };
-export const loginUser = (userData, history) => async (dispatch) => {
+export const loginUser = (userData, history) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
       'http://localhost:8080/auth/login',
       userData
     );
     dispatch(userLoginSuccess(response.data));
-    history.push(`/invoices/`);
+    const hasDetails = getState().auth.user.CompanyName;
+    hasDetails ? history.push(`/invoices/`) : history.push(`/user`);
   } catch (err) {
     dispatch(
       getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL')

@@ -38,9 +38,7 @@ const User = () => {
     <>
       <Form className=' add__company' onSubmit={handleSubmit(onSubmit)}>
         <Navbar className='company_nav'>
-          {!user.CompanyName
-            ? 'Complete the form with you company details to create invoices faster!'
-            : 'Change your company details and create invoices faster!'}
+          Complete the form with you company details to create invoices faster!'
         </Navbar>
         <Form.Row style={{ marginTop: 2 + 'rem' }}>
           <Col xs={8}>
