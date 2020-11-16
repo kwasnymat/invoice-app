@@ -37,9 +37,22 @@ const CreateInvoiceForm = ({
                 name='invoiceNumber'
                 placeholder='#'
                 size='sm'
-                ref={register({ required: 'Invoice number is required.' })}
+                ref={register({
+                  required: 'Invoice number is required.',
+                  maxLength: {
+                    value: 8,
+                    message: 'Max length exceeded- 8 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='invoiceNumber' as='p' />
+              <ErrorMessage errors={errors} name='invoiceNumber' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
         </div>
@@ -60,9 +73,22 @@ const CreateInvoiceForm = ({
               <Form.Control
                 size='sm'
                 name='cityInvoice'
-                ref={register({ required: 'Invoice city is required.' })}
+                ref={register({
+                  required: 'Invoice city is required.',
+                  maxLength: {
+                    value: 14,
+                    message: 'Max length exceeded- 14 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='cityInvoice' as='p' />
+              <ErrorMessage errors={errors} name='cityInvoice' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
         </div>
@@ -77,9 +103,22 @@ const CreateInvoiceForm = ({
               <Form.Control
                 size='sm'
                 name='SellerCompanyName'
-                ref={register({ required: 'Seller name is required.' })}
+                ref={register({
+                  required: 'Seller name is required.',
+                  maxLength: {
+                    value: 40,
+                    message: 'Max length exceeded- 40 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyName' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyName' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -91,9 +130,20 @@ const CreateInvoiceForm = ({
                 name='SellerCompanyStreet'
                 ref={register({
                   required: 'Seller street is required.',
+                  maxLength: {
+                    value: 30,
+                    message: 'Max length exceeded- 30 characters.',
+                  },
                 })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyStreet' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyStreet' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -105,9 +155,20 @@ const CreateInvoiceForm = ({
                 name='SellerCompanyZip'
                 ref={register({
                   required: 'Seller zip-code is required.',
+                  maxLength: {
+                    value: 10,
+                    message: 'Max length exceeded- 10 characters.',
+                  },
                 })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyZip' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyZip' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
             <Col xs={5}>
               <Form.Label>City</Form.Label>
@@ -117,9 +178,20 @@ const CreateInvoiceForm = ({
                 name='SellerCompanyCity'
                 ref={register({
                   required: 'Seller  city is required.',
+                  maxLength: {
+                    value: 20,
+                    message: 'Max length exceeded- 20 characters.',
+                  },
                 })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyCity' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyCity' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -131,9 +203,20 @@ const CreateInvoiceForm = ({
                 name='SellerCompanyVat'
                 ref={register({
                   required: 'Seller vat number is required.',
+                  maxLength: {
+                    value: 30,
+                    message: 'Max length exceeded- 30 characters.',
+                  },
                 })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyVat' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyVat' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -145,9 +228,20 @@ const CreateInvoiceForm = ({
                 name='SellerCompanyPhone'
                 ref={register({
                   required: 'Seller phone number is required.',
+                  maxLength: {
+                    value: 16,
+                    message: 'Max length exceeded- 16 characters.',
+                  },
                 })}
               />
-              <ErrorMessage errors={errors} name='SellerCompanyPhone' as='p' />
+              <ErrorMessage errors={errors} name='SellerCompanyPhone' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
         </div>
@@ -159,9 +253,22 @@ const CreateInvoiceForm = ({
               <Form.Control
                 size='sm'
                 name='BuyerCompanyName'
-                ref={register({ required: 'Buyer name is required.' })}
+                ref={register({
+                  required: 'Buyer name is required.',
+                  maxLength: {
+                    value: 40,
+                    message: 'Max length exceeded- 40 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyName' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyName' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -171,9 +278,22 @@ const CreateInvoiceForm = ({
                 type='name'
                 size='sm'
                 name='BuyerCompanyStreet'
-                ref={register({ required: 'Buyer street is required.' })}
+                ref={register({
+                  required: 'Buyer street is required.',
+                  maxLength: {
+                    value: 30,
+                    message: 'Max length exceeded- 30 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyStreet' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyStreet' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -183,9 +303,22 @@ const CreateInvoiceForm = ({
                 type='name'
                 size='sm'
                 name='BuyerCompanyZip'
-                ref={register({ required: 'Buyer zip-code is required.' })}
+                ref={register({
+                  required: 'Buyer zip-code is required.',
+                  maxLength: {
+                    value: 10,
+                    message: 'Max length exceeded- 10 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyZip' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyZip' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
             <Col xs={5}>
               <Form.Label>City</Form.Label>
@@ -193,9 +326,22 @@ const CreateInvoiceForm = ({
                 type='name'
                 size='sm'
                 name='BuyerCompanyCity'
-                ref={register({ required: 'Buyer city is required.' })}
+                ref={register({
+                  required: 'Buyer city is required.',
+                  maxLength: {
+                    value: 20,
+                    message: 'Max length exceeded- 20 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyCity' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyCity' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -205,9 +351,22 @@ const CreateInvoiceForm = ({
                 type='name'
                 size='sm'
                 name='BuyerCompanyVat'
-                ref={register({ required: 'Buyer vat number is required.' })}
+                ref={register({
+                  required: 'Buyer vat number is required.',
+                  maxLength: {
+                    value: 30,
+                    message: 'Max length exceeded- 30 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyVat' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyVat' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -217,9 +376,22 @@ const CreateInvoiceForm = ({
                 type='name'
                 size='sm'
                 name='BuyerCompanyPhone'
-                ref={register({ required: 'Buyer phone number is required.' })}
+                ref={register({
+                  required: 'Buyer phone number is required.',
+                  maxLength: {
+                    value: 16,
+                    message: 'Max length exceeded- 16 characters.',
+                  },
+                })}
               />
-              <ErrorMessage errors={errors} name='BuyerCompanyPhone' as='p' />
+              <ErrorMessage errors={errors} name='BuyerCompanyPhone' as='p'>
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              </ErrorMessage>
             </Col>
           </Form.Row>
         </div>

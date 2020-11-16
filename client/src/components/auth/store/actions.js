@@ -3,6 +3,8 @@ import axios from 'axios';
 import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
 import * as types from './types';
 
+import api from '../../../api/config';
+
 export const getErrors = (errorMessage, errorStatus, idMessage = null) => {
   return {
     type: types.GET_ERRORS,
@@ -47,7 +49,7 @@ export const editUser = (data) => async (dispatch, getState) => {
   try {
     dispatch(loaderOn());
     const response = await axios.put(
-      'http://localhost:8080/auth/user/edit-user',
+      `${api}/auth/user/edit-user`,
       data,
       tokenConfig(getState)
     );

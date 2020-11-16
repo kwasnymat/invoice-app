@@ -45,11 +45,11 @@ $colorFont: #ffffff;
   padding: 0px 0px 5px 0px;
 }
 
-p {
+.invoice__generator p {
   color: $color-app-dark;
 }
 
-p::before {
+.invoice__generator p::before {
   content: none;
 }
 
