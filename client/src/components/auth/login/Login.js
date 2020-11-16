@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Col, Navbar, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 import { loginUser, clearErrors } from '../store/actions';
@@ -39,64 +39,54 @@ const Login = () => {
     }
   }, [dispatch, errorMessage, idMessage]);
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <Form className='signup-form' onSubmit={handleSubmit(LogUser)}>
-      <div className='form__sign'>
-        <h2>Member Login</h2>
-        {msg && <Alert variant='danger'>{msg}</Alert>}
-        <hr />
-        <div className='form-group'>
-          <div className='input-group'>
-            <div className='input-group-prepend'>
-              <span className='input-group-text'>
-                <i className='fa fa-paper-plane'></i>
-              </span>
-            </div>
-            <Form.Control
-              type='email'
-              className='form-control'
-              name='email'
-              placeholder='Email Address'
-              ref={register({ required: 'Email adress is required.' })}
-            />
-            <ErrorMessage errors={errors} name='email' as='p' />
-          </div>
-        </div>
-        <div className='form-group'>
-          <div className='input-group'>
-            <div className='input-group-prepend'>
-              <span className='input-group-text'>
-                <i className='fa fa-lock'></i>
-              </span>
-            </div>
-            <Form.Control
-              type='text'
-              className='form-control'
-              name='password'
-              placeholder='Password'
-              ref={register({ required: 'Password is required.' })}
-            />
-            <ErrorMessage errors={errors} name='password' as='p' />
-          </div>
-        </div>
-        <div className='form-group'>
-          <Button type='submit' className='btn btn-primary btn-lg '>
-            Sign Up
-          </Button>
-        </div>
-      </div>
-      <div className='text-center'>
-        <NavLink
-          exact
-          to='/sign-up'
-          className='form-text float-right create-link'
-        >
-          Create an Account
-        </NavLink>
-      </div>
-    </Form>
+  return (
+    <>
+      <Row>
+        {isLoading && <Loader />}
+        <Col>
+          <Form className='auth__form' onSubmit={handleSubmit(LogUser)}>
+            <Navbar className='company_nav'>Member Login</Navbar>
+            {msg && <Alert variant='danger'>{msg}</Alert>}
+            <Form.Row style={{ marginTop: 1 + 'rem' }}>
+              <Col xs={10}>
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type='email'
+                  size='sm'
+                  name='email'
+                  placeholder='Email Address'
+                  ref={register({ required: 'Email Address is required.' })}
+                />
+                <ErrorMessage errors={errors} name='email' as='p' />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col xs={10}>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  size='sm'
+                  //   type='password'
+                  name='password'
+                  placeholder='Password'
+                  ref={register({ required: 'Password is required.' })}
+                />
+                <ErrorMessage errors={errors} name='password' as='p' />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Button className='invoice__save user_save' type='submit'>
+                <i className='fa fa-paper-plane'> Log in </i>
+              </Button>
+            </Form.Row>
+          </Form>
+          <Row className='auth__formInfo'>
+            <NavLink exact to='/sign-up'>
+              Create an Account
+            </NavLink>
+          </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 export default Login;

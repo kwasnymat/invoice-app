@@ -43,7 +43,7 @@ const User = () => {
           <Form className='edit__user' onSubmit={handleSubmit(onSubmitUser)}>
             <Navbar className='company_nav'>Edit your account details</Navbar>
             <Form.Row style={{ marginTop: 2 + 'rem' }}>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>User name</Form.Label>
                 <Form.Control
                   size='sm'
@@ -54,7 +54,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Email adress</Form.Label>
                 <Form.Control
                   size='sm'
@@ -65,7 +65,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Current password</Form.Label>
                 <Form.Control
                   size='sm'
@@ -76,7 +76,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>New password</Form.Label>
                 <Form.Control
                   size='sm'
@@ -104,13 +104,13 @@ const User = () => {
               faster!
             </Navbar>
             <Form.Row style={{ marginTop: 2 + 'rem' }}>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Company name</Form.Label>
                 <Form.Control size='sm' name='CompanyName' ref={register} />
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Street</Form.Label>
                 <Form.Control
                   type='name'
@@ -121,7 +121,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={3}>
+              <Col xs={4}>
                 <Form.Label>Zip code</Form.Label>
                 <Form.Control
                   type='name'
@@ -130,7 +130,7 @@ const User = () => {
                   ref={register}
                 />
               </Col>
-              <Col xs={5}>
+              <Col xs={6}>
                 <Form.Label>City</Form.Label>
                 <Form.Control
                   type='name'
@@ -141,7 +141,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Vat Id</Form.Label>
                 <Form.Control
                   type='name'
@@ -152,7 +152,7 @@ const User = () => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col xs={8}>
+              <Col xs={10}>
                 <Form.Label>Phone number</Form.Label>
                 <Form.Control
                   type='number'
