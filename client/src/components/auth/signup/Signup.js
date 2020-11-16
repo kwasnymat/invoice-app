@@ -9,8 +9,6 @@ import { useForm } from 'react-hook-form';
 import { registerUser, clearErrors } from '../store/actions';
 import Loader from '../../layout/loader/Loader';
 
-import './Signup.scss';
-
 const Signup = () => {
   const { errorMessage, idMessage } = useSelector(({ auth }) => auth);
   const { isLoading } = useSelector(({ shared }) => shared);

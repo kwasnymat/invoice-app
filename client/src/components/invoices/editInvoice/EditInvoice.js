@@ -73,7 +73,7 @@ const EditInvoice = ({ match }) => {
       <div className='row' size='sm'>
         <div className=' col-lg-6'>
           <Form.Row>
-            <Col xs={5}>
+            <Col sm={8} md={8} xs={12}>
               <Form.Label>Invoice number</Form.Label>
               <Form.Control
                 name='invoiceNumber'
@@ -100,7 +100,7 @@ const EditInvoice = ({ match }) => {
         </div>
         <div className='col-lg-6'>
           <Form.Row>
-            <Col xs={4}>
+            <Col sm={4} md={4} xs={12}>
               <Form.Label>Date Of Invoice</Form.Label>
               <Form.Control
                 name='dateInvoice'
@@ -110,7 +110,7 @@ const EditInvoice = ({ match }) => {
               />
               <ErrorMessage errors={errors} name='dateInvoice' as='p' />
             </Col>
-            <Col xs={4}>
+            <Col sm={4} md={4} xs={12}>
               <Form.Label>City</Form.Label>
               <Form.Control
                 size='sm'
@@ -140,7 +140,7 @@ const EditInvoice = ({ match }) => {
         <div className=' col-lg-6 '>
           <Form.Label className='invoice__label'>Seller</Form.Label>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Company name</Form.Label>
               <Form.Control
                 size='sm'
@@ -164,7 +164,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Street</Form.Label>
               <Form.Control
                 type='name'
@@ -189,7 +189,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={3}>
+            <Col sm={3} xs={5} md={3}>
               <Form.Label>Zip code</Form.Label>
               <Form.Control
                 type='name'
@@ -212,7 +212,7 @@ const EditInvoice = ({ match }) => {
                 }
               </ErrorMessage>
             </Col>
-            <Col xs={5}>
+            <Col sm={5} xs={7} md={5}>
               <Form.Label>City</Form.Label>
               <Form.Control
                 type='name'
@@ -237,7 +237,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Vat Id</Form.Label>
               <Form.Control
                 type='name'
@@ -262,7 +262,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Phone number</Form.Label>
               <Form.Control
                 type='number'
@@ -290,7 +290,7 @@ const EditInvoice = ({ match }) => {
         <div className=' col-lg-6'>
           <Form.Label className='invoice__label'>Buyer</Form.Label>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Company name</Form.Label>
               <Form.Control
                 size='sm'
@@ -314,7 +314,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Street</Form.Label>
               <Form.Control
                 type='name'
@@ -339,7 +339,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={3}>
+            <Col sm={3} xs={5} md={3}>
               <Form.Label>Zip code</Form.Label>
               <Form.Control
                 type='name'
@@ -362,7 +362,7 @@ const EditInvoice = ({ match }) => {
                 }
               </ErrorMessage>
             </Col>
-            <Col xs={5}>
+            <Col sm={5} xs={7} md={5}>
               <Form.Label>City</Form.Label>
               <Form.Control
                 type='name'
@@ -387,7 +387,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Vat Id</Form.Label>
               <Form.Control
                 type='name'
@@ -412,7 +412,7 @@ const EditInvoice = ({ match }) => {
             </Col>
           </Form.Row>
           <Form.Row>
-            <Col xs={8}>
+            <Col sm={8} xs={12} md={8}>
               <Form.Label>Phone number</Form.Label>
               <Form.Control
                 type='name'
@@ -440,7 +440,7 @@ const EditInvoice = ({ match }) => {
       </div>
       <hr />
       <div className='row'>
-        <div className='col-lg-12'>
+        <div className='col-lg-12 dynamic__table'>
           <table className='table table-bordered table-hover' id='tab_logic'>
             <thead>
               <tr>
@@ -459,12 +459,12 @@ const EditInvoice = ({ match }) => {
                 <tbody key={item.id}>
                   <tr id='addr0'>
                     <td>{counter}</td>
-                    <td>
+                    <td className='row__position'>
                       <Form.Control
                         name={`items[${index}].productName`}
                         defaultValue={item.productName}
                         type='text'
-                        className='form-control'
+                        className='form-control dynamic__fields'
                         ref={register({
                           required: 'Product name is required.',
                         })}
@@ -480,7 +480,7 @@ const EditInvoice = ({ match }) => {
                         type='number'
                         name={`items[${index}].unitCost`}
                         defaultValue={item.unitCost}
-                        className='form-control'
+                        className='form-control dynamic__fields'
                         ref={register({
                           required: 'Unit cost is required.',
                         })}
@@ -496,7 +496,7 @@ const EditInvoice = ({ match }) => {
                         name={`items[${index}].qty`}
                         defaultValue={item.qty}
                         type='number'
-                        className='form-control'
+                        className='form-control dynamic__fields'
                         ref={register({
                           required: 'Quantity is required.',
                         })}
@@ -513,7 +513,6 @@ const EditInvoice = ({ match }) => {
                         index={index}
                         register={register()}
                         control={control}
-                        className='form-control'
                       />
                     </td>
                     <td>
@@ -521,7 +520,7 @@ const EditInvoice = ({ match }) => {
                         defaultValue={item.vat}
                         name={`items[${index}].vat`}
                         type='number'
-                        className='form-control'
+                        className='form-control dynamic__fields'
                         ref={register({
                           required: 'Vat % is required.',
                         })}
@@ -537,7 +536,6 @@ const EditInvoice = ({ match }) => {
                         register={register()}
                         control={control}
                         index={index}
-                        className='form-control'
                       />
                     </td>
                     <td

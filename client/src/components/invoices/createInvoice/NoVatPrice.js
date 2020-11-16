@@ -12,6 +12,7 @@ const NoVatPrice = ({ control, index, register, defaultValue, setValue }) => {
 
   return (
     <Form.Control
+      className='form-control dynamic__fields'
       type='number'
       readOnly
       ref={register}

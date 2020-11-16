@@ -79,6 +79,9 @@ label.form-label {
 .form__invoice .btn:active {
   background-color: $color-app-dark !important;
 }
+input.form_control {
+  padding: 0 !important;
+}
 
 th.text-center {
   font-size: 14px;
@@ -91,6 +94,15 @@ th.text-center {
 .invoice__save:hover,
 .invoice__save:active {
   background-color: $color-app-dark !important;
+}
+.form__invoice p {
+  color: $color-error;
+  text-align: center;
+  font-weight: 400;
+}
+
+.user_save {
+  margin-top: 2rem;
 }
 
 @media (max-width: 991px) {
@@ -106,11 +118,27 @@ th.text-center {
 }
 
 @media (max-width: 768px) {
+  .container {
+    max-width: 710px !important;
+  }
   .choose__curency {
     margin-bottom: 1rem;
     max-width: 7rem;
   }
+  input.dynamic__fields {
+    font-size: 12px !important;
+    padding: 0;
+  }
 }
+@media (max-width: 550px) {
+  .dynamic__table {
+    padding: 0;
+  }
+  .row__position {
+    padding: 0 !important;
+  }
+}
+
 @media (max-width: 400px) {
   .form__invoice {
     margin-top: 3rem;
@@ -119,14 +147,12 @@ th.text-center {
   th.text-center {
     font-size: 0.7rem;
   }
+  input.dynamic__fields {
+    font-size: 10px !important;
+  }
 }
-
-.form__invoice p {
-  color: $color-error;
-  text-align: center;
-  font-weight: 400;
-}
-
-.user_save {
-  margin-top: 2rem;
+@media (max-width: 330px) {
+  .form__invoice {
+    border: 0;
+  }
 }
