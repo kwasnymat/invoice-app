@@ -40,8 +40,8 @@ const CreateInvoiceForm = ({
                 ref={register({
                   required: 'Invoice number is required.',
                   maxLength: {
-                    value: 8,
-                    message: 'Max length exceeded- 8 characters.',
+                    value: 12,
+                    message: 'Max length exceeded- 12 characters.',
                   },
                 })}
               />
@@ -106,8 +106,8 @@ const CreateInvoiceForm = ({
                 ref={register({
                   required: 'Seller name is required.',
                   maxLength: {
-                    value: 40,
-                    message: 'Max length exceeded- 40 characters.',
+                    value: 60,
+                    message: 'Max length exceeded- 60 characters.',
                   },
                 })}
               />
@@ -256,8 +256,8 @@ const CreateInvoiceForm = ({
                 ref={register({
                   required: 'Buyer name is required.',
                   maxLength: {
-                    value: 40,
-                    message: 'Max length exceeded- 40 characters.',
+                    value: 60,
+                    message: 'Max length exceeded- 60 characters.',
                   },
                 })}
               />
@@ -435,13 +435,24 @@ const CreateInvoiceForm = ({
                           className='form-control'
                           ref={register({
                             required: 'Product name is required.',
+                            maxLength: {
+                              value: 20,
+                              message: 'Max length exceeded- 20 characters.',
+                            },
                           })}
                         />
                         <ErrorMessage
                           errors={errors}
                           name={`items[${index}].productName`}
                           as='p'
-                        />
+                        >
+                          {({ messages }) =>
+                            messages &&
+                            Object.entries(messages).map(([type, message]) => (
+                              <p key={type}>{message}</p>
+                            ))
+                          }
+                        </ErrorMessage>
                       </td>
                       <td>
                         <Form.Control
@@ -451,13 +462,28 @@ const CreateInvoiceForm = ({
                           className='form-control'
                           ref={register({
                             required: 'Unit cost is required.',
+                            min: {
+                              value: 1,
+                              message: 'Min value is 1.',
+                            },
+                            max: {
+                              value: 99999999,
+                              message: 'Max value exceeded- 99999999.',
+                            },
                           })}
                         />
                         <ErrorMessage
                           errors={errors}
                           name={`items[${index}].unitCost`}
                           as='p'
-                        />
+                        >
+                          {({ messages }) =>
+                            messages &&
+                            Object.entries(messages).map(([type, message]) => (
+                              <p key={type}>{message}</p>
+                            ))
+                          }
+                        </ErrorMessage>
                       </td>
                       <td>
                         <Form.Control
@@ -467,13 +493,28 @@ const CreateInvoiceForm = ({
                           className='form-control'
                           ref={register({
                             required: 'Quantity is required.',
+                            min: {
+                              value: 1,
+                              message: 'Min value is 1.',
+                            },
+                            max: {
+                              value: 99999999,
+                              message: 'Max value exceeded- 99999999.',
+                            },
                           })}
                         />
                         <ErrorMessage
                           errors={errors}
                           name={`items[${index}].qty`}
                           as='p'
-                        />
+                        >
+                          {({ messages }) =>
+                            messages &&
+                            Object.entries(messages).map(([type, message]) => (
+                              <p key={type}>{message}</p>
+                            ))
+                          }
+                        </ErrorMessage>
                       </td>
                       <td>
                         <NoVatPrice
@@ -496,13 +537,24 @@ const CreateInvoiceForm = ({
                           className='form-control'
                           ref={register({
                             required: 'Vat % is required.',
+                            max: {
+                              value: 99,
+                              message: 'Max value exceeded- 99%.',
+                            },
                           })}
                         />
                         <ErrorMessage
                           errors={errors}
                           name={`items[${index}].vat`}
                           as='p'
-                        />
+                        >
+                          {({ messages }) =>
+                            messages &&
+                            Object.entries(messages).map(([type, message]) => (
+                              <p key={type}>{message}</p>
+                            ))
+                          }
+                        </ErrorMessage>
                       </td>
                       <td>
                         <VatPrice
