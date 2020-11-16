@@ -99,6 +99,8 @@ router.put('/user/edit-user', auth, async (req, res, next) => {
     throw error;
   }
   const {
+    username,
+    email,
     CompanyName,
     CompanyStreet,
     CompanyZip,
@@ -113,6 +115,8 @@ router.put('/user/edit-user', auth, async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
+    user.username = username;
+    user.email = email;
     user.CompanyName = CompanyName;
     user.CompanyStreet = CompanyStreet;
     user.CompanyZip = CompanyZip;

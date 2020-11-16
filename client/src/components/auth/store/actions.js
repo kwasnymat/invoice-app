@@ -79,10 +79,12 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 export const loginUser = (userData, history) => async (dispatch, getState) => {
   try {
+    dispatch(loaderOn());
     const response = await axios.post(`${api}/auth/login`, userData);
     dispatch(userLoginSuccess(response.data));
     const hasDetails = getState().auth.user.CompanyName;
     hasDetails ? history.push(`/invoices/`) : history.push(`/user`);
+    dispatch(loaderOff());
   } catch (err) {
     dispatch(
       getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL')

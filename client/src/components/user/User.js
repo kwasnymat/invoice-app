@@ -14,18 +14,14 @@ const User = () => {
   const { user } = useSelector(({ auth }) => auth);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      CompanyCity: user.CompanyCity,
-      CompanyName: user.CompanyName,
-      CompanyStreet: user.CompanyStreet,
-      CompanyVat: user.CompanyVat,
-      CompanyZip: user.CompanyZip,
-      CompanyPhone: user.CompanyPhone,
+      user,
     },
   });
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     dispatch(editUser(data));
+    console.log(data);
   };
 
   useEffect(() => {
@@ -38,9 +34,21 @@ const User = () => {
     <>
       <Form className=' add__company' onSubmit={handleSubmit(onSubmit)}>
         <Navbar className='company_nav'>
-          Complete the form with you company details to create invoices faster!'
+          Complete the form with you company details to create invoices faster!
         </Navbar>
         <Form.Row style={{ marginTop: 2 + 'rem' }}>
+          <Col xs={8}>
+            <Form.Label>User name</Form.Label>
+            <Form.Control size='sm' name='username' ref={register} />
+          </Col>
+        </Form.Row>
+        <Form.Row>
+          <Col xs={8}>
+            <Form.Label>Email adress</Form.Label>
+            <Form.Control size='sm' name='email' ref={register} />
+          </Col>
+        </Form.Row>
+        <Form.Row>
           <Col xs={8}>
             <Form.Label>Company name</Form.Label>
             <Form.Control size='sm' name='CompanyName' ref={register} />
