@@ -2,11 +2,15 @@ $color-app: #bb5353;
 $color-app-light: #f1f1f1;
 $colorFont: #ffffff;
 
-.add__company {
+.add__company,
+.edit__user {
   max-width: 400px;
-  margin-top: 5rem;
+  margin-top: 3rem;
   border: 2px solid $color-app-light;
   padding-bottom: 2rem;
+}
+.add__company {
+  margin-bottom: 6rem;
 }
 
 .company_nav {
@@ -20,7 +24,26 @@ $colorFont: #ffffff;
 .add__company label {
   margin-bottom: 0.2rem;
 }
-
-.add__companyOr {
+.edit__title {
   margin-top: 5rem;
+}
+.edit__title h2 {
+  margin: 0 auto;
+  color: $color-app;
+}
+@media (max-width: 767px) {
+  .add__company,
+  .edit__user {
+    margin: 1rem auto;
+  }
+  .add__company {
+    margin-bottom: 6rem;
+  }
+}
+
+@media (max-width: 515px) {
+  .edit__title h2 {
+    font-size: 1.3rem;
+    padding: 0 1rem 0 1rem;
+  }
 }
