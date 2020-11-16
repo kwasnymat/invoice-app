@@ -3,8 +3,8 @@ $color-app-light: #f1f1f1;
 $colorFont: #ffffff;
 
 .add__company {
-  max-width: 500px;
-  margin: 5rem auto;
+  max-width: 400px;
+  margin-top: 5rem;
   border: 2px solid $color-app-light;
   padding-bottom: 2rem;
 }
@@ -19,4 +19,8 @@ $colorFont: #ffffff;
 
 .add__company label {
   margin-bottom: 0.2rem;
+}
+
+.add__companyOr {
+  margin-top: 5rem;
 }

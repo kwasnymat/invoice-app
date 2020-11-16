@@ -65,6 +65,26 @@ export const editUser = (data) => async (dispatch, getState) => {
     });
   }
 };
+export const editCompany = (data) => async (dispatch, getState) => {
+  try {
+    dispatch(loaderOn());
+    const response = await axios.put(
+      `${api}/auth/user/edit-company`,
+      data,
+      tokenConfig(getState)
+    );
+    const { message } = response.data;
+    const status = response.status;
+    dispatch(loadUser());
+    dispatch(loaderOff());
+    dispatch(toasterOn(message, status));
+  } catch (err) {
+    dispatch(getErrors(err.response.data.message, err.response.status));
+    dispatch({
+      type: types.AUTH_ERROR,
+    });
+  }
+};
 
 export const loadUser = () => async (dispatch, getState) => {
   try {
@@ -86,6 +106,7 @@ export const loginUser = (userData, history) => async (dispatch, getState) => {
     hasDetails ? history.push(`/invoices/`) : history.push(`/user`);
     dispatch(loaderOff());
   } catch (err) {
+    dispatch(loaderOff());
     dispatch(
       getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL')
     );

@@ -3,8 +3,6 @@ import User from '../models/user.js';
 import auth from '../middleware/auth.js';
 import { Router } from 'express';
 
-import { validationResult } from 'express-validator';
-
 import config from 'config';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -91,16 +89,8 @@ router.get('/user', auth, async (req, res, next) => {
   }
 });
 
-router.put('/user/edit-user', auth, async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
-    error.statusCode = 422;
-    throw error;
-  }
+router.put('/user/edit-company', auth, async (req, res, next) => {
   const {
-    username,
-    email,
     CompanyName,
     CompanyStreet,
     CompanyZip,
@@ -115,8 +105,6 @@ router.put('/user/edit-user', auth, async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-    user.username = username;
-    user.email = email;
     user.CompanyName = CompanyName;
     user.CompanyStreet = CompanyStreet;
     user.CompanyZip = CompanyZip;
@@ -125,7 +113,38 @@ router.put('/user/edit-user', auth, async (req, res, next) => {
     user.CompanyPhone = CompanyPhone;
 
     const result = await user.save();
-    res.status(200).json({ message: 'User updated!', user: result });
+    res
+      .status(200)
+      .json({ message: 'User company details updated!', user: result });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+});
+router.put('/user/edit-user', auth, async (req, res, next) => {
+  const { email, username, password, currentPassword } = req.body;
+  try {
+    const user = await User.findById(req.user);
+    if (!user) {
+      const error = new Error('Could not find user!');
+      error.statusCode = 404;
+      throw error;
+    }
+    if (password && currentPassword) {
+      const checkIfPasswordMatch = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
+      if (!checkIfPasswordMatch) throw Error('Invalid current password');
+      const hashedPw = await bcrypt.hash(password, 12);
+      user.password = hashedPw;
+    }
+    user.username = username;
+    user.email = email;
+    const result = await user.save();
+    res.status(200).json({ message: 'User details updated!', user: result });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
