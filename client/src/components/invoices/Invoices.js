@@ -46,7 +46,6 @@ const Invoices = () => {
           <th className='text-center'> Invoice number</th>
           <th className='text-center'> Invoice date</th>
           <th className='text-center'> Recipient</th>
-          <th className='text-center'> Vat amount </th>
           <th className='text-center'> Total amount</th>
           <th className='text-center'> Action</th>
         </tr>
@@ -56,7 +55,6 @@ const Invoices = () => {
           invoiceNumber,
           dateInvoice,
           BuyerCompanyName,
-          tax_amountTotal,
           total_amount,
           currency,
           _id,
@@ -65,12 +63,9 @@ const Invoices = () => {
         return (
           <tbody key={_id} className='recipment__details'>
             <tr>
-              <td className='text-center'>{invoiceNumber}</td>
+              <td className='text-center '>{invoiceNumber}</td>
               <td className='text-center'>{dateInvoice}</td>
               <td className='text-center'>{BuyerCompanyName} </td>
-              <td className='text-center'>
-                {tax_amountTotal} {currency}
-              </td>
               <td className='text-center'>
                 {total_amount} {currency}
               </td>

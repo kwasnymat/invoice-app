@@ -44,7 +44,7 @@ const FilterBar = () => {
   return (
     <Form onSubmit={handleSubmit(SubmitForm)}>
       <Navbar className='filter__bar custab' expand='lg'>
-        <Form.Group>
+        <Form.Group className='filter__position'>
           <Form.Label>Invoice number</Form.Label>
           <Form.Control
             ref={register}
@@ -53,7 +53,7 @@ const FilterBar = () => {
             placeholder='type invoice number '
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className='filter__position'>
           <Form.Label>Invoicte date</Form.Label>
           <Form.Control
             ref={register}
@@ -69,7 +69,7 @@ const FilterBar = () => {
             ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className='filter__position'>
           <Form.Label>Recipient name</Form.Label>
           <Form.Control
             ref={register}

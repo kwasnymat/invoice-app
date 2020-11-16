@@ -56,3 +56,9 @@ $colorFont: #ffffff;
     padding: 0 0.2rem !important;
   }
 }
+
+@media (max-width: 768px) {
+  .Navigation .nav-link {
+    padding: 0.4rem 0.5rem !important;
+  }
+}

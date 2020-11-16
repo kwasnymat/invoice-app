@@ -100,10 +100,6 @@ $colorFont: #ffffff;
   .recipment__details td {
     font-size: 0.7rem;
   }
-  .deleteId_button,
-  .detailsId_button {
-    font-size: 0.8rem;
-  }
 }
 @media (max-width: 353px) {
   .invoices__thead th {
@@ -111,10 +107,6 @@ $colorFont: #ffffff;
   }
   .recipment__details td {
     font-size: 0.6rem;
-  }
-  .deleteId_button,
-  .detailsId_button {
-    font-size: 0.7rem;
   }
 }
 
@@ -127,6 +119,6 @@ $colorFont: #ffffff;
   }
   .deleteId_button,
   .detailsId_button {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 }

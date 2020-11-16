@@ -58,11 +58,19 @@ $colorFont: #ffffff;
   .form__control {
     width: 10rem !important;
   }
+  .filter__position {
+    margin-right: 2rem;
+  }
 }
 
 @media (max-width: 991px) {
   .btn-primary {
     margin: 1rem 2rem;
+  }
+}
+@media (max-width: 638px) {
+  .filter__position {
+    margin-right: 0.5rem;
   }
 }
 
@@ -77,6 +85,7 @@ $colorFont: #ffffff;
     margin-top: 1rem;
   }
 }
+
 @media (max-width: 414px) {
   .filter__bar {
     margin-top: 3rem !important;
