@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import * as types from './types';
-
 import { loaderOff, loaderOn, toasterOn } from '../../layout/store/actions';
 import { tokenConfig } from '../../auth/store/actions';
+import * as types from './types';
+import api from '../../../api/config';
 
 export const invoicesFetchSuccess = (payload) => {
   return {
@@ -47,7 +47,7 @@ export const fetchInvoices = (queryFilter = '') => async (
   try {
     dispatch(loaderOn());
     const response = await axios.get(
-      `http://localhost:8080/feed/invoices${queryFilter}`,
+      `${api}/feed/invoices${queryFilter}`,
       tokenConfig(getState)
     );
     dispatch(loaderOff());
@@ -61,7 +61,7 @@ export const fetchInvoice = (invoiceId) => async (dispatch, getState) => {
   try {
     dispatch(loaderOn());
     const invoice = await axios.get(
-      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      `${api}/feed/invoices/${invoiceId}`,
       tokenConfig(getState)
     );
     dispatch(loaderOff());
@@ -78,7 +78,7 @@ export const addInvoice = (invoiceData, history) => async (
   try {
     dispatch(loaderOn());
     const response = await axios.post(
-      'http://localhost:8080/feed/invoice',
+      `${api}/feed/invoice`,
       invoiceData,
       tokenConfig(getState)
     );
@@ -99,7 +99,7 @@ export const editInvoice = (invoiceId, invoiceData, history) => async (
   try {
     dispatch(loaderOn());
     const edit = await axios.put(
-      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      `${api}/feed/invoices/${invoiceId}`,
       invoiceData,
       tokenConfig(getState)
     );
@@ -121,7 +121,7 @@ export const deleteInvoice = (invoiceId, history) => async (
   try {
     dispatch(loaderOn());
     const remove = await axios.delete(
-      `http://localhost:8080/feed/invoices/${invoiceId}`,
+      `${api}/feed/invoices/${invoiceId}`,
       tokenConfig(getState)
     );
     history.push(`/invoices`);

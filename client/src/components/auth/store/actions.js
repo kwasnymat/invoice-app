@@ -68,10 +68,7 @@ export const editUser = (data) => async (dispatch, getState) => {
 
 export const loadUser = () => async (dispatch, getState) => {
   try {
-    const response = await axios.get(
-      'http://localhost:8080/auth/user',
-      tokenConfig(getState)
-    );
+    const response = await axios.get(`${api}/auth/user`, tokenConfig(getState));
     dispatch(userLoaded(response.data));
   } catch (err) {
     dispatch(getErrors(err.response.data.message, err.response.status));
@@ -82,10 +79,7 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 export const loginUser = (userData, history) => async (dispatch, getState) => {
   try {
-    const response = await axios.post(
-      'http://localhost:8080/auth/login',
-      userData
-    );
+    const response = await axios.post(`${api}/auth/login`, userData);
     dispatch(userLoginSuccess(response.data));
     const hasDetails = getState().auth.user.CompanyName;
     hasDetails ? history.push(`/invoices/`) : history.push(`/user`);
@@ -102,10 +96,7 @@ export const loginUser = (userData, history) => async (dispatch, getState) => {
 export const registerUser = (userData, history) => async (dispatch) => {
   try {
     dispatch(loaderOn());
-    const response = await axios.put(
-      'http://localhost:8080/auth/signup',
-      userData
-    );
+    const response = await axios.put(`${api}/auth/signup`, userData);
     history.push(`/login/`);
     const { message } = response.data;
     const status = response.status;
