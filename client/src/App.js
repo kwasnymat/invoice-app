@@ -22,57 +22,80 @@ import routes from './routes/routes';
 import './App.scss';
 
 const App = () => {
-  const { isToasterVisible, message, status } = useSelector(
+  const { isToasterVisible, message, status, isLoading } = useSelector(
     ({ shared }) => shared
   );
+  const { isLoadingUser, isAuth } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { home, createInvoice, yourInvoices, login, signup, user } = routes;
 
   const showToaster = isToasterVisible ? (
     <Toaster message={message} status={status} />
   ) : null;
-
+  console.log(isLoadingUser);
+  console.log(isAuth);
   return (
     <Router>
       <Navigation />
 
       <Container>
         {showToaster}
+
         <Switch>
           <AuthRoute exact path={home.link} component={Home} />
+
           <AuthRoute
+            isAuth={isAuth}
             path={createInvoice.link}
             component={CreateInvoice}
             type='private'
           />
-          <AuthRoute path={user.link} component={User} type='private' />
-          <AuthRoute path={login.link} component={Login} type='guest' />
+          <AuthRoute
+            path={user.link}
+            component={User}
+            type='private'
+            isAuth={isAuth}
+          />
+          <AuthRoute
+            path={login.link}
+            component={Login}
+            type='guest'
+            isAuth={isAuth}
+          />
           <AuthRoute
             exact
             path={yourInvoices.link}
             component={Invoices}
             type='private'
+            isAuth={isAuth}
           />
           <AuthRoute
             exact
             path={`${yourInvoices.link}/:id`}
             component={SingleInvoice}
             type='private'
+            isAuth={isAuth}
           />
           <AuthRoute
+            isAuth={isAuth}
             path={`${yourInvoices.link}/edit/:id`}
             component={EditInvoice}
             type='private'
           />
-          <AuthRoute path={signup.link} component={Signup} type='guest' />
+          <AuthRoute
+            path={signup.link}
+            component={Signup}
+            type='guest'
+            isAuth={isAuth}
+          />
           <AuthRoute component={NotFound} />
-
           <Router />
         </Switch>
       </Container>
