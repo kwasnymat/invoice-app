@@ -29,7 +29,6 @@ const FilterBar = () => {
     dispatch(fetchInvoices());
     dispatch(saveQuery(''));
   };
-
   const uniqueInvoices = [
     ...new Map(
       allInvoices.map(
