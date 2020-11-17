@@ -7,15 +7,22 @@ const initialState = {
   errorMessage: {},
   errorStatus: null,
   idMessage: null,
+  isLoadingUser: false,
 };
 
 const invoiceReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.USER_LOADING:
+      return {
+        ...state,
+        isLoadingUser: true,
+      };
     case types.USER_LOADED:
       return {
         ...state,
         isAuth: true,
         user: action.payload,
+        isLoadingUser: false,
       };
     case types.LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
