@@ -50,8 +50,8 @@ export const fetchInvoices = (queryFilter = '') => async (
       `${api}/feed/invoices${queryFilter}`,
       tokenConfig(getState)
     );
-    dispatch(loaderOff());
     dispatch(invoicesFetchSuccess(response.data));
+    dispatch(loaderOff());
   } catch (err) {
     dispatch(loaderOff());
   }
@@ -60,6 +60,7 @@ export const fetchInvoices = (queryFilter = '') => async (
 export const fetchInvoice = (invoiceId) => async (dispatch, getState) => {
   try {
     dispatch(loaderOn());
+
     const invoice = await axios.get(
       `${api}/feed/invoices/${invoiceId}`,
       tokenConfig(getState)

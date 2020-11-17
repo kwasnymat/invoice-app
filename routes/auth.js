@@ -127,24 +127,20 @@ router.put('/user/edit-user', auth, async (req, res, next) => {
   const { email, username, password, currentPassword } = req.body;
   try {
     const user = await User.findById(req.user);
-    if (!user) {
-      const error = new Error('Could not find user!');
-      error.statusCode = 404;
-      throw error;
-    }
-    if (password && currentPassword) {
-      const checkIfPasswordMatch = await bcrypt.compare(
-        currentPassword,
-        user.password
-      );
-      if (!checkIfPasswordMatch) throw Error('Invalid current password');
+    const checkIfPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!checkIfPasswordMatch) {
+      res.status(400).json({ message: 'Invalid current password!' });
+    } else {
       const hashedPw = await bcrypt.hash(password, 12);
       user.password = hashedPw;
+      user.username = username;
+      user.email = email;
+      const result = await user.save();
+      res.status(200).json({ message: 'User details updated!', user: result });
     }
-    user.username = username;
-    user.email = email;
-    const result = await user.save();
-    res.status(200).json({ message: 'User details updated!', user: result });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
