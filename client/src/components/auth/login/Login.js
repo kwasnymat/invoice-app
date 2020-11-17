@@ -65,7 +65,7 @@ const Login = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   size='sm'
-                  //   type='password'
+                  type='password'
                   name='password'
                   placeholder='Password'
                   ref={register({ required: 'Password is required.' })}
