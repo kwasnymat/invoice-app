@@ -18,6 +18,12 @@ export const clearErrors = () => {
   };
 };
 
+export const userLoading = () => {
+  return {
+    type: types.USER_LOADING,
+  };
+};
+
 export const userLoaded = (payload) => {
   return {
     type: types.USER_LOADED,
@@ -55,14 +61,13 @@ export const editUser = (data) => async (dispatch, getState) => {
     );
     const { message } = response.data;
     const status = response.status;
+    console.log(response);
     dispatch(loadUser());
     dispatch(loaderOff());
     dispatch(toasterOn(message, status));
   } catch (err) {
-    dispatch(getErrors(err.response.data.message, err.response.status));
-    dispatch({
-      type: types.AUTH_ERROR,
-    });
+    dispatch(loaderOff());
+    dispatch(toasterOn(err.response.data.message, err.response.status));
   }
 };
 export const editCompany = (data) => async (dispatch, getState) => {
@@ -79,18 +84,20 @@ export const editCompany = (data) => async (dispatch, getState) => {
     dispatch(loaderOff());
     dispatch(toasterOn(message, status));
   } catch (err) {
-    dispatch(getErrors(err.response.data.message, err.response.status));
-    dispatch({
-      type: types.AUTH_ERROR,
-    });
+    dispatch(loaderOff());
+    dispatch(toasterOn(err.response.data.message, err.response.status));
   }
 };
 
 export const loadUser = () => async (dispatch, getState) => {
   try {
+    dispatch(loaderOn());
+    dispatch(userLoading());
     const response = await axios.get(`${api}/auth/user`, tokenConfig(getState));
     dispatch(userLoaded(response.data));
+    dispatch(loaderOff());
   } catch (err) {
+    dispatch(loaderOff());
     dispatch(getErrors(err.response.data.message, err.response.status));
     dispatch({
       type: types.AUTH_ERROR,
