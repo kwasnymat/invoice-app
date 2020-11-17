@@ -22,10 +22,10 @@ import routes from './routes/routes';
 import './App.scss';
 
 const App = () => {
-  const { isToasterVisible, message, status, isLoading } = useSelector(
+  const { isToasterVisible, message, status } = useSelector(
     ({ shared }) => shared
   );
-  const { isLoadingUser, isAuth } = useSelector(({ auth }) => auth);
+  const { token } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
 
@@ -39,8 +39,7 @@ const App = () => {
   const showToaster = isToasterVisible ? (
     <Toaster message={message} status={status} />
   ) : null;
-  console.log(isLoadingUser);
-  console.log(isAuth);
+
   return (
     <Router>
       <Navigation />
@@ -52,7 +51,7 @@ const App = () => {
           <AuthRoute exact path={home.link} component={Home} />
 
           <AuthRoute
-            isAuth={isAuth}
+            token={token}
             path={createInvoice.link}
             component={CreateInvoice}
             type='private'
@@ -61,30 +60,30 @@ const App = () => {
             path={user.link}
             component={User}
             type='private'
-            isAuth={isAuth}
+            token={token}
           />
           <AuthRoute
             path={login.link}
             component={Login}
             type='guest'
-            isAuth={isAuth}
+            token={token}
           />
           <AuthRoute
             exact
             path={yourInvoices.link}
             component={Invoices}
             type='private'
-            isAuth={isAuth}
+            token={token}
           />
           <AuthRoute
             exact
             path={`${yourInvoices.link}/:id`}
             component={SingleInvoice}
             type='private'
-            isAuth={isAuth}
+            token={token}
           />
           <AuthRoute
-            isAuth={isAuth}
+            token={token}
             path={`${yourInvoices.link}/edit/:id`}
             component={EditInvoice}
             type='private'
@@ -93,7 +92,7 @@ const App = () => {
             path={signup.link}
             component={Signup}
             type='guest'
-            isAuth={isAuth}
+            token={token}
           />
           <AuthRoute component={NotFound} />
           <Router />

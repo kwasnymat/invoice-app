@@ -21,7 +21,7 @@ const EditInvoice = ({ match }) => {
 
   const { register, control, handleSubmit, watch, errors, reset } = useForm({
     defaultValues: {
-      items: [invoice],
+      invoice,
     },
   });
   const { fields, append, remove } = useFieldArray({
