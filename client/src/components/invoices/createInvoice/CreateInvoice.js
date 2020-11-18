@@ -19,6 +19,7 @@ const CreateInvoice = () => {
     errors,
     setValue,
     useWatch,
+    reset,
   } = useForm({
     defaultValues: {
       invoiceNumber: `/${new Date().getFullYear()}`,
@@ -30,8 +31,11 @@ const CreateInvoice = () => {
       SellerCompanyPhone: user && user.CompanyPhone,
       dateInvoice: new Date().toISOString().split('T')[0],
       cityInvoice: user && user.CompanyCity,
+      items: [],
     },
   });
+
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
@@ -47,6 +51,21 @@ const CreateInvoice = () => {
   const onSubmit = (invoice) => {
     dispatch(addInvoice(invoice, history));
   };
+
+  useEffect(() => {
+    reset({
+      invoiceNumber: `/${new Date().getFullYear()}`,
+      SellerCompanyCity: user && user.CompanyCity,
+      SellerCompanyName: user && user.CompanyName,
+      SellerCompanyStreet: user && user.CompanyStreet,
+      SellerCompanyVat: user && user.CompanyVat,
+      SellerCompanyZip: user && user.CompanyZip,
+      SellerCompanyPhone: user && user.CompanyPhone,
+      dateInvoice: new Date().toISOString().split('T')[0],
+      cityInvoice: user && user.CompanyCity,
+      items: [],
+    });
+  }, [user]);
 
   return isLoading ? (
     <Loader />

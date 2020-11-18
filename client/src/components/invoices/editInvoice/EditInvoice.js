@@ -39,30 +39,39 @@ const EditInvoice = ({ match }) => {
   }, [dispatch, match.params.id]);
 
   useEffect(() => {
-    reset(invoice);
-  }, [reset, invoice]);
+    reset({
+      ...invoice,
+      items: Object.keys(invoice).length ? invoice.items : [],
+    });
+  }, [invoice]);
 
   const onSubmit = async (invoiceData) => {
     dispatch(editInvoice(invoice._id, invoiceData, history));
   };
 
   const calcGrantTotal = () => {
-    let sum = (a) => a.reduce((x, y) => x + y);
-    let sumAmount = sum(items.map((x) => Number(x.totalMoney)));
-    return sumAmount.toFixed(2);
+    if (items.length) {
+      let sum = (a) => a.reduce((x, y) => x + y);
+      let sumAmount = sum(items.map((x) => Number(x.totalMoney)));
+      return sumAmount.toFixed(2);
+    }
   };
 
   const calcSubTotal = () => {
-    let sum = (a) => a.reduce((x, y) => x + y);
-    let sumAmount = sum(items.map((x) => Number(x.priceNoVat)));
-    return sumAmount.toFixed(2);
+    if (items.length) {
+      let sum = (a) => a.reduce((x, y) => x + y);
+      let sumAmount = sum(items.map((x) => Number(x.priceNoVat)));
+      return sumAmount.toFixed(2);
+    }
   };
 
   const calcTaxTotal = () => {
-    let sum = (a) => a.reduce((x, y) => x + y);
-    let sumGrandTotal = sum(items.map((x) => Number(x.totalMoney)));
-    let sumSubTotal = sum(items.map((x) => Number(x.priceNoVat)));
-    return (sumGrandTotal - sumSubTotal).toFixed(2);
+    if (items.length) {
+      let sum = (a) => a.reduce((x, y) => x + y);
+      let sumGrandTotal = sum(items.map((x) => Number(x.totalMoney)));
+      let sumSubTotal = sum(items.map((x) => Number(x.priceNoVat)));
+      return (sumGrandTotal - sumSubTotal).toFixed(2);
+    }
   };
 
   return isLoading ? (
@@ -453,7 +462,7 @@ const EditInvoice = ({ match }) => {
                 <th className='text-center'> Price including VAT </th>
               </tr>
             </thead>
-            {fields.map((item, index) => {
+            {fields && fields.map((item, index) => {
               counter++;
               return (
                 <tbody key={item.id}>
