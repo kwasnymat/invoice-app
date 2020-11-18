@@ -76,7 +76,7 @@ const Signup = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   size='sm'
-                  //   type='password'
+                  type='password'
                   name='password'
                   placeholder='Password'
                   ref={register({ required: 'Password is required.' })}
@@ -89,7 +89,7 @@ const Signup = () => {
                 <Form.Label>Confirm password</Form.Label>
                 <Form.Control
                   size='sm'
-                  //   type='password'
+                  type='password'
                   name='passwordConfirmation'
                   placeholder='Confirm password'
                   ref={register({

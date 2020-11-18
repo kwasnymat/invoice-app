@@ -4,6 +4,13 @@
 
 InvoiceApp is a full stack RWD application for creating and managing invoices. Besides creating, you can also edit invoices, delete, filter, generate pdf files or print them directly. All this on your own profile, so no one else will have access to your data or saved invoices. You can edit your personal details such as username, email or password, but also define your company details to generate invoices faster.
 
+
+## Deployment
+
+App is deployed using Heroku for backend and Netflify for frontend. [Link](https://invoiceapplication.netlify.app/)
+
+
+
 ### Built with
 - `Node.js (ECMAScript modules),`
 - `Express,`
@@ -17,6 +24,7 @@ InvoiceApp is a full stack RWD application for creating and managing invoices. B
 - `React Hook Form,`
 - `html2canvas,`
 - `jsPDF,`
+
 
 
 ![](https://raw.githubusercontent.com/baxuu/invoice-app/master/client/src/assets/example1.jpg)
